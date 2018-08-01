@@ -304,8 +304,8 @@ sitemap main label="Home"
 
 	Frame label="Devices"
 	{
-        Switch item=TuyaSocket1 label="Plug 1 (Fan) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket1!=ON]
-		Switch item=TuyaSocket1 label="Plug 1 (Fan) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket1==ON]
+        Switch item=TuyaSocket1 label="Plug 1 [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket1!=ON]
+		Switch item=TuyaSocket1 label="Plug 1 [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket1==ON]
         Switch item=TuyaSocket2 label="Plug 2 (Bett) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket2!=ON]
 		Switch item=TuyaSocket2 label="Plug 2 (Bett) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket2==ON]
         Switch item=TuyaSocket3 label="Plug 3 (Mosquito) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket3!=ON]
@@ -320,20 +320,24 @@ sitemap main label="Home"
 
         Switch item=LED1Power label="LED 1 (Backlight) [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED1Power!=ON]
 		Switch item=LED1Power label="LED 1 (Backlight) [%s]" icon="light_led_stripe" mappings=[OFF="OFF"] visibility=[LED1Power==ON]
-        Switch item=LED2Power label="LED 2 [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED2Power!=ON]
-		Switch item=LED2Power label="LED 2 [%s]" icon="light_led_stripe" mappings=[OFF="OFF"] visibility=[LED2Power==ON]
+        Switch item=LED2Power label="LED 2 (Sofa) [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED2Power!=ON]
+		Switch item=LED2Power label="LED 2 (Sofa) [%s]" icon="light_led_stripe" mappings=[OFF="OFF"] visibility=[LED2Power==ON]
         Switch item= WOL_NAS icon="it_nas" mappings=[ON="WOL"] 
 
         Default item=LED1_color icon="light_led_stripe_rgb"
         Default item=LED2_color icon="light_led_stripe_rgb"
         Switch item= WOL_Surface icon="it_smartphone" mappings=[ON="WOL"] 
 
-        Setpoint item=LED1Scene label="LED 1 Scene [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
-        Setpoint item=LED2Scene label="LED 2 Scene [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
+        Setpoint item=LED1Scene label="LED 1 Scene [%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
+        Setpoint item=LED2Scene label="LED 2 Scene [%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
         Switch item= WOL_FireTV icon="it_media_player" mappings=[ON="WOL"] 
 
-        Setpoint item=LED1Flash label="LED 1 Flash [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
-        Setpoint item=LED2Flash label="LED 2 Flash [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
+        Setpoint item=LED1Flash label="LED 1 Flash [%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
+        Setpoint item=LED2Flash label="LED 2 Flash [%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
+        Text label="" icon="none"
+
+        Slider  item=LED1FlashSpeed icon="none" 
+        Slider  item=LED2FlashSpeed icon="none" 
         Text label="" icon="none"
 
         Text label="" icon="none"
@@ -490,14 +494,14 @@ sitemap main label="Home"
 		Text item=FireTVPresence label="FireTV [%s]" icon="it_media_player"
 		Text item=BlackBeanPresence label="Black Bean [%s]" icon="it_media_player"
         Text item=BabyCamPresence label="Baby Cam [%s]" icon="it_media_player"
-		Text item=Socket1Presence label="Socket 1 (Ventilator) [%s]" icon="message_socket"
+		Text item=Socket1Presence label="Socket 1 [%s]" icon="message_socket"
 		Text item=Socket2Presence label="Socket 2 (Bett Licht) [%s]" icon="message_socket"
-		Text item=Socket3Presence label="Socket 3 () [%s]" icon="message_socket"
-		Text item=Socket4Presence label="Socket 4 () [%s]" icon="message_socket"
+		Text item=Socket3Presence label="Socket 3 [%s]" icon="message_socket"
+		Text item=Socket4Presence label="Socket 4 [%s]" icon="message_socket"
 		Text item=Socket5Presence label="Socket 5 (Stehlampe) [%s]" icon="message_socket"
-		Text item=Socket6Presence label="Socket 6 () [%s]" icon="message_socket"
+		Text item=Socket6Presence label="Socket 6 [%s]" icon="message_socket"
         Text item=LED1Presence label="LED1 (TV Backlight) [%s]" icon="message_socket"
-        Text item=LED2Presence label="LED2 () [%s]" icon="message_socket"
+        Text item=LED2Presence label="LED2 (Sofa) [%s]" icon="message_socket"
         Text item=TPLinkPlug1Presence label="TPLinkPlug1 (Media) [%s]" icon="message_socket"
         Text item=TPLinkPlug2Presence label="TPLinkPlug2 (Waschmaschine) [%s]" icon="message_socket"
 

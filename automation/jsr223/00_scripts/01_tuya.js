@@ -205,18 +205,43 @@ JSRule({
     description: "Line: "+__LINE__,
     triggers: [
         ItemCommandTrigger("LED1Flash"),
-        ItemCommandTrigger("LED2Flash")
+        ItemCommandTrigger("LED2Flash"),
+        ItemCommandTrigger("LED1FlashSpeed"),
+        ItemCommandTrigger("LED2FlashSpeed")
     ],
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
-        var state = input.command;
         var execResult
         var cmd 
         var tuyaConfig
 
-        if (triggeringItem.name == "LED1Flash") tuyaConfig = TuyaLED1Config + " FLASH -flashid " + state;
-        if (triggeringItem.name == "LED2Flash") tuyaConfig = TuyaLED2Config + " FLASH -flashid " + state;
+        var type = null;
+        var speed = null;
+        if ((triggeringItem.name == "LED2Flash") || (triggeringItem.name == "LED1Flash")) type = input.command;
+        else if ((triggeringItem.name == "LED1FlashSpeed") || (triggeringItem.name == "LED2FlashSpeed")) speed = input.command;
+
+        if ((triggeringItem.name == "LED1Flash") || (triggeringItem.name == "LED1FlashSpeed"))
+        {   
+            var itemLED1Flash = getItem("LED1Flash");
+            var itemLED1FlashSpeed = getItem("LED1FlashSpeed");
+            if (type == null) type = itemLED1Flash.state;
+            if (type == null) type = 1;
+            if (speed == null) speed = itemLED1FlashSpeed.state;
+            if (speed == null) speed = 1;
+            tuyaConfig = TuyaLED1Config + " FLASH -flashid " + type + " -flashspeed " + speed;
+        }
+        else if ((triggeringItem.name == "LED2Flash") || (triggeringItem.name == "LED2FlashSpeed"))
+        {
+            var itemLED2Flash = getItem("LED2Flash");
+            var itemLED2FlashSpeed = getItem("LED2FlashSpeed");
+
+            if (type == null) type = itemLED2Flash.state;
+            if (type == null) type = 1;
+            if (speed == null) speed = itemLED2FlashSpeed.state;
+            if (speed == null) speed = 1;
+            tuyaConfig = TuyaLED2Config + " FLASH -flashid " + type + " -flashspeed " + speed;
+        }
 
         cmd = tuyaLEDScript + tuyaConfig;
         execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 3);

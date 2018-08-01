@@ -13,6 +13,7 @@ var tuyaKey = getArgs(args, "-key");
 var tuyaType = getArgs(args, "-type");
 var tuyaSceneID = getArgs(args, "-sceneid");
 var tuyaFlashID = getArgs(args, "-flashid");
+var tuyaFlashSpeed = getArgs(args, "-flashspeed");
 var HSB = getArgs(args, "-hsb").split(",").map(Number);
 var tuya = new TuyaDevice({
     ip: tuyaIP,
@@ -75,8 +76,6 @@ tuya.resolveId().then(() =>
         return;
     }
 
-    var set_options = {};
-
     if (tuyaType == "light")
     {
         if (args.includes("SCENE")) 
@@ -92,7 +91,9 @@ tuya.resolveId().then(() =>
         else if (args.includes("FLASH")) 
         {
             var type = tuyaFlashID
-            var speed = "02"
+            var speed = Math.ceil(255/100 * tuyaFlashSpeed);
+            var speed = speed.toString(16);
+            console.log(speed);
 
             var col1 = (Math.random()*0xFFFFFF<<0).toString(16);
             var set1 = "FFFF"+speed+"0"+type+col1; //5
@@ -106,10 +107,11 @@ tuya.resolveId().then(() =>
             var col4 = (Math.random()*0xFFFFFF<<0).toString(16);
             var set4 = "FFFF"+speed+"0"+type+col4; //9
 
-            var dps = {1: true, 2: "scene_"+type, 5: set1, 6: set2, 7: set3, 9: set4 };
+            //var dps = {1: true, 2: "scene_"+type, 7: set1, 8: set2, 9: set3, 10: set4 };
+            var dps = {1: true, 2: "scene_"+type, 7: set1, 9: set3};
             setMultiple(dps);
 
-            tuya.get({schema: true}).then(result => {console.log(result)});
+//            tuya.get({schema: true}).then(result => {console.log(result)});
 
 /*
             set_options = { set: "ffffFF06ff000000ff00ffff00ff00ff0000ffff0000", dps:8 };

@@ -17,6 +17,7 @@ Items
     gSensors* : strategy = everyChange, restoreOnStartup
     gTPLinkAll* : strategy = everyChange, restoreOnStartup
     gSNMP* : strategy = everyChange, restoreOnStartup
+    gTuya* : strategy = everyChange, restoreOnStartup
 
 	FeelsLikeOutdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     Temperature_UI_Outdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
