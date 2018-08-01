@@ -1,0 +1,46 @@
+//
+ARIES=♈ Widder
+TAURUS=♉ Stier
+GEMINI=♊ Zwilling
+CANCER=♋ Krebs
+LEO=♌ Löwe
+VIRGO=♍ Jungfrau
+LIBRA=♎ Waage
+SCORPIO=♏ Skorpion
+SAGITTARIUS=♐ Schütze
+CAPRICORN=♑ Steinbock
+AQUARIUS=♒ Wassermann
+PISCES=♓ Fisch
+
+//
+SPRING=Frühling
+SUMMER=Sommer
+AUTUMN=Herbst
+WINTER=Winter
+
+//
+SUN_RISE=Sonnenaufgang
+ASTRO_DAWN=astronomische Morgendämmerung
+NAUTIC_DAWN=nautische Morgendämmerung
+CIVIL_DAWN=zivile Morgendämmerung
+CIVIL_DUSK=zivile Abenddämmerung
+NAUTIC_DUSK=nautische Abenddämmerung
+ASTRO_DUSK=astronomische Abenddämmerung
+SUN_SET=Sonnenuntergang
+DAYLIGHT=Tag
+NOON=Abend
+NIGHT=Nacht
+
+//
+NEW=🌑 Neumond
+WAXING_CRESCENT=zunehmender Halbmond
+FIRST_QUARTER=erstes Viertel
+WAXING_GIBBOUS=zunehmender Mond
+FULL=Vollmond
+WANING_GIBBOUS=abnehmender Mond
+THIRD_QUARTER=letztes Viertel
+WANING_CRESCENT=abnehmender Halbmond
+
+//
+NULL=unbekannt ⁉
+-=unbekannt ⁉

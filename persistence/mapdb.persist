@@ -1,0 +1,26 @@
+Strategies {
+	everyMinute : "0 * * * * ?"
+	every5Minutes : "*/5 * * * * ?"
+    every10Minutes : "*/10 * * * * ?"
+    everyHour   : "0 0 * * * ?"
+    everyDay    : "0 0 0 * * ?"
+}
+
+Items 
+{
+    gPresence* : strategy = everyHour, restoreOnStartup
+    gCal_Event* : strategy = everyChange, restoreOnStartup
+    gMail* : strategy = everyChange, restoreOnStartup
+    gEchos* : strategy = everyChange, restoreOnStartup
+    gMQTT_Phone_Strings* : strategy = everyChange, restoreOnStartup
+    gFritzBox* : strategy = everyChange, restoreOnStartup
+    gSensors* : strategy = everyChange, restoreOnStartup
+    gTPLinkAll* : strategy = everyChange, restoreOnStartup
+    gSNMP* : strategy = everyChange, restoreOnStartup
+
+	FeelsLikeOutdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
+    Temperature_UI_Outdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
+    itemEnergyUsage_Today_UI, TPLinkPlug1_UI, TPLinkPlug2_UI : strategy = everyChange, restoreOnStartup   
+    PollenUI : strategy = everyChange, restoreOnStartup
+    Washingmachine_OpState : strategy = everyChange, restoreOnStartup
+}

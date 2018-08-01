@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/css/overrides.css">
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/jquery.rss.min.js"></script>
+        <style>
+            body
+            {
+                font-family: 'Roboto Condensed', sans-serif !important;
+                font-size: 11px;
+                margin: 0;
+                overflow: hidden;
+                background-color: transparent !important;
+            }
+            #rss
+            {
+                overflow-y: scroll;
+                height: 144px;  /* The height is 400 pixels */
+                width: 105%;  /* The width is the width of the web page */
+            }
+
+            ul
+            {
+                margin:0 !important;
+                padding-inline-start: 10px;
+                padding-right:20px;
+            }
+
+            li
+            {
+                margin: 10px 0 10px 0;
+                list-style-type:none;
+            }
+            li a
+            {
+                margin-left: 0;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="rss"></div>
+        <script>
+            //"https://rss.torrentleech.org/0d90990b8127337a3552"
+            //http://www.nordbayern.de/cmlink/15.423?cid=2.232
+            var url = "https://blog.fefe.de/rss.xml";
+            $("#rss").rss(url,
+                {
+                    ssl: true,
+                    limit: 10,
+                    entryTemplate:'<li><a target="_blank" href="{url}">{title}</a><br/>{teaserImage}{shortBodyPlain}</li>'
+                });
+                //[{author}@{date}]
+
+            /*
+
+                                filterLimit: 10,
+                    filter: function(entry, tokens) {
+                        return tokens.title.indexOf("german") > -1
+                    },
+
+             */
+        </script>
+    </body>
+</html>

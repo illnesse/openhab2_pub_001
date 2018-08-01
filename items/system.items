@@ -1,0 +1,45 @@
+Group gAtHome
+Switch AtHomeS "S is Home [%s]" (gAtHome)
+Switch AtHomeJ "J is Home [%s]" (gAtHome)
+
+Group:String gCalTimes
+
+String AtHomeSBegin (gCalTimes)
+String AtHomeSEnd (gCalTimes)
+String AtHomeJBegin (gCalTimes)
+String AtHomeJEnd (gCalTimes)
+
+String CallPrefix (gCalTimes)
+String CallBegin (gCalTimes)
+String CallEnd (gCalTimes)
+
+
+Switch SysStartup "System Start [%s]"
+Switch SysStartupForce "System Start Test [%s]"
+
+String Backupbtn "Push to Bitbucket"
+String Resetbtn "Reset OH2 Service"
+String ClearCacheBtn "Clear Cache"
+Switch TestBTN "TestBTN"
+Switch fboxReboot "Reboot Fritz!Box"
+Switch piReboot "Reboot RasPi"
+
+String TTSOut1 "TTSOut"
+String TTSOut1Quiet "TTSOut"
+String TTSOut2 "TTSOut"
+String TTSOut2Quiet "TTSOut"
+
+Number ALARM1_PERSON1_H    "Hour [%s]"
+Number ALARM1_PERSON1_M    "Minute [%s]"
+String ALARM1_PERSON1_D    "Day"
+
+Number System_openHAB_Uptime "Uptime openHAB [JS(duration.js):%s]"
+Number System_openHAB_Memory "openHAB Memory Usage [%s kB]"
+Number System_openHAB_DBSize "influxDB Database Size [%s MB]"
+
+Number System_CPU_Uptime "Uptime server [JS(duration.js):%s]" { channel="systeminfo:computer:raspberrypi:cpu#uptime" }
+
+String   logreaderLastError         "Last error [%s]"                                      { channel="logreader:reader:openhablog:lastErrorEvent" }
+String   logreaderLastWarning       "Last warning [%s]"                                    { channel="logreader:reader:openhablog:lastWarningEvent" }
+Number   logreaderErrors            "Error events matched [%d]"                            { channel="logreader:reader:openhablog:errorEvents" }
+Number   logreaderWarnings          "Warning events matched [%d]"                          { channel="logreader:reader:openhablog:warningEvents" }

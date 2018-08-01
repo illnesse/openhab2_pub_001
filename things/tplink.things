@@ -1,0 +1,2 @@
+tplinksmarthome:hs110:plug1 "TPLink Plug 1"        [ ipAddress="192.168.178.46", refresh=120 ]
+tplinksmarthome:hs110:plug2 "TPLink Plug 2"        [ ipAddress="192.168.178.47", refresh=120 ]

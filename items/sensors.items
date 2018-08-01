@@ -1,0 +1,19 @@
+Group gSensors
+
+Switch  HM_EM_LowBattery "Low Battery [%s]" (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#LOWBAT" }
+Number  HM_EM_SignalStrength "Signal Strength [%.0f]"  (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#SIGNAL_STRENGTH" }
+Number  HM_EM_Power "power [%.0f W]"  (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#POWER" }
+Number  HM_EM_EnergyCounter "Energy Counter [%.2f Wh]" (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#ENERGY_COUNTER" }
+Number  HM_EM_EnergyCounterK "[%.2f kWh]" (gSensors)
+Number  HM_EM_EnergyUsage_Today "[%.2f]"
+Number  HM_EM_EnergyUsage_Month "[%.2f]"
+String  HM_EM_EnergyUsage_Today_UI "[%s]"
+
+Number  HMTemp1  "HMTemp1 [%.1f °C]" (gSensors) { channel="homematic:HmIP-STH:PEQ0174170:000E5709B28DEE:1#ACTUAL_TEMPERATURE" }
+Number  HMTemp1HUM  "HMTemp1HUM [%s %%]" (gSensors) { channel="homematic:HmIP-STH:PEQ0174170:000E5709B28DEE:1#HUMIDITY" }
+Contact  HMDoor1 "HMDoor1 [%s]" (gSensors) { channel="homematic:HM-Sec-SCo:PEQ0174170:OEQ1199810:1#STATE" }
+String  HMDoor1UI "HMDoor1 [%s]" (gSensors)
+
+Switch OsramSensorTriggered "Sensor triggered [%s]" (gSensors) { channel="osramlightify:motionsensor:XX-XX-XX-XX-XX-XX-XX-XX:triggered" }
+String OsramSensorTriggeredUI "Sensor triggered [%s]" (gSensors) 
+

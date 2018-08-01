@@ -1,0 +1,13 @@
+astro:sun:home  [ geolocation="12.345,12.234,100", interval=300 ]  
+{
+    Channels:
+        Type start : rise#start [
+            offset=5
+        ]
+        Type end : set#end [
+            offset=5
+        ]
+}
+
+astro:moon:home [ geolocation="12.234,12.345", interval=300 ]
+

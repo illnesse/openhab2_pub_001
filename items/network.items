@@ -1,0 +1,122 @@
+Group:String gPresence
+Group:Number gLatency
+Group:Contact gOnline
+
+Contact RouterOnline (gOnline)
+Contact NASOnline (gOnline)      	     {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact DesktopOnline (gOnline)          {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact HandySOnline (gOnline)           {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact HandyJOnline (gOnline)           {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact SurfaceOnline (gOnline)          {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact SonyAudioOnline (gOnline)        {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact RaspberryPiOnline (gOnline)      {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact RaspberryMaticOnline (gOnline)   {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact PS4Online (gOnline)    	         {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Echo1Online (gOnline)            {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Echo2Online (gOnline)            {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact OSRAMGatewayOnline (gOnline)     {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact FireTVOnline (gOnline)           {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact BlackBeanOnline (gOnline)        {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact BabyCamOnline (gOnline)          {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+
+Contact Socket1Online     "Socket1 [%s]"  (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Socket2Online     "Socket2 [%s]"  (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Socket3Online     "Socket3 [%s]"  (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Socket4Online     "Socket4 [%s]"  (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Socket5Online     "Socket5 [%s]"  (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact Socket6Online     "Socket6 [%s]"  (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+
+Contact LED1Online        "LED1 [%s]"     (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact LED2Online        "LED2 [%s]"     (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+
+Contact TPLinkPlug1Online "TPLinkPlug1 [%s]" (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+Contact TPLinkPlug2Online "TPLinkPlug2 [%s]" (gOnline)  {fritzboxtr064="maconline:XX-XX-XX-XX-XX-XX"}
+
+
+String RouterPresence (gPresence)
+Number RouterLatency (gLatency) {channel="network:pingdevice:router:latency"}
+
+String DesktopPresence (gPresence)
+Number DesktopLatency (gLatency) {channel="network:pingdevice:desktop:latency"}
+
+String NASPresence (gPresence)
+Number NASLatency (gLatency) {channel="network:pingdevice:nas:latency"}
+
+String HandySPresence (gPresence)
+Number HandySLatency (gLatency) {channel="network:pingdevice:handys:latency"}
+
+String HandyJPresence (gPresence)
+Number HandyJLatency (gLatency) {channel="network:pingdevice:handyj:latency"}
+
+String SurfacePresence (gPresence)
+Number SurfaceLatency (gLatency) {channel="network:pingdevice:surface:latency"}
+
+String SonyAudioPresence (gPresence)
+Number SonyAudioLatency (gLatency) {channel="network:pingdevice:sonyaudio:latency"}
+
+String Echo1Presence (gPresence)
+Number Echo1Latency (gLatency) {channel="network:pingdevice:echo1:latency"}
+
+String Echo2Presence (gPresence)
+Number Echo2Latency (gLatency) {channel="network:pingdevice:echo2:latency"}
+
+String RaspberryPiPresence (gPresence)
+Number RaspberryPiLatency (gLatency) {channel="network:pingdevice:raspberrypi:latency"}
+
+String RaspberryMaticPresence (gPresence)
+Number RaspberryMaticLatency (gLatency) {channel="network:pingdevice:raspberrymatic:latency"}
+
+String PS4Presence (gPresence)
+Number PS4Latency (gLatency) {channel="network:pingdevice:ps4:latency"}
+
+String OSRAMGatewayPresence (gPresence)
+Number OSRAMGatewayLatency (gLatency) {channel="network:pingdevice:osramgateway:latency"}
+
+String FireTVPresence (gPresence)
+Number FireTVLatency (gLatency) {channel="network:pingdevice:firetv:latency"}
+
+String BlackBeanPresence (gPresence)
+Number BlackBeanLatency (gLatency) {channel="network:pingdevice:blackbean:latency"}
+
+String BabyCamPresence (gPresence)
+Number BabyCamLatency (gLatency) {channel="network:pingdevice:babycam:latency"}
+
+String Socket1Presence (gPresence)
+Number Socket1Latency (gLatency) {channel="network:pingdevice:socket1:latency"}
+
+String Socket2Presence (gPresence)
+Number Socket2Latency (gLatency) {channel="network:pingdevice:socket2:latency"}
+
+String Socket3Presence (gPresence)
+Number Socket3Latency (gLatency) {channel="network:pingdevice:socket3:latency"}
+
+String Socket4Presence (gPresence)
+Number Socket4Latency (gLatency) {channel="network:pingdevice:socket4:latency"}
+
+String Socket5Presence (gPresence)
+Number Socket5Latency (gLatency) {channel="network:pingdevice:socket5:latency"}
+
+String Socket6Presence (gPresence)
+Number Socket6Latency (gLatency) {channel="network:pingdevice:socket6:latency"}
+
+String LED1Presence (gPresence)
+Number LED1Latency (gLatency) {channel="network:pingdevice:led1:latency"}
+
+String LED2Presence (gPresence)
+Number LED2Latency (gLatency) {channel="network:pingdevice:led2:latency"}
+
+String TPLinkPlug1Presence (gPresence)
+Number TPLinkPlug1Latency (gLatency) {channel="network:pingdevice:tplinkplug1:latency"}
+
+String TPLinkPlug2Presence (gPresence)
+Number TPLinkPlug2Latency (gLatency) {channel="network:pingdevice:tplinkplug2:latency"}
+
+
+Group gSpeedtest
+String      SpeedtestSummary        "Speedtest [%s]"             (gSpeedtest)
+//Number      SpeedtestResultPing     "Ping [%.3f ms]"             (gSpeedtest)
+Number      SpeedtestResultDown     "Downlink [%.2f Mbit/s]"     (gSpeedtest)
+Number      SpeedtestResultUp       "Uplink [%.2f Mbit/s]"       (gSpeedtest)
+//String      SpeedtestRunning        "Speedtest running ... [%s]" (gSpeedtest)
+String      SpeedtestRerun           "Start Speedtest [%s]"            (gSpeedtest) [ "Switchable" ]
+DateTime    SpeedtestResultDate     "Last executed [%1$td.%1$tm.%1$tY, %1$tH:%1$tM Uhr]"   (gSpeedtest)

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/jquery-ui.min.js"></script>
+        <script src="../static/js/jquery.cookie.js"></script>
+        <script src="../static/js/overrides.js"></script>
+        <style>
+
+            body
+            {
+                overflow: hidden;
+                margin: 0;
+            }
+
+            pre
+            {
+                margin: 0;
+            }
+
+
+            .log
+            {
+                color: #666;
+            }
+
+            .error
+            {
+                color: #a25050a6;
+            }
+
+            .warning
+            {
+                color: #ba9f669d;
+            }
+
+            .logview
+            {
+                border-bottom: 1px solid #444;
+
+                height:50%;
+                color: #666;
+                font-family: monospace;
+                font-size: 9px;
+                line-height:9px;
+                overflow: hidden;
+                padding-top:5px;
+                padding-bottom:5px;
+
+                white-space: pre-wrap;
+                white-space: -moz-pre-wrap;
+                white-space: -pre-wrap;
+                white-space: -o-pre-wrap;
+                word-wrap: break-word;
+            }
+
+        </style>
+    </head>
+    <body>
+        <pre><div id="logview1" class="logview"></div></pre>
+        <pre><div id="logview2" class="logview"></div></pre>
+    </body>
+</html>

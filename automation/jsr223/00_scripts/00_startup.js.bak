@@ -1,0 +1,11 @@
+'use strict';
+load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
+
+function init()
+{
+    logInfo("touching scripts...")
+    var execResult = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/loadscripts.sh",1000 * 2);
+    logInfo(execResult);
+}
+
+init();

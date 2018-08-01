@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../static/css/overrides.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.cookie.js"></script>
+    <script src="../static/js/color-thief.min.js"></script>
+    <style>
+        body 
+        {    
+            overflow: hidden;
+            margin: 0;
+            background: transparent !important;
+        }
+        .thumb
+        {
+            margin-right:10px;
+            opacity: 0.4;
+        }
+        .content
+        {
+            overflow:hidden;
+            white-space: nowrap; 
+            text-overflow: ellipsis;
+            white-space: no-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+        .linkitem
+        {
+            cursor: pointer;
+            display: flex;
+            width: 20%;
+            height: 38px;
+            margin: 4px;
+            padding: 5px;
+            border-radius: 4px;
+            flex-grow: 1;
+            
+        }
+
+        .linkitem:hover
+        {
+            background-color: rgba(255,255,255,0.1) !important;
+            -webkit-transition: background-color 200ms linear;
+            -ms-transition: background-color 200ms linear;
+            transition: background-color 200ms linear;
+        }
+
+        h2, h3 
+        {
+            margin: 0;
+            color: #ffffff87;
+            font-weight: 400;
+            line-height: 15px;
+        }
+        h2 
+        {
+            font-size: 11px;
+        }
+        h3 
+        {
+            font-size: 10px;
+            color: #ffffff33;
+            font-weight: normal;
+        }
+
+        .header {
+            height: 50px;
+        }
+
+        #list3 {
+            display: flex;
+            /*padding-left: 44px;*/
+            padding-right: 224px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-content: flex-start;
+            width:102%;
+            height: 260px;
+            overflow-y: scroll;
+        }
+
+        #tuneinsearchtext
+        {
+            border: 1px solid #333;
+            background-color: transparent;
+            border-radius: 4px;
+            color: #999; 
+            width: 180px;
+            height: 22px;
+            outline: none;
+            padding-left:4px;
+            margin-right:9px;
+            font-family: 'Roboto Condensed', sans-serif !important;
+            font-weight: 900;
+        }
+
+        .label
+        {
+            margin-left: 52px;
+            color: #ffffffa6;
+            display: inline;
+            font-size: 14px;
+        }
+        .searchform, form
+        {
+            display: inline;
+        }
+        .l 
+        {
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            margin-top:4px;
+        }
+
+        @media screen and (max-width: 850px)
+        {
+            .linkitem {
+                width: 22%;
+            }
+            .label
+            {
+                margin-left: 47px;
+            }
+            .l 
+            {
+                width: 100%;
+            }
+            #tuneinsearchtext
+            {
+                margin-right:0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="header">
+            <div class="l">
+                <div class="label">Search</div>
+                <div class="searchform">
+                    <form id="tuneinsearch" ><input id="tuneinsearchtext" type="text"></form>
+                </div>
+            </div>
+            <div class="r">
+
+            </div>
+        </div>
+        <div id="list3"></div>
+    </div>
+    <script>
+        var searchstring = $.cookie('tunein_loadlist');
+        $("#tuneinsearchtext").val(searchstring);
+
+        $("#tuneinsearch").submit(function( event ) 
+        {
+            event.preventDefault();
+            searchstring = $("#tuneinsearchtext").val()
+
+            $.cookie('tunein_loadlist', searchstring);
+            loadlist();
+        });
+
+        function initevents() 
+        {
+            $(".linkitem").on("click", function( event ) 
+            {
+                event.preventDefault();
+                var link = $( this ).data("link")
+                //var str = $("#ttstext",$parentdoc).val()
+
+                console.log(link);
+                $.ajax({
+                    url:"/rest/items/Echo2_RadioStationId",
+                    type:"POST",
+                    data:link,
+                    contentType:"text/plain",
+                    dataType:"json"
+                });
+
+            });
+
+            $(window).on("load", function() {
+                var colorThief = new ColorThief();
+                $(".thumb").each(
+                    function() {
+                        var color,img = $(this).get(0);
+                        if (img)
+                        {
+                            /*
+                            if (img.src.indexOf("cdn-profiles") != -1) 
+                            {
+                                img.crossOrigin = "Anonymous";
+                                //img.crossOrigin = null;
+
+                                var canvas = document.createElement('canvas');
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+
+                                var haximg = document.createElement("img");
+                                haximg.crossOrigin = "";
+                                haximg.src = img.src;
+
+                                c = canvas.getContext('2d');
+                                c.drawImage(haximg, 0, 0);
+
+                                width = canvas.width;
+                                height = canvas.height;
+                                imageData = canvas.toDataURL("image/png");
+                                //imageData = c.getImageData(0, 0, width, height);
+
+                                console.log(imageData);
+                            }
+                            */
+                            try {
+                                color = colorThief.getColor(img);
+                                $(this).parent().parent().css({"background-color":"rgba("+color[0]+","+color[1]+","+color[2]+",0.2)"});
+                            }
+                            catch(err) {
+                                //console.log(err.message);
+                            }
+                        }
+                });
+            });
+        }
+
+        function loadlist() 
+        {
+            $("#list3").empty();
+            var rand = "&itemToken=BgQEAAIAAgAAAAAAAAAAAQAAAA";
+            var tuneinurl = "https://api.tunein.com/profiles?"+
+                            "fullTextSearch=true"+
+                            "&query="+searchstring+
+                            "&filter=s!"+
+                            "&itemToken="+rand+
+                            "&offset=1"+
+                            "&limit=100"+
+                            "&formats=mp3,aac,ogg,flash,html"+
+                            "&serial=2dd4eed9-251b-45da-90b3-a00f85505b7d"+
+                            "&partnerId=RadioTime"+
+                            "&version=2.5300000000000002"+
+                            "&itemUrlScheme=secure"+
+                            "&build=2.53.0"+
+                            "&reqAttempt=1";
+
+            $.ajax({
+                url     : tuneinurl,
+                data    : {},
+                dataType: 'jsonp',
+                success : function( data ) 
+                {
+                    /*
+                    var reg = /{(?:\n|.)*}/;
+                    var str = data.toString();
+                    var yiff = str.match(reg);
+                    */
+                    $.each(data.Items, function(index, elem) 
+                    {
+                        //$.each(elem.Children, function(index, elem) 
+                        //{
+                            if (elem.Image.indexOf("cdn-profiles") != -1) elem.Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+                            $("#list3").append(""+
+                            "<div class=\"linkitem\" data-link=\""+elem.GuideId+"\">"+
+                                "<div>"+
+                                "<img class=\"thumb\" id=\"thumb"+index+"\" src=\""+elem.Image+"\" width=\"36\" height=\"36\" crossorigin=\"\">"+
+                                "</div>"+
+                                "<div class=\"content\">"+
+                                    "<div><h2>"+ elem.Title +"</h2></div>" +
+                                    "<div><h3>"+ elem.Subtitle +"</h2></div>" +
+                                "</div>"+
+                            "</div>")
+                        //});
+
+                    });
+                    console.log("tunein station items: " + data.Items.length);
+                    initevents();
+                }
+            });
+        }
+
+        loadlist();
+    </script>
+  </body>
+</html>

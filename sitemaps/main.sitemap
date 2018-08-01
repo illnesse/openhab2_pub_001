@@ -1,0 +1,536 @@
+sitemap main label="Home"
+{
+    Frame label="IP Cams"
+	{
+        Video url="http://192.168.178.27:8081/" encoding="mjpeg"
+        Video url="http://192.168.178.27:8082/" encoding="mjpeg"
+		Image url="https://XXXXXXX.de/XXXXXXX.jpg"
+    }
+
+	Frame label="Samsung TV Wohnzimmer"
+	{
+		Switch item=MQTT_TV label="Power" icon="control_on_off" mappings=[power="PWR"]
+		Switch item=MQTT_TV label="Volume" icon="audio_playlist" mappings=[input="INPUT",mute="MUTE",volumedown="-",volumeup="+"] //visibility=[TV_ON==ON]
+	}
+	Frame label="SAT Receiver Wohnzimmer"
+	{
+		Switch item=MQTT_SAT label="Power" icon="control_on_off" mappings=[power="PWR"] 
+		Switch item=MQTT_SAT label="Volume" icon="audio_playlist" mappings=[mute="MUTE",volumedown="-",volumeup="+"] //visibility=[SAT_ON==ON]
+		Selection item=MQTT_SATChannel label="Channel [%s]" icon="audio_playlist" mappings=[
+			1="ARD",
+			2="ZDF",
+			3="RTL",
+			4="SAT1",
+			5="VOX",
+			6="PRO7",
+			7="Kabel1",
+			8="arte",
+			9="RTL2",
+			10="Super RTL",
+			11="3Sat",
+			12="WDR",
+			13="BR",
+			14="SWR",
+			15="NDR",
+			16="hr",
+			17="MDR",
+			12="rbb",
+			21="ONE",
+			23="tagesschau24",
+			24="ZDFneo",
+			28="ServusTV",
+			40="Nitro",
+			41="Welt der Wunder",
+			44="Deluxe Music",
+			45="Comedy Central/VIVA",
+			61="n-tv",
+			62="WELT",
+			63="BBC",
+			64="CNN",
+			70="Astro TV"
+		] //visibility=[SAT_ON==ON]
+		Switch item=MQTT_SAT label="Program" icon="audio_playlist" mappings=[list="LIST",guide="GUIDE",channeldown="▼",channelup="▲"]
+        Text label="" icon="none"
+        Switch item=MQTT_SAT label="[]" icon="none" mappings=[exit="EXIT",ok="OK",down="▾",up="▴"]
+	}
+	Frame label="Sony AV Receiver Wohnzimmer"
+	{
+		Switch item=MQTT_AUDIO label="Power" icon="control_on_off" mappings=[power="PWR"] 
+		Switch item=MQTT_AUDIO label="Volume" icon="audio_playlist" mappings=[home="HOME", mute="MUTE",volumedown="-",volumeup="+"]  //visibility=[AUDIO_ON==ON]
+	}
+	Frame label="HDMI Switch Wohnzimmer"
+	{
+		Switch item=MQTT_SWITCH label="Port" icon="audio_playlist" mappings=[1="TV",2="PS4",3="PC",4="FireTV"]
+		Switch item=MQTT_SWITCH label="Audio / Source" icon="audio_playlist" mappings=[2_1ch="2.1",5_1ch="5.1",7_1ch="7.1",arc="arc",auto="auto",autosource="autosrc"]
+	}
+	Frame label="A/C Wohnzimmer"
+	{
+		Switch item=MQTT_AC label="Power" icon="control_on_off" mappings=[power="PWR"]
+		Switch item=MQTT_AC label="Stuff" icon="audio_playlist" mappings=[fan="FAN",fan2="FAN2",rotate="ROT",down="▼",up="▲"]
+	}
+	Frame label="Fan Wohnzimmer"
+	{
+		Switch item=MQTT_FAN label="Power" icon="control_on_off" mappings=[power="PWR"]
+		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="▼",up="▲"]
+	}
+	Frame label="Kodi Wohnzimmer"
+	{
+		Selection item=Kodi_control icon="audio_playlist" mappings=[PLAY='Play', PAUSE='Pause', NEXT='Next', PREVIOUS='Previous', FASTFORWARD='Fastforward', REWIND='Rewind']
+        Default   item=Kodi_control icon="audio_playlist"
+		Text      item=Kodi_title icon="audio_playlist"
+        Switch    item=Kodi_stop icon="audio_playlist" mappings=[ON='STOP']
+		Text      item=Kodi_artist icon="audio_playlist"
+		Selection item=Kodi_input  icon="audio_playlist" mappings=[Up='Up', Down='Down', Left='Left', Right='Right', Select='Select', Back='Back', Home='Home', ContextMenu='ContextMenu', Info='Info']
+		Selection item=Kodi_systemcommand  icon="audio_playlist" mappings=[Shutdown='Herunterfahren', Suspend='Bereitschaft', Reboot='Neustart']
+		Text      item=Kodi_mediatype icon="audio_playlist"
+	}
+    Frame label="RSS"
+	{
+        Text label="Fefe's Blog" icon="message_empty"
+        Webview url="/static/rss.html" height=4
+	}
+    Frame label="E-Mail"
+    {
+        Switch item=Mail_Account1_Update label="Update |Google Mail|https://mail.google.com [%s]" icon="message_mail" mappings=[ON="UPDATE"]
+        Text label="" icon="none"
+        Text item=GMail_Acc1_Mail1__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail2__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail3__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail4__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail5__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail6__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail7__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail8__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail9__UI icon="message_mail" 
+        Text item=GMail_Acc1_Mail10__UI icon="message_mail" 
+    }
+    Frame label="Calendar Events"
+    {
+        Switch item=Cal_Update label="Update |Google Calendar|https://calendar.google.com [%s]" icon="time_calendar" mappings=[ON="UPDATE"]
+        Text label="" icon="none"
+        Text item=Cal_Event1__UI icon="time_calendar" 
+        Text item=Cal_Event9__UI icon="time_calendar" 
+
+        Text item=Cal_Event2__UI icon="time_calendar" 
+        Text item=Cal_Event10__UI icon="time_calendar"
+
+        Text item=Cal_Event3__UI icon="time_calendar" 
+        Text item=Cal_Event11__UI icon="time_calendar"
+
+        Text item=Cal_Event4__UI icon="time_calendar" 
+        Text item=Cal_Event12__UI icon="time_calendar"
+
+        Text item=Cal_Event5__UI icon="time_calendar" 
+        Text item=Cal_Event13__UI icon="time_calendar"
+
+        Text item=Cal_Event6__UI icon="time_calendar" 
+        Text item=Cal_Event14__UI icon="time_calendar"
+
+        Text item=Cal_Event7__UI icon="time_calendar" 
+        Text item=Cal_Event15__UI icon="time_calendar"
+
+        Text item=Cal_Event8__UI icon="time_calendar" 
+        Text item=Cal_Event16__UI icon="time_calendar"
+	}
+
+    Frame label="Alarms" 
+	{
+        Selection item=ALARM1_PERSON1_D icon="time_alarm_clock" mappings=[90="OFF", 15="MO-FR", 67="SAT-SUN", 17="MO-SUN"]
+        Setpoint item=ALARM1_PERSON1_H  icon="time_alarm_clock" minValue=0 maxValue=23 step=1
+        Setpoint item=ALARM1_PERSON1_M  icon="time_alarm_clock" minValue=0 maxValue=59 step=1
+	}
+
+
+	Frame label="Echo Schlafzimmer"
+	{
+		Default item=Echo1_Player icon="message_empty"
+		Selection item=Echo1_RadioStationId icon="it_radio"
+			mappings=[ 
+			''='Off', 
+			's2585'='Sleepbot Environmental Broadcast', 
+			's2225'='Limbik Frequencies', 
+			's25021'='Jam FM', 
+			's110956'='Traxx FM Tech Minimal', 
+			's268514'='sunshine live - Drum n Bass', 
+			'p526035'='Monday Night HAZE'
+			]
+		Slider  item=Echo1_Volume icon="audio_volume_high" 
+		Text    item=Echo1_Title icon="none"
+		Text 	item=Echo1_Subtitles icon="none"
+	}
+
+	Frame label="Echo Wohnzimmer"
+	{
+		Default item=Echo2_Player icon="message_empty"
+		Selection item=Echo2_RadioStationId icon="it_radio"
+			mappings=[ 
+			''='Off', 
+			's2585'='Sleepbot Environmental Broadcast', 
+			's2225'='Limbik Frequencies', 
+			's25021'='Jam FM', 
+			's110956'='Traxx FM Tech Minimal', 
+			's268514'='sunshine live - Drum n Bass', 
+			'p526035'='Monday Night HAZE'
+			]
+		Slider  item=Echo2_Volume icon="audio_volume_high" 
+		Text    item=Echo2_Title icon="none"
+		Text 	item=Echo2_Subtitles icon="none"
+	}
+
+	Frame label="Echo Group"
+	{
+		Default item=EchoGroup1_Player icon="message_empty"
+		Selection item=EchoGroup1_RadioStationId icon="it_radio"
+			mappings=[ 
+			''='Off', 
+			's177719'='BASS RADIO - [www.bassradio.fm]', 
+			's100978'='Dubstep.fm', 
+			's2585'='Sleepbot Environmental Broadcast', 
+			's2225'='Limbik Frequencies', 
+			's25021'='Jam FM', 
+			's110956'='Traxx FM Tech Minimal', 
+			's268514'='sunshine live - Drum n Bass', 
+			'p526035'='Monday Night HAZE'
+			]
+		Text    item=EchoGroup1_Title icon="none"
+		Text 	item=EchoGroup1_Subtitles icon="none"
+	}
+
+	Frame label="Tunein"
+	{
+        Webview url="/static/tunein.html" height=9
+	}
+
+    Frame label="Mobiles / GPS" 
+	{
+		Switch item=MQTT_Phone_S_Update label="Update |CloudMQTT|https://customer.cloudmqtt.com" icon="light_led_stripe" mappings=[wait="UPDATE"]
+		Switch item=MQTT_Phone_J_Update label="Update |CloudMQTT|https://customer.cloudmqtt.com" icon="light_led_stripe" mappings=[wait="UPDATE"]
+		
+        Text item=MQTT_Phone_S_Info icon="message_presence_geo_inactive"
+		Text item=MQTT_Phone_J_Info icon="message_presence_geo_inactive"
+		
+		Text item=MQTT_Phone_S_DistanceDuration icon="message_presence_geo_inactive"
+		Text item=MQTT_Phone_J_DistanceDuration icon="message_presence_geo_inactive"
+		
+		Text item=MQTT_Phone_S_TimeStamp icon="message_presence_geo_inactive"
+		Text item=MQTT_Phone_J_TimeStamp icon="message_presence_geo_inactive"
+		
+		Text item=MQTT_Phone_S_Conn icon="message_presence_geo_inactive"
+		Text item=MQTT_Phone_J_Conn icon="message_presence_geo_inactive"
+		
+		Text item=MQTT_Phone_S_Battery icon="measure_battery_75"
+        Text item=MQTT_Phone_J_Battery icon="measure_battery_75"
+
+        Text item=AtHomeS icon="message_presence_geo_active"
+        Text item=AtHomeJ icon="message_presence_geo_active"
+
+        Text item=MQTT_Phone_S_CallsIn icon="phone_call_in"
+        Text item=MQTT_Phone_J_CallsIn icon="phone_call_in"
+
+        Text item=MQTT_Phone_S_CallsOut icon="phone_call_out"
+        Text item=MQTT_Phone_J_CallsOut icon="phone_call_out"
+
+        Text item=MQTT_Phone_S_WhatsappUI icon="message_notice"
+        Text item=MQTT_Phone_J_WhatsappUI icon="message_notice"
+
+        Webview url="/static/map.html" height=5
+    }
+	Frame label="FRITZ!Box"
+	{	
+		Text item=fboxRinging icon="phone_call_in"
+		Text item=fboxRinging_Out icon="phone_call_out"
+		
+		Text item=fboxTAM0NewMsg icon="phone_answering"
+		Text item=fboxMissedCalls icon="phone_missed_in"
+
+		Text item=Fritz_LastIncoming icon="phone_call_in"
+		Text item=Fritz_LastOutgoing icon="phone_call_out"
+		Text item=Fritz_LastIncomingResolved icon="phone_missed_in"
+		Text item=Fritz_LastOutgoingResolved icon="phone_missed_out"
+
+		Text item=Fritz_LastIncomingTimeUI icon="phone_answering"
+		Text item=Fritz_LastOutgoingTimeUI icon="phone_answering"
+
+        Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
+		Text label="Fritz Box Settings" icon="it_router"
+		{
+			Frame 
+			{
+				Text item=fboxName
+				Text item=fboxManufacturer
+				Text item=fboxSerial
+				Text item=fboxVersion
+				Text item=fboxWanIP
+				Text item=fboxWanIPExternal
+			}
+			Frame
+			{
+				Switch item=fboxWifi24
+				Switch item=fboxGuestWifi
+			}
+			Frame
+			{
+				Text item=fboxWanAccessType
+				Text item=fboxWanLayer1UpstreamMaxBitRate
+				Text item=fboxWanLayer1DownstreamMaxBitRate
+				Text item=fboxWanPhysicalLinkStatus
+				Text item=fboxWanTotalBytesSent
+				Text item=fboxWanTotalBytesReceived
+			}
+			Frame
+			{
+				Text item=fboxDslEnable
+				Text item=fboxDslStatus
+			}
+			Frame
+			{	
+				Text item=fboxDslUpstreamCurrRate
+				Text item=fboxDslDownstreamCurrRate
+				Text item=fboxDslUpstreamMaxRate
+				Text item=fboxDslDownstreamMaxRate
+				Text item=fboxDslUpstreamNoiseMargin
+				Text item=fboxDslDownstreamNoiseMargin
+				Text item=fboxDslUpstreamAttenuation
+				Text item=fboxDslDownstreamAttenuation
+			}
+			Frame
+			{
+				Text item=fboxDslFECErrors
+				Text item=fboxDslHECErrors
+				Text item=fboxDslCRCErrors
+			}
+		}
+	}
+
+	Frame label="Devices"
+	{
+        Switch item=TuyaSocket1 label="Plug 1 (Fan) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket1!=ON]
+		Switch item=TuyaSocket1 label="Plug 1 (Fan) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket1==ON]
+        Switch item=TuyaSocket2 label="Plug 2 (Bett) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket2!=ON]
+		Switch item=TuyaSocket2 label="Plug 2 (Bett) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket2==ON]
+        Switch item=TuyaSocket3 label="Plug 3 (Mosquito) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket3!=ON]
+		Switch item=TuyaSocket3 label="Plug 3 (Mosquito) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket3==ON]
+
+        Switch item=TuyaSocket4 label="Plug 4 [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket4!=ON]
+		Switch item=TuyaSocket4 label="Plug 4 [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket4==ON]
+        Switch item=TuyaSocket5 label="Plug 5 (Stehlampe) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket5!=ON]
+		Switch item=TuyaSocket5 label="Plug 5 (Stehlampe) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket5==ON]
+        Switch item=TuyaSocket6 label="Plug 6 [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket6!=ON]
+		Switch item=TuyaSocket6 label="Plug 6 [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket6==ON]
+
+        Switch item=LED1Power label="LED 1 (Backlight) [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED1Power!=ON]
+		Switch item=LED1Power label="LED 1 (Backlight) [%s]" icon="light_led_stripe" mappings=[OFF="OFF"] visibility=[LED1Power==ON]
+        Switch item=LED2Power label="LED 2 [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED2Power!=ON]
+		Switch item=LED2Power label="LED 2 [%s]" icon="light_led_stripe" mappings=[OFF="OFF"] visibility=[LED2Power==ON]
+        Switch item= WOL_NAS icon="it_nas" mappings=[ON="WOL"] 
+
+        Default item=LED1_color icon="light_led_stripe_rgb"
+        Default item=LED2_color icon="light_led_stripe_rgb"
+        Switch item= WOL_Surface icon="it_smartphone" mappings=[ON="WOL"] 
+
+        Setpoint item=LED1Scene label="LED 1 Scene [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
+        Setpoint item=LED2Scene label="LED 2 Scene [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
+        Switch item= WOL_FireTV icon="it_media_player" mappings=[ON="WOL"] 
+
+        Setpoint item=LED1Flash label="LED 1 Flash [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
+        Setpoint item=LED2Flash label="LED 2 Flash [%s]" icon="light_led_stripe" minValue=1 maxValue=5 step=1
+        Text label="" icon="none"
+
+        Text label="" icon="none"
+        Text label="" icon="none"
+        Text label="" icon="none"
+        //Switch item=AtHomeS
+        //Switch item=AtHomeJ
+		Text item=OsramSensorTriggeredUI label="Motion Sensor [%s]" icon="message_presence_active"
+		//Text item=HMDoor1 label="Haustüre" icon="fts_door"
+        Text item=HMDoor1UI label="Door" icon="fts_door"
+	}
+
+    Frame label="Energy"
+	{
+        Text item=TPLinkPlug1_UI label="Media Stuff Current [%s]" icon="it_television"
+        Text item=TPLinkPlug2_UI label="Waschmaschine Current [%s]" icon="scene_washing_machine"
+
+        Text item=TPLinkPlug1_EnergyUsage label="Usage Total [%.3f kWh]" icon="measure_power"
+        Text item=TPLinkPlug2_EnergyUsage label="Usage Total [%.3f kWh]" icon="measure_power"
+
+        Text item=TPLinkPlug1_EnergyUsage_Month label="Usage Month [%.3f kWh]" icon="measure_power"
+        Text item=TPLinkPlug2_EnergyUsage_Month label="Usage Month [%.3f kWh]" icon="measure_power"
+
+        Text item=TPLinkPlug1_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
+        Text item=TPLinkPlug2_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
+
+		Text label="" icon="none"
+		Switch item=Washingmachine_OpState icon="none" label="Status []" mappings=[0="OFF",1="Standby",2="Active",3="Finished"]
+
+        Image label="10" url="http://localhost:8080/static/10.png"
+
+        Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
+        Text item=HM_EM_SignalStrength label="Signal Strength [%s]" icon="it_television"
+        Text item=HM_EM_Power label="Power Current [%.0f W]" icon="measure_power"
+        Text item=HM_EM_EnergyCounterK label="Energy Counter [%.3f kWh]" icon="measure_power_meter"
+
+        Text item=HM_EM_EnergyUsage_Month label="Usage Month [%.3f kWh]" icon="measure_power_meter"
+        Text item=HM_EM_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
+
+        Image label="12" url="http://localhost:8080/static/12.png"
+        
+        Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1 |Homematic|http://192.168.178.45" icon="none"
+        Text label="" icon="none"
+    }
+
+	Frame label="Klima"
+	{
+		Text item=Temperature_UI_Outdoor label="Temp Aussen" icon="temp_temperature"
+		//Text item=Temperature label="Temp Aussen" icon="temp_temperature"
+		Text item=Humidity label="Luftfeuchtigkeit Aussen" icon="weather_humidity"
+
+		Text item=Temperature_UI_Indoor label="Temp Wohnzimmer" icon="temp_temperature"
+		Text item=HMTemp1HUM label="Luftfeuchtigkeit Wohnzimmer" icon="weather_humidity"
+		//Text item=FeelsLike label="Temp Humidex Aussen" icon="temp_temperature"
+		Text item=PollenUI icon="message_attention"
+		Text item=Pressure icon="measure_pressure_bar"
+		
+		Text label="Wetter Details" icon="weather_cloudy"
+		{
+			Frame label="Sonne/Mond"
+			{
+				Default item=Sunrise_Time
+				Default item=NightStartTime
+				
+				Default item=Sunset_Time
+				Default item=NightEndTime
+				
+				Switch item=Sun_Event
+				Default item=NightState
+
+				Default item=SeasonName
+				Default item=Zodiac
+
+				Default item=DayPhase
+			}
+		}
+		Image label="8" url="http://localhost:8080/static/8.png"
+		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
+	}
+	Frame label="System Stats"
+	{
+        Switch item=Backupbtn label="Commit & Push Backup |Bitbucket Repository|https://bitbucket.org/XXXXXXX/all [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
+        Switch item=Resetbtn label="Restart OH2 Service [%s]" icon="control_reset" mappings=[ON="RESTART"]
+        Switch item=piReboot label="Reboot RasPi" icon="control_reset" mappings=[ON="REBOOT"]
+        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST"] visibility=[SysStartupForce!=ON]
+
+		Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
+        Text item=SysStartup icon="none"
+
+        Switch item=ClearCacheBtn label="Clear Cache [%s]" icon="control_reset" mappings=[ON="CLEAR"]
+        Switch item=TestBTN icon="message_attention" mappings=[ON="TEST"]
+
+        Text label="" icon="none"
+        Text label="" icon="none"
+
+		Text item=System_CPU_Uptime icon="player"
+		Text item=System_openHAB_Uptime icon="player"
+
+		Text item=System_openHAB_Memory icon="player"
+		Text item=System_openHAB_DBSize icon="player"
+
+		Text item=Sensor_CPUTemp icon="none"
+		Text item=CPU_Threads icon="none"
+
+
+        Text item=Memory_Used             
+        Text item=Memory_Total    
+
+        Text item=Network_DataSent
+        Text item=Network_DataRecevied
+
+        Text item=CPU_Name icon="none"
+        Text item=CPU_Load         
+        Text item=CPU_Load1        
+        Text item=CPU_Load5        
+        Text item=CPU_Load15       
+
+        Text item=Storage_Used              
+        Text item=Storage_Total             
+        Text item=Memory_Used             
+        Text item=Memory_Total   
+
+
+        Image label="4" url="http://localhost:8080/static/4.png"
+		Image label="2" url="http://localhost:8080/static/2.png"
+		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1|PaperUI|http://192.168.178.31:8080/paperui/index.html|Rest API|http://192.168.178.31:8080/doc/index.html" icon="none"
+	}	
+
+    Frame label="LogReader" 
+	{
+        Text item=logreaderLastError icon="info_error"
+        Text item=logreaderLastWarning icon="info_warning"
+        Text item=logreaderErrors icon="audio_playlist"
+        Text item=logreaderWarnings icon="audio_playlist"
+	
+        Webview url="/static/overrides.html" height=14
+	}
+
+	Frame label="Network"
+	{
+		Text item=RouterPresence label="Router |FritzUI|http://192.168.178.1 [%s]" icon="it_router"
+		Text item=DesktopPresence label="Desktop [%s]" icon="it_pc"
+		Text item=NASPresence label="NAS |asustor|http://192.168.178.25:8000/portal/?XXXXXXX [%s]" icon="it_nas"
+		Text item=HandySPresence label="Handy S [%s]" icon="it_smartphone"
+		Text item=HandyJPresence label="Handy J [%s]" icon="it_smartphone"
+		Text item=SonyAudioPresence label="Sony Audio [%s]" icon="it_media_player"
+		Text item=SurfacePresence label="Surface [%s]" icon="it_smartphone"
+		Text item=Echo1Presence label="Echo 1 [%s]" icon="message_empty"
+		Text item=Echo2Presence label="Echo 2 [%s]" icon="message_empty"
+		Text item=RaspberryPiPresence label="RaspberryPi OH2 [%s]" icon="it_server"
+		Text item=RaspberryMaticPresence label="RaspberryPi CCU2 |Homematic|http://192.168.178.45 [%s]" icon="it_server"
+		Text item=PS4Presence label="PS4 [%s]" icon="scene_gaming_3"
+		Text item=OSRAMGatewayPresence label="OSRAM Gateway [%s]" icon="it_media_player"
+		Text item=FireTVPresence label="FireTV [%s]" icon="it_media_player"
+		Text item=BlackBeanPresence label="Black Bean [%s]" icon="it_media_player"
+        Text item=BabyCamPresence label="Baby Cam [%s]" icon="it_media_player"
+		Text item=Socket1Presence label="Socket 1 (Ventilator) [%s]" icon="message_socket"
+		Text item=Socket2Presence label="Socket 2 (Bett Licht) [%s]" icon="message_socket"
+		Text item=Socket3Presence label="Socket 3 () [%s]" icon="message_socket"
+		Text item=Socket4Presence label="Socket 4 () [%s]" icon="message_socket"
+		Text item=Socket5Presence label="Socket 5 (Stehlampe) [%s]" icon="message_socket"
+		Text item=Socket6Presence label="Socket 6 () [%s]" icon="message_socket"
+        Text item=LED1Presence label="LED1 (TV Backlight) [%s]" icon="message_socket"
+        Text item=LED2Presence label="LED2 () [%s]" icon="message_socket"
+        Text item=TPLinkPlug1Presence label="TPLinkPlug1 (Media) [%s]" icon="message_socket"
+        Text item=TPLinkPlug2Presence label="TPLinkPlug2 (Waschmaschine) [%s]" icon="message_socket"
+
+		Image label="6" url="http://localhost:8080/static/6.png"
+        Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
+		Text label="" icon="none"
+
+        Text item=SpeedtestSummary icon="info_info"
+        Switch item=SpeedtestRerun label="Start Speedtest [%s]" mappings=[ON="Start"] icon="info_info"
+
+	}
+
+    Frame label="NAS SNMP Stats" 
+	{
+	    Text label="NAS is OFFLINE" icon="info_info" visibility=[NASOnline != "OPEN"]
+	    Switch item= WOL_NAS icon="it_nas" mappings=[ON="WOL"] visibility=[NASOnline != "OPEN"]
+
+        Text item=SNMP_NAS_hwModelName icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_sysSerialNumber icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_sysADMVersion icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_sysUptime icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_sysTime icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_sysAsustorID icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_hwTotalMem icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_hwProcessor icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_cpuUsage icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_fanSpeed icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_netPacketSent icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_diskID icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_diskModel icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_diskStatus icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_volumeName icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_volumeFileSystem icon="info_info" visibility=[NASOnline == "OPEN"]
+        Text item=SNMP_NAS_volumeTotalSize icon="info_info" visibility=[NASOnline == "OPEN"]
+	}
+}

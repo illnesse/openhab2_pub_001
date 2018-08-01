@@ -1,0 +1,23 @@
+DateTime Sunrise_Time          	"Sonnenaufgang [%1$tH:%1$tM]"  						<sunrise>   	{ channel="astro:sun:home:rise#start" }
+DateTime Sunset_Time           	"Sonnenuntergang [%1$tH:%1$tM]" 					<sunset>        { channel="astro:sun:home:set#start" }
+String   DayPhase            	"Tageszeit [MAP(astro.map):%s]"                     <sun> 		{ channel="astro:sun:home:phase#name" }
+
+DateTime NightStartTime      	"Nacht Beginn [%1$tH:%1$tM Uhr]"                    <moon>      	{ channel="astro:sun:home:night#start" }
+DateTime NightEndTime        	"Nacht Ende [%1$tH:%1$tM Uhr]"                      <moon>      	{ channel="astro:sun:home:night#end" }
+Switch   NightState          	"Nacht"                                             <moon>
+
+String	 Sun_Event          	"Sonne scheint"  									<sunrise>   	{ channel="astro:sun:home:rise#event" }
+
+String   SeasonName          "Jahreszeit [MAP(astro.map):%s]"                       <sun> 		{ channel="astro:sun:home:season#name" }
+String   Zodiac             "Tierkreiszeichen [MAP(astro.map):%s]"              	<moon>       	{ channel="astro:sun:home:zodiac#sign" }
+/*
+Number   Azimuth            "Azimuth"                                  				<sun>			{ channel="astro:sun:home:position#azimuth" }
+Number   Elevation          "Elevation"                               				<sun>			{ channel="astro:sun:home:position#elevation" }
+Number   Total_Radiation    "Radiation [%.2f W/m\u00B2]"							<sun>			{ channel="astro:sun:home:radiation#total" }
+Number   Diffuse_Radiation  "Diffuse Radiation [%.2f W/m\u00B2]"					<sun>			{ channel="astro:sun:home:radiation#diffuse" }
+
+Number      MoonElevation       "Mondhöhe [%.1f °]"                                 		<moon>      		{ channel="astro:moon:home:position#elevation" }
+String      MoonPhase           "Mondphase [MAP(astro.map):%s]"                     		<moon>      		{ channel="astro:moon:home:phase#name" }
+DateTime    MoonFull            "Nächster Vollmond [%1$td.%1$tm.%1$tY, %1$tH:%1$tM Uhr]" 	<moon> 				{ channel="astro:moon:home:phase#full" }
+DateTime    MoonNew             "Nächster Neumond [%1$td.%1$tm.%1$tY, %1$tH:%1$tM Uhr]" 	<moon>  			{ channel="astro:moon:home:phase#new" }
+*/

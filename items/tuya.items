@@ -1,0 +1,19 @@
+Switch TuyaSocket1 "Socket 1" ["Switchable"] 
+Switch TuyaSocket2 "Socket 2" ["Switchable"] 
+
+Switch TuyaSocket3 "Socket 3" ["Switchable"] 
+Switch TuyaSocket4 "Socket 4" ["Switchable"] 
+Switch TuyaSocket5 "Socket 5" ["Switchable"] 
+Switch TuyaSocket6 "Socket 6" ["Switchable"] 
+
+Switch LED1Power "LED 1" ["Switchable"] 
+Switch LED2Power "LED 2" ["Switchable"] 
+
+Color  LED1_color "Color" ["Switchable"]
+Color  LED2_color "Color" ["Switchable"]
+
+Number LED1Scene "LED 1 Scene" ["Switchable"] 
+Number LED2Scene "LED 2 Scene" ["Switchable"] 
+
+Number LED1Flash "LED 1 Flash" ["Switchable"] 
+Number LED2Flash "LED 2 Flash" ["Switchable"] 

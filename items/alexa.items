@@ -1,0 +1,85 @@
+Group gEchos
+Group gEcho1 (gEchos)
+Group gEcho2 (gEchos)
+Group gEchoGroup (gEchos)
+Group gEchoTriggers
+
+String Echo1_Subtitles            "Subtitles [%s]"                         (gEcho1)
+String Echo2_Subtitles            "Subtitles [%s]"                         (gEcho2)
+String EchoGroup1_Subtitles       "Subtitles [%s]"                         (gEchoGroup)
+
+Player Echo1_Player               "Player"                            (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:player"}
+Dimmer Echo1_Volume               "Volume [%.0f %%]" <soundvolume>    (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:volume"}
+//Switch Echo1_Shuffle              "Shuffle"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:shuffle"}
+//String Echo1_ImageUrl             "Image URL"                         (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:imageUrl"}
+String Echo1_Title                "Title"                             (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:title"}
+String Echo1_Subtitle1            "Subtitle 1"                        (gEcho1, gEchoTriggers) {channel="amazonechocontrol:echo:account1:echo1:subtitle1"}
+String Echo1_Subtitle2            "Subtitle 2"                        (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:subtitle2"}
+String Echo1_ProviderDisplayName  "Provider"                          (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:providerDisplayName"}
+// String Echo1_BluetoothId          "Bluetooth Mac Address" <bluetooth> (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:bluetoothId"}
+// String Echo1_BluetoothId_Selection "Bluetooth Device" <bluetoothIdSelection> (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:bluetoothId"}
+// Switch Echo1_Bluetooth            "Bluetooth"        <bluetooth>      (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:bluetooth"}
+// String Echo1_BluetoothDeviceName  "Bluetooth Device" <bluetooth>      (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:bluetoothDeviceName"}
+String Echo1_RadioStationId       "TuneIn Radio Station Id"           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:radioStationId"}
+// Switch Echo1_Radio                "TuneIn Radio"                      (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:radio"}
+// String Echo1_AmazonMusicTrackId    "Amazon Music Track Id"            (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:amazonMusicTrackId"}
+// String Echo1_AmazonMusicPlayListId "Amazon Music Playlist Id (Write Only)"  (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:amazonMusicPlayListId"}
+// String Echo1_AmazonMusicPlayListIdLastUsed "Amazon Music Playlist Id last used"  (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:amazonMusicPlayListIdLastUsed"}
+// Switch Echo1_AmazonMusic           "Amazon Music"                     (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:amazonMusic"}
+String Echo1_TTS                "Text to Speech"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:textToSpeech"}
+String Echo1_StartCommand       "Start Command"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:startCommand"}
+// String Echo1_Remind                "Remind"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:remind"}
+// String Echo1_PlayAlarmSound         "Play Alarm Sound"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:playAlarmSound"}
+// Switch Echo1_PlayFlashBriefing         "Play Flash Briefing"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:playFlashBriefing"}
+// Switch Echo1_PlayWeatherReport         "Play Weather Report"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:playWeatherReport"}
+// Switch Echo1_PlayTrafficNews        "Play Traffic News"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:playTrafficNews"}
+// String Echo1_StartRoutine         "Start Routine"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:startRoutine"}
+// String Echo1_PlayMusicProvider    "Music Provider (Write Only)"             (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:playMusicProvider"}
+// String Echo1_PlayMusicCommand     "Play music voice command (Write Only)"    (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:playMusicVoiceCommand"}
+
+Player Echo2_Player               "Player"                            (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:player"}
+Dimmer Echo2_Volume               "Volume [%.0f %%]" <soundvolume>    (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:volume"}
+// Switch Echo2_Shuffle              "Shuffle"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:shuffle"}
+// String Echo2_ImageUrl             "Image URL"                         (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:imageUrl"}
+String Echo2_Title                "Title"                             (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:title"}
+String Echo2_Subtitle1            "Subtitle 1"                        (gEcho2, gEchoTriggers) {channel="amazonechocontrol:echo:account1:echo2:subtitle1"}
+String Echo2_Subtitle2            "Subtitle 2"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:subtitle2"}
+String Echo2_ProviderDisplayName  "Provider"                          (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:providerDisplayName"}
+// String Echo2_BluetoothId          "Bluetooth Mac Address" <bluetooth> (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:bluetoothId"}
+// String Echo2_BluetoothId_Selection "Bluetooth Device" <bluetoothIdSelection> (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:bluetoothId"}
+// Switch Echo2_Bluetooth            "Bluetooth"        <bluetooth>      (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:bluetooth"}
+// String Echo2_BluetoothDeviceName  "Bluetooth Device" <bluetooth>      (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:bluetoothDeviceName"}
+String Echo2_RadioStationId       "TuneIn Radio Station Id"           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:radioStationId"}
+// Switch Echo2_Radio                "TuneIn Radio"                      (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:radio"}
+// String Echo2_AmazonMusicTrackId    "Amazon Music Track Id"            (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:amazonMusicTrackId"}
+// String Echo2_AmazonMusicPlayListId "Amazon Music Playlist Id (Write Only)"  (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:amazonMusicPlayListId"}
+// String Echo2_AmazonMusicPlayListIdLastUsed "Amazon Music Playlist Id last used"  (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:amazonMusicPlayListIdLastUsed"}
+// Switch Echo2_AmazonMusic           "Amazon Music"                     (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:amazonMusic"}
+String Echo2_TTS                "Text to Speech"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:textToSpeech"}
+String Echo2_StartCommand       "Start Command"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:startCommand"}
+// String Echo2_Remind                "Remind"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:remind"}
+// String Echo2_PlayAlarmSound         "Play Alarm Sound"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:playAlarmSound"}
+// Switch Echo2_PlayFlashBriefing         "Play Flash Briefing"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:playFlashBriefing"}
+// Switch Echo2_PlayWeatherReport         "Play Weather Report"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:playWeatherReport"}
+// Switch Echo2_PlayTrafficNews        "Play Traffic News"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:playTrafficNews"}
+// String Echo2_StartRoutine         "Start Routine"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:startRoutine"}
+// String Echo2_PlayMusicProvider    "Music Provider (Write Only)"             (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:playMusicProvider"}
+// String Echo2_PlayMusicCommand     "Play music voice command (Write Only)"    (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:playMusicVoiceCommand"}
+
+Player EchoGroup1_Player               "Player"                            (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:player"}
+// Switch EchoGroup1_Shuffle              "Shuffle"                           (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:shuffle"}
+// String EchoGroup1_ImageUrl             "Image URL"                         (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:imageUrl"}
+String EchoGroup1_Title                "Title"                             (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:title"}
+String EchoGroup1_Subtitle1            "Subtitle 1"                        (gEchoGroup, gEchoTriggers) {channel="amazonechocontrol:wha:dcc1f0f1:subtitle1"}
+String EchoGroup1_Subtitle2            "Subtitle 2"                        (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:subtitle2"}
+String EchoGroup1_ProviderDisplayName  "Provider"                          (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:providerDisplayName"}
+String EchoGroup1_RadioStationId       "TuneIn Radio Station Id"           (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:radioStationId"}
+// Switch EchoGroup1_Radio                "TuneIn Radio"                      (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:radio"}
+// String EchoGroup1_AmazonMusicTrackId    "Amazon Music Track Id"            (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:amazonMusicTrackId"}
+// String EchoGroup1_AmazonMusicPlayListId "Amazon Music Playlist Id (Write Only)"  (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:amazonMusicPlayListId"}
+// String EchoGroup1_AmazonMusicPlayListIdLastUsed "Amazon Music Playlist Id last used"  (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:amazonMusicPlayListIdLastUsed"}
+// Switch EchoGroup1_AmazonMusic           "Amazon Music"                     (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:amazonMusic"}
+
+// Switch FlashBriefing_Technical_Save  "Save (Write only)" { channel="amazonechocontrol:flashbriefingprofile:account1:flashbriefing1:save"} 
+// Switch FlashBriefing_Technical_Active "Active" { channel="amazonechocontrol:flashbriefingprofile:account1:flashbriefing1:active"}
+// String FlashBriefing_Technical_Play "Play (Write only)" { channel="amazonechocontrol:flashbriefingprofile:account1:flashbriefing1:playOnDevice"}

@@ -1,0 +1,27 @@
+Group gTPLinkAll
+Group gTPLinkPlugs
+
+String TPLinkPlug1_UI "[%s]"                      (gTPLinkAll)
+Number TPLinkPlug1_Signal         "[%d]"          (gTPLinkAll)               { channel="tplinksmarthome:hs110:plug1:rssi" }
+Number TPLinkPlug1_Power          "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { channel="tplinksmarthome:hs110:plug1:power" }
+Number TPLinkPlug1_EnergyUsage    "[%.2f]"        (gTPLinkAll)               { channel="tplinksmarthome:hs110:plug1:energyUsage" }
+Number TPLinkPlug1_Current        "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { channel="tplinksmarthome:hs110:plug1:current" }
+Number TPLinkPlug1_Voltage        "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { channel="tplinksmarthome:hs110:plug1:voltage" }
+
+String TPLinkPlug2_UI "[%s]"                      (gTPLinkAll)
+Number TPLinkPlug2_Signal         "[%d]"          (gTPLinkAll)               { channel="tplinksmarthome:hs110:plug2:rssi" }
+Number TPLinkPlug2_Power          "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { channel="tplinksmarthome:hs110:plug2:power" }
+Number TPLinkPlug2_EnergyUsage    "[%.2f]"        (gTPLinkAll)               { channel="tplinksmarthome:hs110:plug2:energyUsage" }
+Number TPLinkPlug2_Current        "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { channel="tplinksmarthome:hs110:plug2:current" }
+Number TPLinkPlug2_Voltage        "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { channel="tplinksmarthome:hs110:plug2:voltage" }
+
+Number Washingmachine_OpState
+
+Number TPLinkPlug1_EnergyUsage_Month "[%.2f]" (gTPLinkAll)
+Number TPLinkPlug2_EnergyUsage_Month "[%.2f]" (gTPLinkAll)
+
+Number TPLinkPlug1_EnergyUsage_Today "[%.2f]" (gTPLinkAll)
+Number TPLinkPlug2_EnergyUsage_Today "[%.2f]" (gTPLinkAll)
+
+String TPLinkPlug1_EnergyUsage_Today_UI "[%s]" (gTPLinkAll)
+String TPLinkPlug2_EnergyUsage_Today_UI "[%s]" (gTPLinkAll)

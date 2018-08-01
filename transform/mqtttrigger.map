@@ -1,0 +1,7 @@
+p=task ping
+c=circular region event
+b=beacon region event
+r=reportLocation
+u=manual
+t=timer 
+v=settings

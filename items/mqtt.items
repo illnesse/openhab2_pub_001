@@ -1,0 +1,99 @@
+/*
+Switch TV_ON
+Switch SAT_ON
+Switch AUDIO_ON
+*/
+
+Group:Switch gMQTT_CommandsSw
+Group:String gMQTT_CommandsStr
+
+String MQTT_TV "Samsung TV" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_SAT "Humax SAT" (gMQTT_CommandsStr) ["Switchable"] 
+Number MQTT_SATChannel "Humax SAT" ["Switchable"] 
+String MQTT_AUDIO "Sony Audio" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_SWITCH "HDMI Switch" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_AC "A/C" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_FAN "FAN" (gMQTT_CommandsStr) ["Switchable"] 
+
+Switch aMQTT_FAN_power "Ventilator Power" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_FAN_rot "Ventilator Rot" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_FAN_up "Ventilator stärker" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_FAN_down "Ventilator schwächer" (gMQTT_CommandsSw) ["Switchable"]
+
+Switch aMQTT_ALLES "Glotze" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_TV "a_TV_Power" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_SAT "a_SAT_Power" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_AUDIO "a_Audio_Power" (gMQTT_CommandsSw) ["Switchable"]
+Switch aSonyVolume "aSonyVolume" (gMQTT_CommandsSw) ["Switchable"]
+Switch aMQTT_AUDIO_MUTE "a_Audio_Mute" (gMQTT_CommandsSw) ["Switchable"]
+
+Group:Switch:OR(ON, OFF) gMQTT_SAT_ch
+
+Switch aMQTT_SAT_ch_ARD                  "ARD"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_ZDF                  "ZDF"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_RTL                  "RTL"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_SAT1                 "SAT1"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_VOX                  "VOX"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_PRO7                 "PRO7"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_Kabel1               "Kabel1"                 (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_arte                 "arte"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_RTL2                 "RTL2"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_SuperRTL             "Super RTL"              (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_3Sat                 "3Sat"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_WDR                  "WDR"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_BR                   "BR"                     (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_SWR                  "SWR"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_NDR                  "NDR"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_hr                   "hr"                     (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_MDR                  "MDR"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_rbb                  "rbb"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_ONE                  "ONE"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_tagesschau24         "tagesschau24"           (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_ZDFneo               "ZDFneo"                 (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_ServusTV             "ServusTV"               (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_Nitro                "Nitro"                  (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_WeltderWunder        "Welt der Wunder"        (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_DeluxeMusic          "Deluxe Music"           (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_ComedyCentralVIVA    "Comedy Central/VIVA"    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_ntv                  "n-tv"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_WELT                 "WELT"                   (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_BBC                  "BBC"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_CNN                  "CNN"                    (gMQTT_SAT_ch)  ["Switchable"]
+Switch aMQTT_SAT_ch_AstroTV              "Astro TV"               (gMQTT_SAT_ch)  ["Switchable"]
+
+
+Group:String gMQTT_Phone_Strings
+Group:Location gMQTT_Phone_Locations
+
+String	 MQTT_Phone_S_PositionRaw  "Raw Data" { mqtt="<[cloudmqtt:owntracks/XXXXXXX/a0001:state:default]" }
+String   MQTT_Phone_S_Info         "Location S [%s]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_S_TimeStamp         "Timestamp [%s]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_S_Conn         "Details [%s]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_S_Battery      "Battery [%s%%]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_S_DistanceDuration      "Distance/Duration [%s]" (gMQTT_Phone_Strings) 
+Location MQTT_Phone_S_location (gMQTT_Phone_Locations) 
+
+String	 MQTT_Phone_J_PositionRaw  "Raw Data" { mqtt="<[cloudmqtt:owntracks/XXXXXXX/huaweip8:state:default]" }
+String   MQTT_Phone_J_Info         "Location J [%s]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_J_TimeStamp         "Timestamp [%s]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_J_Conn         "Details [%s]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_J_Battery      "Battery [%s%%]" (gMQTT_Phone_Strings) 
+String   MQTT_Phone_J_DistanceDuration      "Distance/Duration [%s]" (gMQTT_Phone_Strings) 
+Location MQTT_Phone_J_location (gMQTT_Phone_Locations) 
+
+String	 MQTT_Phone_S_Update  "Update [%s]"	
+String	 MQTT_Phone_J_Update  "Update [%s]"	
+
+String  MQTT_Phone_S_WhatsappRaw { mqtt="<[cloudmqtt:a0001/whatsapp:state:default]" }
+String  MQTT_Phone_S_WhatsappUI "Whatsapp Status [%s]" (gMQTT_Phone_Strings)
+
+String  MQTT_Phone_J_WhatsappRaw { mqtt="<[cloudmqtt:huaweip8/whatsapp:state:default]" }
+String  MQTT_Phone_J_WhatsappUI "Whatsapp Status [%s]" (gMQTT_Phone_Strings)
+
+String  MQTT_Phone_S_CallsRaw { mqtt="<[cloudmqtt:a0001/call:state:default]" }
+String  MQTT_Phone_S_CallsIn "Last Call In [%s]" (gMQTT_Phone_Strings)
+String  MQTT_Phone_S_CallsOut "Last Call Out [%s]" (gMQTT_Phone_Strings)
+
+String  MQTT_Phone_J_CallsRaw { mqtt="<[cloudmqtt:huaweip8/call:state:default]" }
+String  MQTT_Phone_J_CallsIn "Call In [%s]" (gMQTT_Phone_Strings)
+String  MQTT_Phone_J_CallsOut "Call Out [%s]" (gMQTT_Phone_Strings)

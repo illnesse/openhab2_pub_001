@@ -1,0 +1,1 @@
+logreader:reader:openhablog[ refreshRate=1000, errorPatterns="ERROR+", warningBlacklistingPatterns="is either empty or cannot be parsed|Another one" ]

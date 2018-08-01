@@ -1,0 +1,195 @@
+ASUSTOR-UPS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	OBJECT-GROUP, MODULE-COMPLIANCE
+				FROM SNMPv2-CONF
+   DisplayString
+				FROM SNMPv2-TC				
+	enterprises, MODULE-IDENTITY, OBJECT-TYPE, Integer32
+				FROM SNMPv2-SMI;
+				
+asustor	 OBJECT IDENTIFIER 
+	::= { enterprises 44738 }
+	
+asustorUps MODULE-IDENTITY
+    ORGANIZATION "www.asustor.com"
+    CONTACT-INFO
+         "postal: ASUSTOR Inc.
+		 email: support@asustor.com"
+    DESCRIPTION
+        "Characteristics of the ups information"
+    ::= { asustor 6 }		
+
+upsManufacturer OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..63))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The ups manufacturer"
+    ::= { asustorUps 1 }
+
+upsModel OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..63))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The ups model"
+    ::= { asustorUps 2 }
+	
+upsProductId OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The ups product id"
+    ::= { asustorUps 3 }	
+	
+upsVendorId OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The ups vendor id"
+    ::= { asustorUps 4 }
+	
+upsBeeperStatus OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..32))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The ups beeper enable or not"	
+    ::= { asustorUps 5 }		
+
+upsStatus OBJECT-TYPE 
+    SYNTAX	  DisplayString (SIZE (0..32))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "
+	OL: On line (no power failure) (opposite of OB - on battery)
+	OB: On battery
+	LB: Low battery
+	"
+    ::= { asustorUps 6 }		
+
+upsBatteryChargePercentage OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The battery chared percentage"
+    ::= { asustorUps 7 }		
+
+upsBatteryChargeLowPercentage OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "Remaining battery level when UPS switches to LB (percent)"
+    ::= { asustorUps 8 }			
+	
+upsBatteryChargeWarningPercentage OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+   "Battery level when UPS switches to Warning state (percent)"
+    ::= { asustorUps 9 }		
+	
+upsBatteryRuntimeSecond OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The battery runtime (seconds)"
+    ::= { asustorUps 10 }			
+	
+upsBatteryRuntimeLowSecond OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "Remaining battery runtime when UPS switches to LB (seconds)"
+    ::= { asustorUps 11 }		
+	
+upsBatteryType OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The battery type"
+    ::= { asustorUps 12 }		
+	
+upsInputSensitivity OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "Input power sensitivity"
+    ::= { asustorUps 13 }			
+	
+upsInputTransferHighVolt OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "High voltage trimming transfer point"
+    ::= { asustorUps 14 }		
+
+upsInputTransferLowVolt OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "Low voltage trimming transfer point"
+    ::= { asustorUps 15 }	
+
+upsInputVoltage OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "Input voltage"
+    ::= { asustorUps 16 }		
+	
+upsInputVoltageNominal OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "Nominal input voltage"
+    ::= { asustorUps 17 }			
+	
+upsDriverName OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The driver name"
+    ::= { asustorUps 18 }		
+	
+upsDriverPollinterval OBJECT-TYPE
+    SYNTAX	  Integer32
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The polling interval"
+    ::= { asustorUps 19 }		
+	
+upsDriverPort OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The driver port"
+    ::= { asustorUps 20 }		
+	
+upsDriverVersion OBJECT-TYPE
+    SYNTAX	  DisplayString (SIZE (0..31))
+    MAX-ACCESS  read-only
+    STATUS	  current
+    DESCRIPTION
+    "The driver version"
+    ::= { asustorUps 21 }			
+
+END
