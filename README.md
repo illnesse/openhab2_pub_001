@@ -25,7 +25,7 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - Logtail/Multitail style Iframe to display current events.log and openhab.log with some basic syntax highlighting
   - RSS Reader Iframe, needs more work, maybe TTS notifications
   - Logreader to notify you of system issues (needs more work)
-  - Energy sensor stats for single sockets and the whole house (current )
+  - Energy sensor stats for single sockets and the whole house (needs more work)
   - Temperature/Humidity info for inside & outside, Pollen Warning
   - Presence detection via DHCP packets which works reliably (but needs more work)
   - Commits to bitbucket repo as backup method
