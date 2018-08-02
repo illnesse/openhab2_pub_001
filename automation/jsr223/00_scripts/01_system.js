@@ -123,6 +123,40 @@ JSRule({
     }
 });
 
+JSRule({
+    name: "SystemInfo UI",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemStateUpdateTrigger("CPU_Load")
+    ],
+    execute: function( module, input)
+    {
+        var itemCPU_UI = getItem("CPU_UI");
+        var itemCPU_Load = getItem("CPU_Load");
+        var itemCPU_Load1 = getItem("CPU_Load1");
+        var itemCPU_Load5 = getItem("CPU_Load5");
+        var itemCPU_Load15 = getItem("CPU_Load15");
+        var itemCPU_Name = getItem("CPU_Name");
+
+        var itemStorage_UI = getItem("Storage_UI");
+        var itemStorage_Used = getItem("Storage_Used");
+        var itemStorage_Total = getItem("Storage_Total");
+
+        var itemMemory_UI = getItem("Memory_UI");
+        var itemMemory_Used = getItem("Memory_Used");
+        var itemMemory_Total = getItem("Memory_Total");
+
+        var itemNetwork_UI = getItem("Network_UI");
+        var itemNetwork_DataSent = getItem("Network_DataSent");
+        var itemNetwork_DataRecevied = getItem("Network_DataRecevied");
+
+        postUpdate(itemStorage_UI,round((itemStorage_Used.state / 1000),2) +" GB used of "+round((itemStorage_Total.state / 1000),2) +" GB ("+round((itemStorage_Used.state / itemStorage_Total.state * 100),1) +"%) ");
+        postUpdate(itemMemory_UI,itemMemory_Used.state +" MB used of "+itemMemory_Total.state+" MB ("+round((itemMemory_Used.state / itemMemory_Total.state * 100),1) +"%) ");
+        postUpdate(itemNetwork_UI,round((itemNetwork_DataSent.state / 1000),2) +" GB sent / "+round((itemNetwork_DataRecevied.state / 1000),2) +" GB received");
+        postUpdate(itemCPU_UI,itemCPU_Name.state +" / "+itemCPU_Load.state+"% / "+itemCPU_Load1.state+" / "+itemCPU_Load5.state+" / "+itemCPU_Load15.state);
+    }
+});
+
 /*
 var logTimer = null;
 function scheduleLogTimer()

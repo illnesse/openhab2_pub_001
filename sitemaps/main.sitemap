@@ -395,6 +395,7 @@ sitemap main label="Home"
 		Text item=PollenUI icon="message_attention"
 		Text item=Pressure icon="measure_pressure_bar"
 		
+/*
 		Text label="Wetter Details" icon="weather_cloudy"
 		{
 			Frame label="Sonne/Mond"
@@ -414,6 +415,7 @@ sitemap main label="Home"
 				Default item=DayPhase
 			}
 		}
+*/
 		Image label="8" url="http://localhost:8080/static/8.png"
 		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
 	}
@@ -442,24 +444,11 @@ sitemap main label="Home"
 		Text item=Sensor_CPUTemp icon="none"
 		Text item=CPU_Threads icon="none"
 
+        Text item=CPU_UI label="CPU [%s]" icon="player"
+        Text item=Memory_UI label="Memory [%s]" icon="player"
 
-        Text item=Memory_Used             
-        Text item=Memory_Total    
-
-        Text item=Network_DataSent
-        Text item=Network_DataRecevied
-
-        Text item=CPU_Name icon="none"
-        Text item=CPU_Load         
-        Text item=CPU_Load1        
-        Text item=CPU_Load5        
-        Text item=CPU_Load15       
-
-        Text item=Storage_Used              
-        Text item=Storage_Total             
-        Text item=Memory_Used             
-        Text item=Memory_Total   
-
+        Text item=Storage_UI label="Storage [%s]" icon="player"
+        Text item=Network_UI label="Network [%s]" icon="player"
 
         Image label="4" url="http://localhost:8080/static/4.png"
 		Image label="2" url="http://localhost:8080/static/2.png"

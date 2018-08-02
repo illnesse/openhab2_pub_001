@@ -93,21 +93,13 @@ tuya.resolveId().then(() =>
             var type = tuyaFlashID
             var speed = Math.ceil(255/100 * tuyaFlashSpeed);
             var speed = speed.toString(16);
-            console.log(speed);
 
             var col1 = (Math.random()*0xFFFFFF<<0).toString(16);
-            var set1 = "FFFF"+speed+"0"+type+col1; //5
-
-            var col2 = (Math.random()*0xFFFFFF<<0).toString(16);
-            var set2 = "FFFF"+speed+"0"+type+col2; //6
+            var set1 = "FFFF"+speed+"0"+type+col1; //7
 
             var col3 = (Math.random()*0xFFFFFF<<0).toString(16);
-            var set3 = "FFFF"+speed+"0"+type+col3; //7
+            var set3 = "FFFF"+speed+"0"+type+col3; //9
 
-            var col4 = (Math.random()*0xFFFFFF<<0).toString(16);
-            var set4 = "FFFF"+speed+"0"+type+col4; //9
-
-            //var dps = {1: true, 2: "scene_"+type, 7: set1, 8: set2, 9: set3, 10: set4 };
             var dps = {1: true, 2: "scene_"+type, 7: set1, 9: set3};
             setMultiple(dps);
 

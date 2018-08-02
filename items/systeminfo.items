@@ -1,20 +1,27 @@
+Group gSysInfo
+
 //String Network_AdapterName          { channel="systeminfo:computer:raspberrypi:network#networkDisplayName" }
 //String Network_Name                 { channel="systeminfo:computer:raspberrypi:network#networkName" }
 // String Network_IP                   { channel="systeminfo:computer:raspberrypi:network#ip" }
 // String Network_Mac                  { channel="systeminfo:computer:raspberrypi:network#mac" }
-Number Network_DataSent             { channel="systeminfo:computer:raspberrypi:network#dataSent" }
-Number Network_DataRecevied         { channel="systeminfo:computer:raspberrypi:network#dataReceived" }
+Number Network_DataSent (gSysInfo)             { channel="systeminfo:computer:raspberrypi:network#dataSent" }
+Number Network_DataRecevied (gSysInfo)         { channel="systeminfo:computer:raspberrypi:network#dataReceived" }
 //Number Network_PacketsSent         { channel="systeminfo:computer:raspberrypi:network#packetsSent" }
 //Number Network_PacketsRecevied     { channel="systeminfo:computer:raspberrypi:network#packetsReceived" }
 
-String CPU_Name                     { channel="systeminfo:computer:raspberrypi:cpu#name" }
+String CPU_UI "[%s]" (gSysInfo)
+String Memory_UI "[%s]" (gSysInfo)
+String Storage_UI "[%s]" (gSysInfo)
+String Network_UI "[%s]" (gSysInfo)
+
+String CPU_Name (gSysInfo)                     { channel="systeminfo:computer:raspberrypi:cpu#name" }
 //String CPU_Description              { channel="systeminfo:computer:raspberrypi:cpu#description" }
-Number CPU_Load                     { channel="systeminfo:computer:raspberrypi:cpu#load"}
-Number CPU_Load1                    { channel="systeminfo:computer:raspberrypi:cpu#load1" }
-Number CPU_Load5                    { channel="systeminfo:computer:raspberrypi:cpu#load5" }
-Number CPU_Load15                   { channel="systeminfo:computer:raspberrypi:cpu#load15" }
-Number CPU_Threads                  { channel="systeminfo:computer:raspberrypi:cpu#threads" }
-Number CPU_Uptime                   { channel="systeminfo:computer:raspberrypi:cpu#uptime" }
+Number CPU_Load (gSysInfo)                     { channel="systeminfo:computer:raspberrypi:cpu#load"}
+Number CPU_Load1 (gSysInfo)                    { channel="systeminfo:computer:raspberrypi:cpu#load1" }
+Number CPU_Load5 (gSysInfo)                    { channel="systeminfo:computer:raspberrypi:cpu#load5" }
+Number CPU_Load15 (gSysInfo)                   { channel="systeminfo:computer:raspberrypi:cpu#load15" }
+Number CPU_Threads (gSysInfo)                  { channel="systeminfo:computer:raspberrypi:cpu#threads" }
+Number CPU_Uptime (gSysInfo)                   { channel="systeminfo:computer:raspberrypi:cpu#uptime" }
 
 //String Drive_Name                    { channel="systeminfo:computer:raspberrypi:drive#name" }
 //String Drive_Model                   { channel="systeminfo:computer:raspberrypi:drive#model" }
@@ -24,14 +31,14 @@ Number CPU_Uptime                   { channel="systeminfo:computer:raspberrypi:c
 //String Storage_Type                  { channel="systeminfo:computer:raspberrypi:storage#type" }
 //String Storage_Description           { channel="systeminfo:computer:raspberrypi:storage#description" }
 // Number Storage_Available             { channel="systeminfo:computer:raspberrypi:storage#available" }
-Number Storage_Used                  { channel="systeminfo:computer:raspberrypi:storage#used" }
-Number Storage_Total                 { channel="systeminfo:computer:raspberrypi:storage#total" }
+Number Storage_Used (gSysInfo)                  { channel="systeminfo:computer:raspberrypi:storage#used" }
+Number Storage_Total (gSysInfo)                 { channel="systeminfo:computer:raspberrypi:storage#total" }
 // Number Storage_Available_Percent     { channel="systeminfo:computer:raspberrypi:storage#availablePercent" }
 // Number Storage_Used_Percent          { channel="systeminfo:computer:raspberrypi:storage#usedPercent" }
 
 //Number Memory_Available              { channel="systeminfo:computer:raspberrypi:memory#available" }
-Number Memory_Used                   { channel="systeminfo:computer:raspberrypi:memory#used" }
-Number Memory_Total                  { channel="systeminfo:computer:raspberrypi:memory#total" }
+Number Memory_Used (gSysInfo)                   { channel="systeminfo:computer:raspberrypi:memory#used" }
+Number Memory_Total (gSysInfo)                  { channel="systeminfo:computer:raspberrypi:memory#total" }
 // Number Memory_Available_Percent      { channel="systeminfo:computer:raspberrypi:memory#availablePercent" }
 // Number Memory_Used_Percent           { channel="systeminfo:computer:raspberrypi:memory#usedPercent" }
 /*
@@ -47,7 +54,7 @@ Number Swap_Used_Percent             { channel="systeminfo:computer:raspberrypi:
 
 //String Display_Description           { channel="systeminfo:computer:raspberrypi:display#information" }
 
-Number Sensor_CPUTemp                { channel="systeminfo:computer:raspberrypi:sensors#cpuTemp" }
+Number Sensor_CPUTemp (gSysInfo)                { channel="systeminfo:computer:raspberrypi:sensors#cpuTemp" }
 //Number Sensor_CPUVoltage             { channel="systeminfo:computer:raspberrypi:sensors#cpuVoltage" }
 //Number Sensor_FanSpeed               { channel="systeminfo:computer:raspberrypi:sensors#fanSpeed" }
 
