@@ -109,7 +109,7 @@ JSRule({
 
         cmd = tuyaScript +  tuyaConfig + state;
         logInfo(cmd);
-        execResult = executeCommandLineAndWaitResponse(cmd, 1000 *3);
+        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
         if (execResult.indexOf("Error") > -1)
         {
@@ -149,7 +149,7 @@ JSRule({
         if (triggeringItem.name == "LED2_color") tuyaConfig = TuyaLED2Config + "-hsb " + state + " SETCOLOR";
 
         cmd = tuyaLEDScript + tuyaConfig;
-        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 3);
+        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
         logInfo(cmd);
 
@@ -183,7 +183,7 @@ JSRule({
         if (triggeringItem.name == "LED2Scene") tuyaConfig = TuyaLED2Config + " SCENE -sceneid " + state;
 
         cmd = tuyaLEDScript + tuyaConfig;
-        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 3);
+        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
         logInfo(cmd);
 
@@ -244,7 +244,7 @@ JSRule({
         }
 
         cmd = tuyaLEDScript + tuyaConfig;
-        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 3);
+        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
         logInfo(cmd);
 
@@ -282,7 +282,7 @@ JSRule({
         if (triggeringItem.name == "LED2Power") tuyaConfig = TuyaLED2Config + state;
 
         cmd = tuyaLEDScript + tuyaConfig;
-        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 3);
+        execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
         if (execResult.indexOf("Error") > -1) 
         {

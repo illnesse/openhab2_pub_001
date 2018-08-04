@@ -170,11 +170,25 @@ if($(window.frameElement).attr("data-injected") === undefined)
     //look for urls and link them
     $(".mdl-form__label, .mdl-form__text",$parentdoc).each(function()
     {
-        var $words = $(this).text().split("|");
+        var $elem = this;
+        var $words = $($elem).text().split("|");
         for (i in $words)
         {
             var $word = $.trim($words[i]);
-            if (($word.indexOf('http://') == 0) || $word.indexOf('https://') == 0)
+            if ($word.indexOf('^del') == 0)
+            {
+                console.log("^del" + $elem);
+                $elem.remove();
+            }
+/*
+            else if ($word.indexOf('^small') == 0)
+            {
+                console.log("^small" + $elem);
+                $($elem).parent().addClass("small");
+                $words[i] = "";
+            }
+*/
+            else if (($word.indexOf('http://') == 0) || $word.indexOf('https://') == 0)
             {
                 var $link = $word;
                 var $title = $words[i-1];
@@ -183,7 +197,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
                 $words[i] = "<a target=\"_blank\" href=\"" + $link + "\" class=\"link_override\"><i class=\"material-icons\">link</i>" + $title + "</a>";
             }
         }
-        $(this).html($words.join(' '));
+        $($elem).html($words.join(' '));
 
     });
 }

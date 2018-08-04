@@ -7,12 +7,12 @@ sitemap main label="Home"
 		Image url="https://XXXXXXX.de/XXXXXXX.jpg"
     }
 
-	Frame label="Samsung TV Wohnzimmer"
+	Frame label="Samsung TV WZ"
 	{
 		Switch item=MQTT_TV label="Power" icon="control_on_off" mappings=[power="PWR"]
 		Switch item=MQTT_TV label="Volume" icon="audio_playlist" mappings=[input="INPUT",mute="MUTE",volumedown="-",volumeup="+"] //visibility=[TV_ON==ON]
 	}
-	Frame label="SAT Receiver Wohnzimmer"
+	Frame label="SAT Receiver WZ"
 	{
 		Switch item=MQTT_SAT label="Power" icon="control_on_off" mappings=[power="PWR"] 
 		Switch item=MQTT_SAT label="Volume" icon="audio_playlist" mappings=[mute="MUTE",volumedown="-",volumeup="+"] //visibility=[SAT_ON==ON]
@@ -53,27 +53,27 @@ sitemap main label="Home"
         Text label="" icon="none"
         Switch item=MQTT_SAT label="[]" icon="none" mappings=[exit="EXIT",ok="OK",down="▾",up="▴"]
 	}
-	Frame label="Sony AV Receiver Wohnzimmer"
+	Frame label="Sony AV Receiver WZ"
 	{
 		Switch item=MQTT_AUDIO label="Power" icon="control_on_off" mappings=[power="PWR"] 
 		Switch item=MQTT_AUDIO label="Volume" icon="audio_playlist" mappings=[home="HOME", mute="MUTE",volumedown="-",volumeup="+"]  //visibility=[AUDIO_ON==ON]
 	}
-	Frame label="HDMI Switch Wohnzimmer"
+	Frame label="HDMI Switch WZ"
 	{
 		Switch item=MQTT_SWITCH label="Port" icon="audio_playlist" mappings=[1="TV",2="PS4",3="PC",4="FireTV"]
 		Switch item=MQTT_SWITCH label="Audio / Source" icon="audio_playlist" mappings=[2_1ch="2.1",5_1ch="5.1",7_1ch="7.1",arc="arc",auto="auto",autosource="autosrc"]
 	}
-	Frame label="A/C Wohnzimmer"
+	Frame label="A/C WZ"
 	{
 		Switch item=MQTT_AC label="Power" icon="control_on_off" mappings=[power="PWR"]
 		Switch item=MQTT_AC label="Stuff" icon="audio_playlist" mappings=[fan="FAN",fan2="FAN2",rotate="ROT",down="▼",up="▲"]
 	}
-	Frame label="Fan Wohnzimmer"
+	Frame label="Fan WZ"
 	{
 		Switch item=MQTT_FAN label="Power" icon="control_on_off" mappings=[power="PWR"]
 		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="▼",up="▲"]
 	}
-	Frame label="Kodi Wohnzimmer"
+	Frame label="Kodi WZ"
 	{
 		Selection item=Kodi_control icon="audio_playlist" mappings=[PLAY='Play', PAUSE='Pause', NEXT='Next', PREVIOUS='Previous', FASTFORWARD='Fastforward', REWIND='Rewind']
         Default   item=Kodi_control icon="audio_playlist"
@@ -141,7 +141,7 @@ sitemap main label="Home"
 	}
 
 
-	Frame label="Echo Schlafzimmer"
+	Frame label="Echo SZ"
 	{
 		Default item=Echo1_Player icon="message_empty"
 		Selection item=Echo1_RadioStationId icon="it_radio"
@@ -159,7 +159,7 @@ sitemap main label="Home"
 		Text 	item=Echo1_Subtitles icon="none"
 	}
 
-	Frame label="Echo Wohnzimmer"
+	Frame label="Echo WZ"
 	{
 		Default item=Echo2_Player icon="message_empty"
 		Selection item=Echo2_RadioStationId icon="it_radio"
@@ -352,17 +352,17 @@ sitemap main label="Home"
 
     Frame label="Energy"
 	{
-        Text item=TPLinkPlug1_UI label="Media Stuff Current [%s]" icon="it_television"
-        Text item=TPLinkPlug2_UI label="Waschmaschine Current [%s]" icon="scene_washing_machine"
+        Text item=TPLinkPlug1_UI label="WZ Current [%s]" icon="it_television"
+        Text item=TPLinkPlug2_UI label="WM Current [%s]" icon="scene_washing_machine"
 
-        Text item=TPLinkPlug1_EnergyUsage label="Usage Total [%.3f kWh]" icon="measure_power"
-        Text item=TPLinkPlug2_EnergyUsage label="Usage Total [%.3f kWh]" icon="measure_power"
+        Text item=TPLinkPlug1_EnergyUsage label="WZ Usage Total [JS(kwhprice.js):%s]" icon="measure_power"
+        Text item=TPLinkPlug2_EnergyUsage label="WM Usage Total [JS(kwhprice.js):%s]" icon="measure_power"
 
-        Text item=TPLinkPlug1_EnergyUsage_Month label="Usage Month [%.3f kWh]" icon="measure_power"
-        Text item=TPLinkPlug2_EnergyUsage_Month label="Usage Month [%.3f kWh]" icon="measure_power"
+        Text item=TPLinkPlug1_EnergyUsage_Month label="WZ Usage Month [JS(kwhprice.js):%s]" icon="measure_power"
+        Text item=TPLinkPlug2_EnergyUsage_Month label="WM Usage Month [JS(kwhprice.js):%s]" icon="measure_power"
 
-        Text item=TPLinkPlug1_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
-        Text item=TPLinkPlug2_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
+        Text item=TPLinkPlug1_EnergyUsage_Today_UI label="WZ Usage Today [%s]" icon="measure_power_meter"
+        Text item=TPLinkPlug2_EnergyUsage_Today_UI label="WM Usage Today [%s]" icon="measure_power_meter"
 
 		Text label="" icon="none"
 		Switch item=Washingmachine_OpState icon="none" label="Status []" mappings=[0="OFF",1="Standby",2="Active",3="Finished"]
@@ -372,10 +372,10 @@ sitemap main label="Home"
         Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
         Text item=HM_EM_SignalStrength label="Signal Strength [%s]" icon="it_television"
         Text item=HM_EM_Power label="Power Current [%.0f W]" icon="measure_power"
-        Text item=HM_EM_EnergyCounterK label="Energy Counter [%.3f kWh]" icon="measure_power_meter"
+        Text item=HM_EM_EnergyCounter label="Energy Counter [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
 
-        Text item=HM_EM_EnergyUsage_Month label="Usage Month [%.3f kWh]" icon="measure_power_meter"
         Text item=HM_EM_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
+        Text item=HM_EM_EnergyUsage_Month label="Usage Month [JS(kwhprice.js):%s]" icon="measure_power_meter"
 
         Image label="12" url="http://localhost:8080/static/12.png"
         
@@ -389,8 +389,8 @@ sitemap main label="Home"
 		//Text item=Temperature label="Temp Aussen" icon="temp_temperature"
 		Text item=Humidity label="Luftfeuchtigkeit Aussen" icon="weather_humidity"
 
-		Text item=Temperature_UI_Indoor label="Temp Wohnzimmer" icon="temp_temperature"
-		Text item=HMTemp1HUM label="Luftfeuchtigkeit Wohnzimmer" icon="weather_humidity"
+		Text item=Temperature_UI_Indoor label="Temp WZ" icon="temp_temperature"
+		Text item=HMTemp1HUM label="Luftfeuchtigkeit WZ" icon="weather_humidity"
 		//Text item=FeelsLike label="Temp Humidex Aussen" icon="temp_temperature"
 		Text item=PollenUI icon="message_attention"
 		Text item=Pressure icon="measure_pressure_bar"
@@ -438,8 +438,8 @@ sitemap main label="Home"
 		Text item=System_CPU_Uptime icon="player"
 		Text item=System_openHAB_Uptime icon="player"
 
-		Text item=System_openHAB_Memory icon="player"
-		Text item=System_openHAB_DBSize icon="player"
+		Text item=System_openHAB_Memory label="OH2 Mem [JS(kb_mb.js):%s]" icon="player"
+		Text item=System_openHAB_DBSize label="InfluxDB Size [%.0f MB]" icon="player"
 
 		Text item=Sensor_CPUTemp icon="none"
 		Text item=CPU_Threads icon="none"
@@ -491,8 +491,8 @@ sitemap main label="Home"
 		Text item=Socket6Presence label="Socket 6 [%s]" icon="message_socket"
         Text item=LED1Presence label="LED1 (TV Backlight) [%s]" icon="message_socket"
         Text item=LED2Presence label="LED2 (Sofa) [%s]" icon="message_socket"
-        Text item=TPLinkPlug1Presence label="TPLinkPlug1 (Media) [%s]" icon="message_socket"
-        Text item=TPLinkPlug2Presence label="TPLinkPlug2 (Waschmaschine) [%s]" icon="message_socket"
+        Text item=TPLinkPlug1Presence label="TPLinkPlug1 (WZ) [%s]" icon="message_socket"
+        Text item=TPLinkPlug2Presence label="TPLinkPlug2 (WM) [%s]" icon="message_socket"
 
 		Image label="6" url="http://localhost:8080/static/6.png"
         Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"

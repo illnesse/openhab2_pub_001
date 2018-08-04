@@ -7,16 +7,16 @@ Group gMail
 String Cal_Update "Update"
 
 String Mail_Account1_Update "Update"
-String GMail_Acc1_Mail1__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail2__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail3__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail4__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail5__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail6__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail7__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail8__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail9__UI "Mail: [%s]" (gMail)
-String GMail_Acc1_Mail10__UI "Mail: [%s]" (gMail)
+String GMail_Acc1_Mail1__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail2__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail3__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail4__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail5__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail6__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail7__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail8__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail9__UI "^del [%s]" (gMail)
+String GMail_Acc1_Mail10__UI "^del [%s]" (gMail)
 
 String Cal_Event1__UI "Termin: [%s]" (gCal_Event)
 //String Cal_Event1__Summary (gCal_Event, gCal_triggers)

@@ -8,6 +8,13 @@ var MODE_FINISHED = 3
 
 var timer = null;
 
+var pricekWh = 0.2705; //€
+
+function getPricekWh(kwh)
+{
+    return "("+round((kwh * pricekWh),2)+" € )";
+}
+
 JSRule({
     name: "Washingmachine State",
     description: "Line: "+__LINE__,
@@ -98,7 +105,7 @@ JSRule({
         
         var delta = round(today - EnergyUsage_Yesterday,3);
         //logInfo("toUpdate " + toUpdate + " delta "+ delta +" today "+ today +" EnergyUsage_Yesterday "+ EnergyUsage_Yesterday);
-        var usagetoday = round(today,3) + " kWh (Î” " + ((delta > 0) ? "+"+delta : delta ) + ")";
+        var usagetoday = round(today,3) + " kWh (? " + ((delta > 0) ? "+"+delta : delta ) + ") "+getPricekWh(today);
 
         postUpdate(itemEnergyUsage_Today,today)
         postUpdate(itemEnergyUsage_Today_UI, usagetoday )
@@ -119,7 +126,6 @@ JSRule({
     execute: function( module, input)
     {
         var itemEnergyCounter = getItem("HM_EM_EnergyCounter");
-        var itemEnergyCounterK = getItem("HM_EM_EnergyCounterK");
         var itemEnergyUsage_Today = getItem("HM_EM_EnergyUsage_Today");
         var itemEnergyUsage_Month = getItem("HM_EM_EnergyUsage_Month");
         var itemEnergyUsage_Today_UI = getItem("HM_EM_EnergyUsage_Today_UI");
@@ -136,10 +142,9 @@ JSRule({
 
         var delta = round(EnergyUsage_Today - EnergyUsage_Yesterday,3);
         //logInfo("toUpdate " + toUpdate + " delta "+ delta +" today "+ today +" EnergyUsage_Yesterday "+ EnergyUsage_Yesterday);
-        var usagetoday = round(EnergyUsage_Today,3) + " kWh (Î” " + ((delta > 0) ? "+"+delta : delta ) + ")";
+        var usagetoday = round(EnergyUsage_Today,3) + " kWh (? " + ((delta > 0) ? "+"+delta : delta ) + ") "+getPricekWh(EnergyUsage_Today);
 
         postUpdate(itemEnergyUsage_Today,EnergyUsage_Today)
-        postUpdate(itemEnergyCounterK,itemEnergyCounter.state / 1000)
         postUpdate(itemEnergyUsage_Today_UI, usagetoday )
         postUpdate(itemEnergyUsage_Month, EnergyUsage_Month )
         return;

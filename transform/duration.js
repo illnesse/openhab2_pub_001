@@ -7,9 +7,8 @@
 	var result = '';
 
 	// days
-	if (d > 0) { 
-		result = result + d + ' day(s) ';
-	}
+	if (d === 1) {  result = result + d + ' day '; }
+	else if (d > 1) {  result = result + d + ' days '; }
 	
 	result = result + ("00" + h).substr(-2,2) + ":" + ("00" + m).substr(-2,2);
 
