@@ -1,14 +1,17 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
-var gcal_array = []
-var gcal_array_temp = []
+var gcal_array = [];
+var gcal_array_temp = [];
 
-var MODE_DEFAULT = 0
-var MODE_TODAY = 1
-var MODE_WITHIN_NEXT_HOUR = 2
-var MODE_NOW = 3
-var MODE_OVER = 4
+var MODE_DEFAULT = 0;
+var MODE_TODAY = 1;
+var MODE_WITHIN_NEXT_HOUR = 2;
+var MODE_NOW = 3;
+var MODE_OVER = 4;
+
+var TTS_OFF = 0;
+var TTS_DEFAULT = 1;
 
 function custom_sort(a, b) {
     return jodaDate(a.start.dateTime).compareTo(jodaDate(b.start.dateTime));
@@ -221,12 +224,45 @@ JSRule({
         var Echo1_Volume = getItem("Echo1_Volume");
         var Echo2_Volume = getItem("Echo2_Volume");
 
+        //turn off tts
+        var itemTTSMode = getItem("TTSMode");
+        if ((hour_now >= 23) && (hour_now <= 5))
+        {
+            if (itemTTSMode.state != TTS_OFF)
+            {
+                sendCommand(itemTTSOut2,"TTS deaktiviert");
+                postUpdate(itemTTSMode,TTS_OFF);
+            }
+            
         //reset shit late night
         if ((hour_now == 3) && (minute_now == 0))
         {
             logInfo("Resetting Echo Volume")
             sendCommand(Echo1_Volume,30)
             sendCommand(Echo2_Volume,50)
+        }
+        }
+        else 
+        {
+            var itemAtHomeS = getItem("AtHomeS");
+            var itemAtHomeJ = getItem("AtHomeJ");
+
+            if ((itemAtHomeJ.state == OFF) && (itemAtHomeS.state == OFF))
+            {
+                if (itemTTSMode.state != TTS_OFF)
+                {
+                    sendCommand(itemTTSOut2,"TTS deaktiviert");
+                    postUpdate(itemTTSMode,TTS_OFF);
+                }
+            }
+            else
+            {
+                if (itemTTSMode.state != TTS_DEFAULT) 
+                {
+                    postUpdate(itemTTSMode,TTS_DEFAULT);
+                    sendCommand(itemTTSOut2,"TTS aktiviert");
+                }
+            }
         }
 
         //alarm

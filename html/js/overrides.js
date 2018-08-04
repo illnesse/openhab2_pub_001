@@ -17,6 +17,7 @@ var refreshImageItemURL = "https://XXXXXXX.de/out.jpg";
 //hack to avoid jetty mjpeg timeout
 function refreshSingleImage()
 {
+    if (!$parentdoc.hasFocus()) return;
     if (!$refresh) return;
     var d = new Date();
     if (refreshImageItem === undefined) refreshImageItem = $('*[data-widget-id="0002"] img', $parentdoc);
@@ -26,6 +27,7 @@ function refreshSingleImage()
 
 function refreshAllImgs()
 {
+    if (!$parentdoc.hasFocus()) return;
     //if (!$refresh) return;
     var d = new Date();
     $(".mdl-form__image img", $parentdoc).each(function()
@@ -122,6 +124,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("tunein") >= 0 ) panelcss($panel,$h5,"tunein","tunein");
         else if ($h5text.indexOf("klima") >= 0 ) panelcss($panel,$h5,"klima","homematic");
         else if ($h5text.indexOf("calendar") >= 0 ) panelcss($panel,$h5,"gcal","google");
+        else if ($h5text.indexOf("e-mail") >= 0 ) $panel.addClass("panel_custom bg_email");
         else if ($h5text.indexOf("network") >= 0 ) $panel.addClass("panel_custom bg_net");
         else if ($h5text.indexOf("system") >= 0 ) panelcss($panel,$h5,"sys","raspberrypi");
         else if ($h5text.indexOf("gps") >= 0 ) $panel.addClass("panel_custom bg_gps");
@@ -239,6 +242,7 @@ else
         //event log
         var log1Interval = setInterval(function()
         {
+            if (!$parentdoc.hasFocus()) return;
             $.get( "/static/eventlog_tail.log", function( data )
             {
                 //console.log(data.length);
@@ -251,6 +255,7 @@ else
         //openhab log
         var log2Interval = setInterval(function()
         {
+            if (!$parentdoc.hasFocus()) return;
             var d = new Date();
             $.get( "/static/openhablog_tail.log?nocache"+d.getTime(), function( data )
             {
@@ -285,6 +290,7 @@ else
         //display clock in header
         var clockInterval = setInterval(function()
         {
+            if (!$parentdoc.hasFocus()) return;
             var currentTime = new Date();
             var currentYear = currentTime.getFullYear();
             var currentMonth = currentTime.getMonth()+1;

@@ -476,6 +476,11 @@ a:hover
     width: 548px;
 }
 
+.bg_email 
+{
+    background: linear-gradient(to top, #16262878, #2b5b6585)
+}
+
 .bg_energy
 {
     background: linear-gradient(to bottom, #192d46a6, #353034ad);

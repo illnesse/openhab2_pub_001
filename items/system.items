@@ -24,6 +24,7 @@ Switch TestBTN "TestBTN"
 Switch fboxReboot "Reboot Fritz!Box"
 Switch piReboot "Reboot RasPi"
 
+Number TTSMode "TTSMode"
 String TTSOut1 "TTSOut"
 String TTSOut1Quiet "TTSOut"
 String TTSOut2 "TTSOut"

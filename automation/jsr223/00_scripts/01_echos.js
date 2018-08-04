@@ -7,6 +7,10 @@ itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTrigge
     Echo1TitlesTriggers.push(ItemStateChangeTrigger(gEchoTriggerItem.name));
 });
 
+var TTS_OFF = 0;
+var TTS_DEFAULT = 1;
+
+
 JSRule({
     name: "Echo1Titles",
     description: "Line: "+__LINE__,
@@ -29,80 +33,44 @@ JSRule({
     }
 });
 
+function TTSOut(id,quiet,out)
+    {
+    var itemTTSMode = getItem("TTSMode");
+    var mode = (itemTTSMode.state != null) ? itemTTSMode.state : TTS_DEFAULT;
+
+    logInfo("TTSOut"+id+" quiet:"+quiet+" mode: "+mode+" "+ out)
+
+    if (mode == TTS_OFF) return;
+
+    if (quiet)
+    {
+        sendCommand("Echo"+id+"_Volume",30)
+        createTimer(now().plusSeconds(0.3), function() 
+        {
+            sendCommand("Echo"+id+"_TTS",out)
+        });
+    }
+    else
+    {
+        sendCommand("Echo"+id+"_TTS",out)
+    }
+}
+
 JSRule({
     name: "TTSOut1",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemCommandTrigger("TTSOut1")
-    ],
-    execute: function( module, input)
-    {
-        var itemTTSOut1 = getItem("TTSOut1");
-        var itemEcho1_TTS = getItem("Echo1_TTS");
-
-		var out = input.command
-		logInfo(itemTTSOut1.name +": "+ out)
-        sendCommand(itemEcho1_TTS,out)
-    }
-});
-
-JSRule({
-    name: "TTSOut2",
-    description: "Line: "+__LINE__,
-    triggers: [
-        ItemCommandTrigger("TTSOut2")
-    ],
-    execute: function( module, input)
-    {
-        var itemTTSOut2 = getItem("TTSOut2");
-        var itemEcho2_TTS = getItem("Echo2_TTS");
-
-		var out = input.command
-		logInfo(itemTTSOut2.name +": "+ out)
-        sendCommand(itemEcho2_TTS,out)
-    }
-});
-
-JSRule({
-    name: "TTSOut1Quiet",
-    description: "Line: "+__LINE__,
-    triggers: [
-        ItemCommandTrigger("TTSOut1Quiet")
-    ],
-    execute: function( module, input)
-    {
-        var itemTTSOut1Quiet = getItem("TTSOut1Quiet");
-        var itemEcho1_TTS = getItem("Echo1_TTS");
-        var itemEcho1_Volume = getItem("Echo1_Volume");
-
-		var out = input.command
-		logInfo(itemTTSOut1Quiet.name +": "+ out)
-        sendCommand(itemEcho1_Volume,30)
-        createTimer(now().plusSeconds(0.3), function() 
-        {
-            sendCommand(itemEcho1_TTS,out)
-        });
-    }
-});
-
-JSRule({
-    name: "TTSOut2Quiet",
-    description: "Line: "+__LINE__,
-    triggers: [
+        ItemCommandTrigger("TTSOut1"),
+        ItemCommandTrigger("TTSOut2"),
+        ItemCommandTrigger("TTSOut1Quiet"),
         ItemCommandTrigger("TTSOut2Quiet")
     ],
     execute: function( module, input)
     {
-        var itemTTSOut2Quiet = getItem("TTSOut2Quiet");
-        var itemEcho2_TTS = getItem("Echo2_TTS");
-        var itemEcho2_Volume = getItem("Echo2_Volume");
-
-		var out = input.command
-		logInfo(itemTTSOut2Quiet.name +": "+ out)
-        sendCommand(itemEcho2_Volume,30)
-        createTimer(now().plusSeconds(0.3), function() 
-        {
-            sendCommand(itemEcho2_TTS,out)
-        });
+        var triggeringItem = getItem(getTriggeringItemStr(input));
+        if      (triggeringItem.name == "TTSOut1") TTSOut(1,false,input.command);
+        else if (triggeringItem.name == "TTSOut2") TTSOut(2,false,input.command);
+        else if (triggeringItem.name == "TTSOut1Quiet") TTSOut(1,true,input.command);
+        else if (triggeringItem.name == "TTSOut2Quiet") TTSOut(2,true,input.command);
     }
 });

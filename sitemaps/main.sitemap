@@ -424,13 +424,15 @@ sitemap main label="Home"
         Switch item=Backupbtn label="Commit & Push Backup |Bitbucket Repository|https://bitbucket.org/XXXXXXX/all [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
         Switch item=Resetbtn label="Restart OH2 Service [%s]" icon="control_reset" mappings=[ON="RESTART"]
         Switch item=piReboot label="Reboot RasPi" icon="control_reset" mappings=[ON="REBOOT"]
-        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST"] visibility=[SysStartupForce!=ON]
+        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST ON"] visibility=[SysStartup==OFF]
+        Switch item=SysStartupForce icon="audio_repeat" mappings=[OFF="TEST OFF"] visibility=[SysStartup==ON]
 
 		Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
-        Text item=SysStartup icon="none"
+        Switch item=TestBTN icon="message_attention" mappings=[ON="TEST BTN"]
 
         Switch item=ClearCacheBtn label="Clear Cache [%s]" icon="control_reset" mappings=[ON="CLEAR"]
-        Switch item=TestBTN icon="message_attention" mappings=[ON="TEST"]
+        Switch item=TTSMode label="TTS Mode [JS(ttsmode.js):%s]" icon="none" mappings=[0="OFF"] visibility=[TTSMode!=0]
+        Switch item=TTSMode label="TTS Mode [JS(ttsmode.js):%s]"icon="none" mappings=[1="ON"] visibility=[TTSMode!=1]
 
         Text label="" icon="none"
         Text label="" icon="none"
@@ -476,8 +478,8 @@ sitemap main label="Home"
 		Text item=SurfacePresence label="Surface [%s]" icon="it_smartphone"
 		Text item=Echo1Presence label="Echo 1 [%s]" icon="message_empty"
 		Text item=Echo2Presence label="Echo 2 [%s]" icon="message_empty"
-		Text item=RaspberryPiPresence label="RaspberryPi OH2 [%s]" icon="it_server"
-		Text item=RaspberryMaticPresence label="RaspberryPi CCU2 |Homematic|http://192.168.178.45 [%s]" icon="it_server"
+		Text item=RaspberryPiPresence label="Raspi OH2 [%s]" icon="it_server"
+		Text item=RaspberryMaticPresence label="Raspi CCU3 |Homematic|http://192.168.178.45 [%s]" icon="it_server"
 		Text item=PS4Presence label="PS4 [%s]" icon="scene_gaming_3"
 		Text item=OSRAMGatewayPresence label="OSRAM Gateway [%s]" icon="it_media_player"
 		Text item=FireTVPresence label="FireTV [%s]" icon="it_media_player"
