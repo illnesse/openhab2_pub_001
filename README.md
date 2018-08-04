@@ -7,6 +7,7 @@
 Due to popular demand i just put up my current config as is, there may be a few unfinished things but all in all it's a pretty decent and stable openhab setup. I (hopefully) redacted all personal info with "XXXXXX" or "123456", you should replace those. There are no .rules because Xtext DSL sucks. There's probably a bunch of unused stuff too, idk.. I might clean up later, Enjoy!
 
   - Heavily modified Basic UI via injected JS/CSS
+  - Parses sitemap for strings for special formatting, links etc
   - InfluxDB + Grafana, (replace grafana.light.css with my modified version in html/ to render transparent pngs for the sitemap
   - mapdb for restoreonstartup values / UI
   - Amazon Echos for TTS
