@@ -15,7 +15,7 @@ JSRule({
         var itemHMDoor1UI = getItem("HMDoor1UI");
 
         var state = input.newState;
-        if (state === null) state = itemHMDoor1.state;
+        if (isUninitialized(state)) state = itemHMDoor1.state;
 
         if (state == OPEN)
         {
@@ -43,7 +43,7 @@ JSRule({
         var itemOsramSensorTriggeredUI = getItem("OsramSensorTriggeredUI");
 
         var state = input.state;
-        if (state === null) state = itemOsramSensorTriggered.state;
+        if (isUninitialized(state)) state = itemOsramSensorTriggered.state;
 
         persist(itemOsramSensorTriggered);
         postUpdate(itemOsramSensorTriggeredUI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)

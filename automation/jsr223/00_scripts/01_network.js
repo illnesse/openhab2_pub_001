@@ -23,10 +23,10 @@ JSRule({
 
         var out, online, pinglatency;
 
-        if ((itemOnline.state == OPEN) || (itemOnline.state === undefined)) online = "ONLINE"
+        if ((itemOnline.state == OPEN) || isUninitialized(itemOnline)) online = "ONLINE"
         else online = "OFFLINE"
 
-        if ((itemLatency.state != "") && (!isUninitialized(itemLatency)))
+        if ((itemLatency.state != "") && !isUninitialized(itemLatency))
         {
             online = "ONLINE"
             pinglatency = Math.round( itemLatency.state ) + " ms"
@@ -41,7 +41,7 @@ JSRule({
         postUpdate(itemPresence,out)
         //logInfo(toUpdate +": "+ out);
 
-        if ((toUpdate == "HandyS") && (AtHomeSTimer === null))
+        if ((toUpdate == "HandyS") && isUninitialized(AtHomeSTimer))
         {
             var itemAtHomeS = getItem("AtHomeS");
             if ((itemAtHomeS.state != ON) && (online == "ONLINE")) postUpdate(itemAtHomeS,ON)
@@ -56,7 +56,7 @@ JSRule({
                 });
             }
         }
-        else if ((toUpdate == "HandyJ") && (AtHomeJTimer === null))
+        else if ((toUpdate == "HandyJ") && isUninitialized(AtHomeJTimer))
         {
             var itemAtHomeJ = getItem("AtHomeJ");
             if ((itemAtHomeJ.state != ON) && (online == "ONLINE")) postUpdate(itemAtHomeJ,ON)

@@ -119,6 +119,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("sat receiver") >= 0 ) panelcss($panel,$h5,"sat","humax");
         else if ($h5text.indexOf("sony av") >= 0 ) panelcss($panel,$h5,"sony","sony");
         else if ($h5text.indexOf("hdmi") >= 0 ) panelcss($panel,$h5,"hdmi","hdmi");
+        else if ($h5text.indexOf("pc wz") >= 0 ) panelcss($panel,$h5,"win","win");
         else if ($h5text.indexOf("a/c") >= 0 ) $panel.addClass("panel_custom bg_ac");
         else if ($h5text.indexOf("echo") >= 0 ) panelcss($panel,$h5,"echos","alexa");
         else if ($h5text.indexOf("tunein") >= 0 ) panelcss($panel,$h5,"tunein","tunein");

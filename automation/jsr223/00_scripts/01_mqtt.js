@@ -6,12 +6,20 @@ var home_lon = "12.3456789";
 
 var delay = 400;
 
-function sendMQTT(topic, message)
+function sendMQTT(broker, topic, message)
 {
     var execResult;
-    var command = "mosquitto_pub -t " + topic + " -m \"" + message + "\"";
+    var command;
+    if (broker == "broadlink")
+    {
+        command = "mosquitto_pub -t " + topic + " -m \"" + message + "\"";
+    }
+    else if (broker == "cloudmqtt")
+    {
+        command = "mosquitto_pub -h XXXXXXX -p XXXX -u XXXXXXX -P XXXXXXXXX -i XXXXXXXXXXXX -t " + topic + " -m \"" + message + "\"";
+    }
     execResult = executeCommandLineAndWaitResponse(command, 1000 *3);
-    logInfo("sendMQTT: " + topic + " " + execResult);
+    logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
 }
 
 var gMQTT_CommandTriggers = [];
@@ -31,28 +39,30 @@ JSRule({
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
-        if      (triggeringItem.name == "MQTT_TV") sendMQTT("broadlink/tv/samsung/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_AUDIO") sendMQTT("broadlink/audio/sony/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_SWITCH") sendMQTT("broadlink/hdmiswitch/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_AC") sendMQTT("broadlink/ac/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_FAN") sendMQTT("broadlink/fan/obi/" + input.command, "replay")
+        if      (triggeringItem.name == "MQTT_TV") sendMQTT("broadlink","broadlink/tv/samsung/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_AUDIO") sendMQTT("broadlink","broadlink/audio/sony/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_SWITCH") sendMQTT("broadlink","broadlink/hdmiswitch/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_AC") sendMQTT("broadlink","broadlink/ac/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_FAN") sendMQTT("broadlink","broadlink/fan/obi/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_PC_SYSTEM") sendMQTT("cloudmqtt", "wt/system/commands/" + input.command, "true")
+        else if (triggeringItem.name == "MQTT_PC_DESKTOP") sendMQTT("cloudmqtt", "wt/desktop/commands/" + input.command, "true")
 
-        else if (triggeringItem.name == "aMQTT_FAN_power") sendMQTT("broadlink/fan/obi/power", "replay")
-        else if (triggeringItem.name == "aMQTT_FAN_rot") sendMQTT("broadlink/fan/obi/swivel", "replay")
-        else if (triggeringItem.name == "aMQTT_FAN_up") sendMQTT("broadlink/fan/obi/up", "replay")
-        else if (triggeringItem.name == "aMQTT_FAN_down") sendMQTT("broadlink/fan/obi/down", "replay")
+        else if (triggeringItem.name == "aMQTT_FAN_power") sendMQTT("broadlink","broadlink/fan/obi/power", "replay")
+        else if (triggeringItem.name == "aMQTT_FAN_rot") sendMQTT("broadlink","broadlink/fan/obi/swivel", "replay")
+        else if (triggeringItem.name == "aMQTT_FAN_up") sendMQTT("broadlink","broadlink/fan/obi/up", "replay")
+        else if (triggeringItem.name == "aMQTT_FAN_down") sendMQTT("broadlink","broadlink/fan/obi/down", "replay")
 
-        else if (triggeringItem.name == "aMQTT_TV") sendMQTT("broadlink/tv/samsung/power", "replay")
-        else if (triggeringItem.name == "aMQTT_SAT") sendMQTT("broadlink/sat/humax/power", "replay")
-        else if (triggeringItem.name == "aMQTT_AUDIO") sendMQTT("broadlink/audio/sony/power", "replay")
-        else if (triggeringItem.name == "aMQTT_AUDIO_MUTE") sendMQTT("broadlink/audio/sony/mute", "replay")
+        else if (triggeringItem.name == "aMQTT_TV") sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
+        else if (triggeringItem.name == "aMQTT_SAT") sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
+        else if (triggeringItem.name == "aMQTT_AUDIO") sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
+        else if (triggeringItem.name == "aMQTT_AUDIO_MUTE") sendMQTT("broadlink","broadlink/audio/sony/mute", "replay")
         else if (triggeringItem.name == "aMQTT_ALLES")
         {
-            sendMQTT("broadlink/audio/sony/power", "replay")
+            sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
             sleep(delay);
-            sendMQTT("broadlink/sat/humax/power", "replay")
+            sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
             sleep(delay);
-            sendMQTT("broadlink/tv/samsung/power", "replay")
+            sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
         }
     }
 });
@@ -74,28 +84,28 @@ JSRule({
             var ChannelNumber = parseInt(receivedCommand)
             if (ChannelNumber > 9)
             {
-                sendMQTT("broadlink/sat/humax/0", "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
                 sleep(delay);
-                sendMQTT("broadlink/sat/humax/0", "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
                 sleep(delay);
-                sendMQTT("broadlink/sat/humax/" + receivedCommand.toString().substring(0, 1), "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand.toString().substring(0, 1), "replay")
                 sleep(delay);
-                sendMQTT("broadlink/sat/humax/" + receivedCommand.toString().substring(1, 2), "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand.toString().substring(1, 2), "replay")
             }
             else
             {
-                sendMQTT("broadlink/sat/humax/0", "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
                 sleep(delay);
-                sendMQTT("broadlink/sat/humax/0", "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
                 sleep(delay);
-                sendMQTT("broadlink/sat/humax/0", "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
                 sleep(delay);
-                sendMQTT("broadlink/sat/humax/" + receivedCommand, "replay")
+                sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand, "replay")
             }
         }
         else
         {
-            sendMQTT("broadlink/sat/humax/" + receivedCommand, "replay")
+            sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand, "replay")
         }
     }
 });
@@ -117,7 +127,7 @@ JSRule({
             var i = 0
             while((i=i+1) < 8) 
             {
-                sendMQTT("broadlink/audio/sony/volumeup", "replay");
+                sendMQTT("broadlink","broadlink/audio/sony/volumeup", "replay");
                 sleep(200);
             }
 		}
@@ -127,7 +137,7 @@ JSRule({
             var i = 0
             while((i=i+1) < 8) 
             {
-                sendMQTT("broadlink/audio/sony/volumedown", "replay");
+                sendMQTT("broadlink","broadlink/audio/sony/volumedown", "replay");
                 sleep(200);
             }
 		}
@@ -194,7 +204,7 @@ JSRule({
     execute: function( module, input)
     {
         if (input.command != null) logInfo("MQTT_Phone_S_Update reportLocation")
-        MQTTpublish("cloudmqtt", "owntracks/XXXXXXX/a0001/cmd", "{\"_type\":\"cmd\",\"action\":\"reportLocation\"}")
+        sendMQTT("cloudmqtt", "owntracks/XXXXXXXXXXX/a0001/cmd", "{\"_type\":\"cmd\",\"action\":\"reportLocation\"}")
     }
 });
 
@@ -209,7 +219,7 @@ JSRule({
     execute: function( module, input)
     {
         if (input.command != null) logInfo("MQTT_Phone_J_Update reportLocation")
-        MQTTpublish("cloudmqtt", "owntracks/XXXXXXX/huaweip8/cmd", "{\"_type\":\"cmd\",\"action\":\"reportLocation\"}")
+        sendMQTT("cloudmqtt", "owntracks/XXXXXXXXXXXX/huaweip8/cmd", "{\"_type\":\"cmd\",\"action\":\"reportLocation\"}")
     }
 });
 
@@ -299,7 +309,7 @@ JSRule({
             var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&key=XXXXXXX"
             var geocodeJson = JSON.parse(HTTP.sendHttpGetRequest(geocodeURL));
             var formattedAddress = "?";
-            if (geocodeJson !== null)
+            if (isUninitialized(geocodeJson))
             {
                 formattedAddress = geocodeJson.results[0].formatted_address;
                 formattedAddress = formattedAddress.replace(", Germany", "")
@@ -309,7 +319,7 @@ JSRule({
             var distancematrixJson = JSON.parse(HTTP.sendHttpGetRequest(distancematrixURL));
             var durationintraffic = "?";
             var distance = "?";
-            if (distancematrixJson !== null)
+            if (isUninitialized(distancematrixJson))
             {
                 durationintraffic = distancematrixJson.rows[0].elements[0].duration_in_traffic.text;
                 distance = distancematrixJson.rows[0].elements[0].distance.text;

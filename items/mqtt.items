@@ -14,6 +14,8 @@ String MQTT_AUDIO "Sony Audio" (gMQTT_CommandsStr) ["Switchable"]
 String MQTT_SWITCH "HDMI Switch" (gMQTT_CommandsStr) ["Switchable"] 
 String MQTT_AC "A/C" (gMQTT_CommandsStr) ["Switchable"] 
 String MQTT_FAN "FAN" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_PC_SYSTEM "PC" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_PC_DESKTOP "PC" (gMQTT_CommandsStr) ["Switchable"] 
 
 Switch aMQTT_FAN_power "Ventilator Power" (gMQTT_CommandsSw) ["Switchable"]
 Switch aMQTT_FAN_rot "Ventilator Rot" (gMQTT_CommandsSw) ["Switchable"]

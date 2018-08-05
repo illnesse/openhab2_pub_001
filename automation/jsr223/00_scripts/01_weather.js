@@ -32,7 +32,7 @@ JSRule({
         var itemFeelsLikeOutdoor = getItem("FeelsLikeOutdoor");
         var itemTemperature_UI_Outdoor = getItem("Temperature_UI_Outdoor");
 
-        if ((itemTemperature.state == null) || (itemHumidity.state == null)) { return; }
+        if (isUninitialized(itemTemperature.state) || isUninitialized(itemHumidity.state)) { return; }
         postUpdate(itemFeelsLikeOutdoor,humidex(itemTemperature.state, itemHumidity.state));
         tempUI(itemTemperature_UI_Outdoor, itemTemperature, itemFeelsLikeOutdoor);
     }
@@ -53,7 +53,7 @@ JSRule({
         var itemFeelsLikeIndoor = getItem("FeelsLikeIndoor");
         var itemTemperature_UI_Indoor = getItem("Temperature_UI_Indoor");
 
-        if ((itemHMTemp1.state == null) || (itemHMTemp1HUM.state == null)) { return; }
+        if (isUninitialized(itemHMTemp1.state) || isUninitialized(itemHMTemp1HUM.state)) { return; }
         postUpdate(itemFeelsLikeIndoor,humidex(itemHMTemp1.state, itemHMTemp1HUM.state));
         tempUI(itemTemperature_UI_Indoor, itemHMTemp1, itemFeelsLikeIndoor);
     }

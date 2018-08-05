@@ -225,10 +225,10 @@ JSRule({
         {   
             var itemLED1Flash = getItem("LED1Flash");
             var itemLED1FlashSpeed = getItem("LED1FlashSpeed");
-            if (type == null) type = itemLED1Flash.state;
-            if (type == null) type = 1;
-            if (speed == null) speed = itemLED1FlashSpeed.state;
-            if (speed == null) speed = 1;
+            if (isUninitialized(type)) type = itemLED1Flash.state;
+            if (isUninitialized(type)) type = 1;
+            if (isUninitialized(speed)) speed = itemLED1FlashSpeed.state;
+            if (isUninitialized(speed)) speed = 1;
             tuyaConfig = TuyaLED1Config + " FLASH -flashid " + type + " -flashspeed " + speed;
         }
         else if ((triggeringItem.name == "LED2Flash") || (triggeringItem.name == "LED2FlashSpeed"))
@@ -236,10 +236,10 @@ JSRule({
             var itemLED2Flash = getItem("LED2Flash");
             var itemLED2FlashSpeed = getItem("LED2FlashSpeed");
 
-            if (type == null) type = itemLED2Flash.state;
-            if (type == null) type = 1;
-            if (speed == null) speed = itemLED2FlashSpeed.state;
-            if (speed == null) speed = 1;
+            if (isUninitialized(type)) type = itemLED2Flash.state;
+            if (isUninitialized(type)) type = 1;
+            if (isUninitialized(speed)) speed = itemLED2FlashSpeed.state;
+            if (isUninitialized(speed)) speed = 1;
             tuyaConfig = TuyaLED2Config + " FLASH -flashid " + type + " -flashspeed " + speed;
         }
 

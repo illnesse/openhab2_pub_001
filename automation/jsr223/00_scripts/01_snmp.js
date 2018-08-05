@@ -5,7 +5,7 @@ function querySNMP()
 {
     var itemNASOnline = getItem("NASOnline");
     var execResult = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/snmpnas.sh",1000 * 10);
-    if (execResult === null) return;
+    if (execResult == null) return;
 
     //logInfo(execResult);
 

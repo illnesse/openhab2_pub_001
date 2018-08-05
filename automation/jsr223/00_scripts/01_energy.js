@@ -33,7 +33,7 @@ JSRule({
             if (itemWashingmachine_OpState.state == MODE_OFF) postUpdate(itemWashingmachine_OpState,MODE_STANDBY)
             else if (itemWashingmachine_OpState.state == MODE_ACTIVE) 
             {
-                if (timer == null)
+                if (isUninitialized(timer))
                 {
                     // there have been periods over 10+ min < 4.5 W
                     timer = createTimer(now().plusSeconds(12*60), function() 
@@ -95,8 +95,8 @@ JSRule({
         var itemEnergyUsage_Yesterday = HistoricItem(itemEnergyUsage_Today.name, formatISOStringtoJodaDateTimeZone(date.toISOString()));
 
 
-        var EnergyUsage_SumYesterday = (itemEnergyUsage_SumYesterday === null) ? 0 : itemEnergyUsage_SumYesterday.state;
-        var EnergyUsage_Yesterday = (itemEnergyUsage_Yesterday === null) ? 0 : itemEnergyUsage_Yesterday.state;
+        var EnergyUsage_SumYesterday = isUninitialized(itemEnergyUsage_SumYesterday) ? 0 : itemEnergyUsage_SumYesterday.state;
+        var EnergyUsage_Yesterday = isUninitialized(itemEnergyUsage_Yesterday) ? 0 : itemEnergyUsage_Yesterday.state;
         //logInfo("formatISOStringtoJodaDateTimeZone(date.toISOString()) " + formatISOStringtoJodaDateTimeZone(date.toISOString()));
         //logInfo("itemEnergyUsage_today: " + itemEnergyUsage.state +" - "+ EnergyUsage_SumYesterday + " = " + (itemEnergyUsage.state - EnergyUsage_SumYesterday) + ", EnergyUsage_Yesterday: "+EnergyUsage_Yesterday)
 
@@ -127,7 +127,7 @@ JSRule({
     {
         var itemEnergyCounter = getItem("HM_EM_EnergyCounter");
         var itemEnergyUsage_Today = getItem("HM_EM_EnergyUsage_Today");
-        var itemEnergyUsage_Month = getItem("HM_EM_EnergyUsage_Month");
+        var itemEnergyUsage_Month_UI = getItem("HM_EM_EnergyUsage_Month_UI");
         var itemEnergyUsage_Today_UI = getItem("HM_EM_EnergyUsage_Today_UI");
         
         var date = new Date();
@@ -142,11 +142,11 @@ JSRule({
 
         var delta = round(EnergyUsage_Today - EnergyUsage_Yesterday,3);
         //logInfo("toUpdate " + toUpdate + " delta "+ delta +" today "+ today +" EnergyUsage_Yesterday "+ EnergyUsage_Yesterday);
-        var usagetoday = round(EnergyUsage_Today,3) + " kWh (? " + ((delta > 0) ? "+"+delta : delta ) + ") "+getPricekWh(EnergyUsage_Today);
+        var usagetoday = round(EnergyUsage_Today/1000,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta/1000 + ") "+getPricekWh(EnergyUsage_Today/1000);
 
         postUpdate(itemEnergyUsage_Today,EnergyUsage_Today)
         postUpdate(itemEnergyUsage_Today_UI, usagetoday )
-        postUpdate(itemEnergyUsage_Month, EnergyUsage_Month )
+        postUpdate(itemEnergyUsage_Month_UI, EnergyUsage_Month)
         return;
     }
 });

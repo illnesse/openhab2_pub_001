@@ -63,6 +63,11 @@ sitemap main label="Home"
 		Switch item=MQTT_SWITCH label="Port" icon="audio_playlist" mappings=[1="TV",2="PS4",3="PC",4="FireTV"]
 		Switch item=MQTT_SWITCH label="Audio / Source" icon="audio_playlist" mappings=[2_1ch="2.1",5_1ch="5.1",7_1ch="7.1",arc="arc",auto="auto",autosource="autosrc"]
 	}
+	Frame label="PC WZ"
+	{
+		Switch item=MQTT_PC_SYSTEM label="System" icon="audio_playlist" mappings=[shutdown="OFF",reboot="REBOOT",suspend="SUS",hibernate="HIB"]
+        Switch item=MQTT_PC_DESKTOP label="Desktop" icon="audio_playlist" mappings=[set_display_sleep="SCREEN",close_active_window="CLOSE",run="RUN",open="OPEN",press_keys="KEYS"]
+	}
 	Frame label="A/C WZ"
 	{
 		Switch item=MQTT_AC label="Power" icon="control_on_off" mappings=[power="PWR"]
@@ -369,13 +374,14 @@ sitemap main label="Home"
 
         Image label="10" url="http://localhost:8080/static/10.png"
 
+        Text item=HM_EM_EnergyCounter label="Usage Total [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
         Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
+
+        Text item=HM_EM_EnergyUsage_Month_UI label="Usage Month [JS(kwhprice.js):%s]" icon="measure_power_meter"
         Text item=HM_EM_SignalStrength label="Signal Strength [%s]" icon="it_television"
-        Text item=HM_EM_Power label="Power Current [%.0f W]" icon="measure_power"
-        Text item=HM_EM_EnergyCounter label="Energy Counter [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
 
         Text item=HM_EM_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
-        Text item=HM_EM_EnergyUsage_Month label="Usage Month [JS(kwhprice.js):%s]" icon="measure_power_meter"
+        Text item=HM_EM_Power label="Power Current [%.0f W]" icon="measure_power"
 
         Image label="12" url="http://localhost:8080/static/12.png"
         

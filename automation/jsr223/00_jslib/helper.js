@@ -153,7 +153,9 @@ function formatISOStringtoJodaDateTimeZone(isostring)
 	context.isUninitialized = function(it) {
 		try {
 			var item = context.getItem(it);
-			if(item == null || item.state instanceof UnDefType || item.state.toString() == "Undefined" || item.state.toString() == "Uninitialized" )return true;
+            if(item == null || item == undefined || item.state == undefined || item.state instanceof UnDefType)return true;
+            if(item.state.toString() == "Undefined" || item.state.toString() == "Uninitialized" )return true;
+            
 		}catch(err) {
 			context.logError("isUninitialized "+__LINE__+": "+ it+" "+err);
 			return true;

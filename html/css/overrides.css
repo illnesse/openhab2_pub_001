@@ -515,6 +515,10 @@ a:hover
     background: -webkit-linear-gradient(to bottom, #282d30e6, #202324e6);
     background: linear-gradient(to bottom, #282d30e6, #202324e6);
 }
+.bg_win
+{
+    background-image: radial-gradient(circle at top right, #255660e2, #1b2425c4);
+}
 .bg_ac
 {
 	background-color: rgba(45,45,45, 0.9) !important;

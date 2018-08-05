@@ -270,7 +270,7 @@ JSRule({
         var ALARM1_PERSON1_M = getItem("ALARM1_PERSON1_M");
         var ALARM1_PERSON1_D = getItem("ALARM1_PERSON1_D");
 
-        if ((ALARM1_PERSON1_H.state === null) || (ALARM1_PERSON1_M.state === null) || (ALARM1_PERSON1_D.state === null)) return;
+        if (isUninitialized(ALARM1_PERSON1_H.state) || isUninitialized(ALARM1_PERSON1_M.state) || isUninitialized(ALARM1_PERSON1_D.state)) return;
 
         var minute = parseInt(ALARM1_PERSON1_M.state)
         var m_match = (minute == minute_now)
