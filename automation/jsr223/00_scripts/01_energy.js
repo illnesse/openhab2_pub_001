@@ -9,6 +9,7 @@ var MODE_FINISHED = 3
 var timer = null;
 
 var pricekWh = 0.2705; //€
+var Whtotal = 5723000;
 
 function getPricekWh(kwh)
 {
@@ -27,9 +28,18 @@ JSRule({
         var itemTTSOut2 = getItem("TTSOut2");
         var itemWashingmachine_OpState = getItem("Washingmachine_OpState");
 
-        if (itemTPLinkPlug2_Power.state < 0.2) postUpdate(itemWashingmachine_OpState,MODE_OFF)
-        else if (itemTPLinkPlug2_Power.state > 10) postUpdate(itemWashingmachine_OpState,MODE_ACTIVE)
-        else if (itemTPLinkPlug2_Power.state < 3.0) {
+        if (itemTPLinkPlug2_Power.state < 0.2) 
+        {
+            postUpdate(itemWashingmachine_OpState,MODE_OFF)
+            return;
+        }
+
+        if (itemTPLinkPlug2_Power.state > 10) 
+        {
+            postUpdate(itemWashingmachine_OpState,MODE_ACTIVE)
+        } 
+        else if (itemTPLinkPlug2_Power.state < 3.0) 
+        {
             if (itemWashingmachine_OpState.state == MODE_OFF) postUpdate(itemWashingmachine_OpState,MODE_STANDBY)
             else if (itemWashingmachine_OpState.state == MODE_ACTIVE) 
             {
@@ -77,39 +87,21 @@ JSRule({
         var itemEnergyUsage_Month = getItem(toUpdate+"_EnergyUsage_Month");
         var itemEnergyUsage_Today_UI = getItem(toUpdate+"_EnergyUsage_Today_UI");
 
-        var EnergyUsage_Month = 0;
-        var EnergyUsage_PrevMonth = 0
-        EnergyUsage_Month = itemEnergyUsage.state;
-/*
-        //uncomment this when we have a month worth of data so this isn't null
-        var EnergyUsage_PrevMonth = historicState(itemEnergyUsage.name, now().minusDays(30)); //.,"influxdb"
-        if (EnergyUsage_PrevMonth !== null) // if we don't have a full month of data yet
-        {
-            EnergyUsage_Month = itemEnergyUsage.state - EnergyUsage_PrevMonth;
-        }
-*/      
         var date = new Date();
-        //date.setDate(date.getDate() - 1); //-1 day, yesterday
         date.setHours(0,0,0,0); //before midnight
-        var itemEnergyUsage_SumYesterday = HistoricItem(itemEnergyUsage.name, now().minusDays(1));
-        var itemEnergyUsage_Yesterday = HistoricItem(itemEnergyUsage_Today.name, formatISOStringtoJodaDateTimeZone(date.toISOString()));
 
+        var EnergyUsage_Month = 0;
 
-        var EnergyUsage_SumYesterday = isUninitialized(itemEnergyUsage_SumYesterday) ? 0 : itemEnergyUsage_SumYesterday.state;
-        var EnergyUsage_Yesterday = isUninitialized(itemEnergyUsage_Yesterday) ? 0 : itemEnergyUsage_Yesterday.state;
-        //logInfo("formatISOStringtoJodaDateTimeZone(date.toISOString()) " + formatISOStringtoJodaDateTimeZone(date.toISOString()));
-        //logInfo("itemEnergyUsage_today: " + itemEnergyUsage.state +" - "+ EnergyUsage_SumYesterday + " = " + (itemEnergyUsage.state - EnergyUsage_SumYesterday) + ", EnergyUsage_Yesterday: "+EnergyUsage_Yesterday)
+        var EnergyUsage_Yesterday = HistoricItem(itemEnergyUsage.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
+        var EnergyUsage_Today = itemEnergyUsage.state - EnergyUsage_Yesterday;
+        logInfo(toUpdate+" EnergyUsage_Today: " + EnergyUsage_Today + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
 
-        var today = (itemEnergyUsage.state - EnergyUsage_SumYesterday);
-        if (isNaN(today)) today = 0;
-        
-        var delta = round(today - EnergyUsage_Yesterday,3);
-        //logInfo("toUpdate " + toUpdate + " delta "+ delta +" today "+ today +" EnergyUsage_Yesterday "+ EnergyUsage_Yesterday);
-        var usagetoday = round(today,3) + " kWh (? " + ((delta > 0) ? "+"+delta : delta ) + ") "+getPricekWh(today);
+        var delta = round((EnergyUsage_Today - EnergyUsage_Yesterday),3);
+        var usagetoday = round(EnergyUsage_Today,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta + ") "+getPricekWh(EnergyUsage_Today);
 
-        postUpdate(itemEnergyUsage_Today,today)
-        postUpdate(itemEnergyUsage_Today_UI, usagetoday )
-        postUpdate(itemEnergyUsage_Month, EnergyUsage_Month )
+        postUpdate(itemEnergyUsage_Today,EnergyUsage_Today)
+        postUpdate(itemEnergyUsage_Today_UI, usagetoday)
+        postUpdate(itemEnergyUsage_Month, EnergyUsage_Month)
     }
 });
 
@@ -120,12 +112,12 @@ JSRule({
     name: "Energy per Day",
     description: "Line: "+__LINE__,
     triggers: [
-        TimerTrigger("0 59 23 * * ?"),
-        ItemCommandTrigger("TestBTN")
+        ItemStateChangeTrigger("HM_EM_EnergyCounter")
     ],
     execute: function( module, input)
     {
         var itemEnergyCounter = getItem("HM_EM_EnergyCounter");
+        var itemEnergyCounter_Total_UI = getItem("HM_EM_EnergyCounter_Total_UI");
         var itemEnergyUsage_Today = getItem("HM_EM_EnergyUsage_Today");
         var itemEnergyUsage_Month_UI = getItem("HM_EM_EnergyUsage_Month_UI");
         var itemEnergyUsage_Today_UI = getItem("HM_EM_EnergyUsage_Today_UI");
@@ -138,14 +130,14 @@ JSRule({
         //today so far
         var EnergyUsage_Yesterday = HistoricItem(itemEnergyCounter.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
         var EnergyUsage_Today = itemEnergyCounter.state - EnergyUsage_Yesterday;
-        logInfo("EnergyUsage_Today: " + EnergyUsage_Today + " at "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
+        logInfo("HM_EM EnergyUsage_Today: " + EnergyUsage_Today + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
 
-        var delta = round(EnergyUsage_Today - EnergyUsage_Yesterday,3);
-        //logInfo("toUpdate " + toUpdate + " delta "+ delta +" today "+ today +" EnergyUsage_Yesterday "+ EnergyUsage_Yesterday);
-        var usagetoday = round(EnergyUsage_Today/1000,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta/1000 + ") "+getPricekWh(EnergyUsage_Today/1000);
+        var delta = round((EnergyUsage_Today - EnergyUsage_Yesterday)/1000,3);
+        var usagetoday = round(EnergyUsage_Today/1000,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta + ") "+getPricekWh(EnergyUsage_Today/1000);
 
+        postUpdate(itemEnergyCounter_Total_UI, round(itemEnergyCounter.state + Whtotal,3));
         postUpdate(itemEnergyUsage_Today,EnergyUsage_Today)
-        postUpdate(itemEnergyUsage_Today_UI, usagetoday )
+        postUpdate(itemEnergyUsage_Today_UI, usagetoday)
         postUpdate(itemEnergyUsage_Month_UI, EnergyUsage_Month)
         return;
     }

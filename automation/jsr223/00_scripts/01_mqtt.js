@@ -19,7 +19,8 @@ function sendMQTT(broker, topic, message)
         command = "mosquitto_pub -h XXXXXXX -p XXXX -u XXXXXXX -P XXXXXXXXX -i XXXXXXXXXXXX -t " + topic + " -m \"" + message + "\"";
     }
     execResult = executeCommandLineAndWaitResponse(command, 1000 *3);
-    logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
+    logInfo("sendMQTT " + topic);
+    //logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
 }
 
 var gMQTT_CommandTriggers = [];
@@ -40,22 +41,29 @@ JSRule({
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
         if      (triggeringItem.name == "MQTT_TV") sendMQTT("broadlink","broadlink/tv/samsung/" + input.command, "replay")
+        else if (triggeringItem.name == "aMQTT_TV") sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
+
         else if (triggeringItem.name == "MQTT_AUDIO") sendMQTT("broadlink","broadlink/audio/sony/" + input.command, "replay")
+        else if (triggeringItem.name == "aMQTT_AUDIO") sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
+        else if (triggeringItem.name == "aMQTT_AUDIO_MUTE") sendMQTT("broadlink","broadlink/audio/sony/mute", "replay")
+
         else if (triggeringItem.name == "MQTT_SWITCH") sendMQTT("broadlink","broadlink/hdmiswitch/" + input.command, "replay")
         else if (triggeringItem.name == "MQTT_AC") sendMQTT("broadlink","broadlink/ac/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_FAN") sendMQTT("broadlink","broadlink/fan/obi/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_PC_SYSTEM") sendMQTT("cloudmqtt", "wt/system/commands/" + input.command, "true")
-        else if (triggeringItem.name == "MQTT_PC_DESKTOP") sendMQTT("cloudmqtt", "wt/desktop/commands/" + input.command, "true")
 
+        else if (triggeringItem.name == "MQTT_FAN") sendMQTT("broadlink","broadlink/fan/obi/" + input.command, "replay")
         else if (triggeringItem.name == "aMQTT_FAN_power") sendMQTT("broadlink","broadlink/fan/obi/power", "replay")
         else if (triggeringItem.name == "aMQTT_FAN_rot") sendMQTT("broadlink","broadlink/fan/obi/swivel", "replay")
         else if (triggeringItem.name == "aMQTT_FAN_up") sendMQTT("broadlink","broadlink/fan/obi/up", "replay")
         else if (triggeringItem.name == "aMQTT_FAN_down") sendMQTT("broadlink","broadlink/fan/obi/down", "replay")
 
-        else if (triggeringItem.name == "aMQTT_TV") sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
+        else if (triggeringItem.name == "MQTT_PC_SYSTEM") sendMQTT("cloudmqtt", "wt/system/commands/" + input.command, "true")
+        else if (triggeringItem.name == "MQTT_PC_DESKTOP") sendMQTT("cloudmqtt", "wt/desktop/commands/" + input.command, "true")
+        else if (triggeringItem.name == "aMQTT_PC_screen") sendMQTT("cloudmqtt","wt/desktop/commands/set_display_sleep", "true")
+        else if (triggeringItem.name == "aMQTT_PC_off") sendMQTT("cloudmqtt","wt/system/commands/shutdown", "true")
+        else if (triggeringItem.name == "aMQTT_PC_close") sendMQTT("cloudmqtt","wt/desktop/commands/close_active_window", "true")
+
         else if (triggeringItem.name == "aMQTT_SAT") sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
-        else if (triggeringItem.name == "aMQTT_AUDIO") sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
-        else if (triggeringItem.name == "aMQTT_AUDIO_MUTE") sendMQTT("broadlink","broadlink/audio/sony/mute", "replay")
+        
         else if (triggeringItem.name == "aMQTT_ALLES")
         {
             sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
@@ -199,7 +207,7 @@ JSRule({
     triggers: [
         ItemCommandTrigger("MQTT_Phone_S_Update"),
         ItemCommandTrigger("SysStartup","ON"),
-        TimerTrigger("0 */2 * ? * *")
+        TimerTrigger("0 */15 * ? * *")
     ],
     execute: function( module, input)
     {
@@ -214,7 +222,7 @@ JSRule({
     triggers: [
         ItemCommandTrigger("MQTT_Phone_J_Update"),
         ItemCommandTrigger("SysStartup","ON"),
-        TimerTrigger("0 */2 * ? * *")
+        TimerTrigger("0 */15 * ? * *")
     ],
     execute: function( module, input)
     {

@@ -13,6 +13,7 @@ var ImgIntervalTime = 300;
 
 var refreshImageItem;
 var refreshImageItemURL = "https://XXXXXXX.de/out.jpg";
+var syntaxhilight = true;
 
 //hack to avoid jetty mjpeg timeout
 function refreshSingleImage()
@@ -125,7 +126,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("tunein") >= 0 ) panelcss($panel,$h5,"tunein","tunein");
         else if ($h5text.indexOf("klima") >= 0 ) panelcss($panel,$h5,"klima","homematic");
         else if ($h5text.indexOf("calendar") >= 0 ) panelcss($panel,$h5,"gcal","google");
-        else if ($h5text.indexOf("e-mail") >= 0 ) $panel.addClass("panel_custom bg_email");
+        else if ($h5text.indexOf("e-mail") >= 0 ) panelcss($panel,$h5,"email","google");
         else if ($h5text.indexOf("network") >= 0 ) $panel.addClass("panel_custom bg_net");
         else if ($h5text.indexOf("system") >= 0 ) panelcss($panel,$h5,"sys","raspberrypi");
         else if ($h5text.indexOf("gps") >= 0 ) $panel.addClass("panel_custom bg_gps");
@@ -232,79 +233,83 @@ else
         $(".page-content",$parentdoc).css({height:$height_columns});
 
     }
+
+    function eventlog()
+    {
+        if (!$parentdoc.hasFocus()) return;
+        $.get( "/static/eventlog_tail.log", function( data )
+        {
+            //console.log(data.length);
+            $("#logview1").html(data);
+
+            $('html, body').scrollTop($(document).height());
+        });
+    }
+
+    function openhablog() 
+    {
+        if (!$parentdoc.hasFocus()) return;
+        var d = new Date();
+        $.get( "/static/openhablog_tail.log?nocache"+d.getTime(), function( data )
+        {
+            if (syntaxhilight)
+            {
+                var lines = data.split("\n");
+                var out = "";
+                var class1 = "s1";
+
+                for(n=0;n<lines.length-1;n++)
+                {
+                    var n_fill = pad(n,3);
+                    var elem = lines[n];
+                    if (elem.indexOf("[ERROR]") >= 0) class1 = "error";
+                    else if (elem.indexOf("[WARN ]") >= 0) class1 = "warning";
+                    else class1 = "log";
+
+                    out += n_fill + "  <span class=\""+class1+"\">" + elem + "</span>\n";
+                }
+                //console.log(lines.length);
+                $("#logview2").html(out);
+            }
+            else
+            {
+                $("#logview2").html(data);
+            }
+
+            $('html, body').scrollTop($(document).height());
+        });
+    }
+
+    function clock()
+    {
+        if (!$parentdoc.hasFocus()) return;
+        var currentTime = new Date();
+        var currentYear = currentTime.getFullYear();
+        var currentMonth = currentTime.getMonth()+1;
+        var currentDay = currentTime.getDate();
+        var currentHours = currentTime.getHours();
+        var currentMinutes = currentTime.getMinutes();
+        var currentSeconds = currentTime.getSeconds();
+
+        currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
+        currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
+        var currentTimeString = currentDay +"."+ currentMonth +"."+ currentYear +" "+ currentHours + ":" + currentMinutes + ":" + currentSeconds;
+        $("#clock",$parentdoc).text(currentTimeString);
+    }
    
     function init()
     {
         console.log("init");
 
         //multitail style logger for events.log and openhab.log
-        var syntaxhilight = true;
+        var log1Interval = setInterval(eventlog,LogIntervalTime);
+        eventlog();
 
-        //event log
-        var log1Interval = setInterval(function()
-        {
-            if (!$parentdoc.hasFocus()) return;
-            $.get( "/static/eventlog_tail.log", function( data )
-            {
-                //console.log(data.length);
-                $("#logview1").html(data);
-
-                $('html, body').scrollTop($(document).height());
-            });
-        },LogIntervalTime);
-
-        //openhab log
-        var log2Interval = setInterval(function()
-        {
-            if (!$parentdoc.hasFocus()) return;
-            var d = new Date();
-            $.get( "/static/openhablog_tail.log?nocache"+d.getTime(), function( data )
-            {
-                if (syntaxhilight)
-                {
-                    var lines = data.split("\n");
-                    var out = "";
-                    var class1 = "s1";
-
-                    for(n=0;n<lines.length-1;n++)
-                    {
-                        var n_fill = pad(n,3);
-                        var elem = lines[n];
-                        if (elem.indexOf("[ERROR]") >= 0) class1 = "error";
-                        else if (elem.indexOf("[WARN ]") >= 0) class1 = "warning";
-                        else class1 = "log";
-
-                        out += n_fill + "  <span class=\""+class1+"\">" + elem + "</span>\n";
-                    }
-                    //console.log(lines.length);
-                    $("#logview2").html(out);
-                }
-                else
-                {
-                    $("#logview2").html(data);
-                }
-
-                $('html, body').scrollTop($(document).height());
-            });
-        },LogIntervalTime);
+        var log2Interval = setInterval(openhablog,LogIntervalTime);
+        openhablog();
 
         //display clock in header
-        var clockInterval = setInterval(function()
-        {
-            if (!$parentdoc.hasFocus()) return;
-            var currentTime = new Date();
-            var currentYear = currentTime.getFullYear();
-            var currentMonth = currentTime.getMonth()+1;
-            var currentDay = currentTime.getDate();
-            var currentHours = currentTime.getHours();
-            var currentMinutes = currentTime.getMinutes();
-            var currentSeconds = currentTime.getSeconds();
-
-            currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
-            currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
-            var currentTimeString = currentDay +"."+ currentMonth +"."+ currentYear +" "+ currentHours + ":" + currentMinutes + ":" + currentSeconds;
-            $("#clock",$parentdoc).text(currentTimeString);
-        },1000);
+        var clockInterval = setInterval(clock,1000);
 
         //display TTS input field in header
         $("#ttsinputform",$parentdoc).submit(function( event )

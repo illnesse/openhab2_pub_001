@@ -5,6 +5,7 @@ Number  HM_EM_SignalStrength "Signal Strength [%s]"  (gSensors)  { channel="home
 Number  HM_EM_Power "power [%.0f W]"  (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#POWER" }
 Number  HM_EM_EnergyCounter "Energy Counter [%.2f Wh]" (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#ENERGY_COUNTER" }
 Number  HM_EM_EnergyUsage_Today "[%.2f]" (gSensors)
+Number  HM_EM_EnergyCounter_Total_UI "[%.2f]" (gSensors)
 Number  HM_EM_EnergyUsage_Month_UI "[%.2f]" (gSensors)
 String  HM_EM_EnergyUsage_Today_UI "[%s]" (gSensors)
 

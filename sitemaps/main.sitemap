@@ -242,6 +242,18 @@ sitemap main label="Home"
     }
 	Frame label="FRITZ!Box"
 	{	
+        Text item=fboxName icon="it_router"
+        Text item=fboxVersion icon="it_router"
+
+        Switch item=fboxWifi24 icon="it_router" mappings=[ON="ON",OFF="OFF"]
+        Switch item=fboxGuestWifi icon="it_router" mappings=[ON="ON",OFF="OFF"]
+
+        Text item=fboxWanTotalBytesSent label="DSL total bytes sent [JS(b_mb.js):%s]"
+        Text item=fboxWanTotalBytesReceived label="DSL total bytes received [JS(b_mb.js):%s]"
+
+        Text item=fboxDslUpstreamCurrRate label="DSL Upstream [JS(kbit_mbit.js):%s]"
+        Text item=fboxDslDownstreamCurrRate label="DSL Downstream [JS(kbit_mbit.js):%s]"
+
 		Text item=fboxRinging icon="phone_call_in"
 		Text item=fboxRinging_Out icon="phone_call_out"
 		
@@ -257,54 +269,6 @@ sitemap main label="Home"
 		Text item=Fritz_LastOutgoingTimeUI icon="phone_answering"
 
         Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
-		Text label="Fritz Box Settings" icon="it_router"
-		{
-			Frame 
-			{
-				Text item=fboxName
-				Text item=fboxManufacturer
-				Text item=fboxSerial
-				Text item=fboxVersion
-				Text item=fboxWanIP
-				Text item=fboxWanIPExternal
-			}
-			Frame
-			{
-				Switch item=fboxWifi24
-				Switch item=fboxGuestWifi
-			}
-			Frame
-			{
-				Text item=fboxWanAccessType
-				Text item=fboxWanLayer1UpstreamMaxBitRate
-				Text item=fboxWanLayer1DownstreamMaxBitRate
-				Text item=fboxWanPhysicalLinkStatus
-				Text item=fboxWanTotalBytesSent
-				Text item=fboxWanTotalBytesReceived
-			}
-			Frame
-			{
-				Text item=fboxDslEnable
-				Text item=fboxDslStatus
-			}
-			Frame
-			{	
-				Text item=fboxDslUpstreamCurrRate
-				Text item=fboxDslDownstreamCurrRate
-				Text item=fboxDslUpstreamMaxRate
-				Text item=fboxDslDownstreamMaxRate
-				Text item=fboxDslUpstreamNoiseMargin
-				Text item=fboxDslDownstreamNoiseMargin
-				Text item=fboxDslUpstreamAttenuation
-				Text item=fboxDslDownstreamAttenuation
-			}
-			Frame
-			{
-				Text item=fboxDslFECErrors
-				Text item=fboxDslHECErrors
-				Text item=fboxDslCRCErrors
-			}
-		}
 	}
 
 	Frame label="Devices"
@@ -374,7 +338,7 @@ sitemap main label="Home"
 
         Image label="10" url="http://localhost:8080/static/10.png"
 
-        Text item=HM_EM_EnergyCounter label="Usage Total [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
+        Text item=HM_EM_EnergyCounter_Total_UI label="Usage Total [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
         Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
 
         Text item=HM_EM_EnergyUsage_Month_UI label="Usage Month [JS(kwhprice.js):%s]" icon="measure_power_meter"

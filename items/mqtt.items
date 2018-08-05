@@ -7,15 +7,19 @@ Switch AUDIO_ON
 Group:Switch gMQTT_CommandsSw
 Group:String gMQTT_CommandsStr
 
-String MQTT_TV "Samsung TV" (gMQTT_CommandsStr) ["Switchable"] 
-String MQTT_SAT "Humax SAT" (gMQTT_CommandsStr) ["Switchable"] 
-Number MQTT_SATChannel "Humax SAT" ["Switchable"] 
-String MQTT_AUDIO "Sony Audio" (gMQTT_CommandsStr) ["Switchable"] 
-String MQTT_SWITCH "HDMI Switch" (gMQTT_CommandsStr) ["Switchable"] 
-String MQTT_AC "A/C" (gMQTT_CommandsStr) ["Switchable"] 
-String MQTT_FAN "FAN" (gMQTT_CommandsStr) ["Switchable"] 
-String MQTT_PC_SYSTEM "PC" (gMQTT_CommandsStr) ["Switchable"] 
-String MQTT_PC_DESKTOP "PC" (gMQTT_CommandsStr) ["Switchable"] 
+String MQTT_TV "Samsung TV" (gMQTT_CommandsStr)
+String MQTT_SAT "Humax SAT" (gMQTT_CommandsStr)
+Number MQTT_SATChannel "Humax SAT"
+String MQTT_AUDIO "Sony Audio" (gMQTT_CommandsStr)
+String MQTT_SWITCH "HDMI Switch" (gMQTT_CommandsStr)
+String MQTT_AC "A/C" (gMQTT_CommandsStr)
+String MQTT_FAN "FAN" (gMQTT_CommandsStr)
+String MQTT_PC_SYSTEM "PC System" (gMQTT_CommandsStr)
+String MQTT_PC_DESKTOP "PC Desktop" (gMQTT_CommandsStr)
+
+Switch aMQTT_PC_screen "PC Screen" (gMQTT_CommandsSw) ["Switchable"] 
+Switch aMQTT_PC_off "PC Power" (gMQTT_CommandsSw) ["Switchable"] 
+Switch aMQTT_PC_close "PC Close" (gMQTT_CommandsSw) ["Switchable"] 
 
 Switch aMQTT_FAN_power "Ventilator Power" (gMQTT_CommandsSw) ["Switchable"]
 Switch aMQTT_FAN_rot "Ventilator Rot" (gMQTT_CommandsSw) ["Switchable"]
