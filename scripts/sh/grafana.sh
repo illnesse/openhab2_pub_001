@@ -1,12 +1,11 @@
 WIDTH="1324"
-HEIGHT="400"
 
 IP="127.0.0.1"
 ID="-8mo5BRgk"
 
 sudo chmod 777 /etc/openhab2/html/*.png
 
-wget --output-document /etc/openhab2/html/_2.png "http://$IP:3000/render/d-solo/$ID/grafana_home?panelId=2&width=$WIDTH&height=200&theme=light"
+wget --output-document /etc/openhab2/html/_2.png "http://$IP:3000/render/d-solo/$ID/grafana_home?panelId=2&width=$WIDTH&height=300&theme=light"
 mv /etc/openhab2/html/_2.png /etc/openhab2/html/2.png
 
 wget --output-document /etc/openhab2/html/_4.png "http://$IP:3000/render/d-solo/$ID/grafana_home?panelId=4&width=$WIDTH&height=300&theme=light"

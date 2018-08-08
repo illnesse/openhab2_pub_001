@@ -324,11 +324,11 @@ sitemap main label="Home"
         Text item=TPLinkPlug1_UI label="WZ Current [%s]" icon="it_television"
         Text item=TPLinkPlug2_UI label="WM Current [%s]" icon="scene_washing_machine"
 
-        Text item=TPLinkPlug1_EnergyUsage label="WZ Usage Total [JS(kwhprice.js):%s]" icon="measure_power"
-        Text item=TPLinkPlug2_EnergyUsage label="WM Usage Total [JS(kwhprice.js):%s]" icon="measure_power"
+        Text item=TPLinkPlug1_EnergyCounter_Total_UI label="WZ Usage Total [JS(kwhprice.js):%s]" icon="measure_power"
+        Text item=TPLinkPlug2_EnergyCounter_Total_UI label="WM Usage Total [JS(kwhprice.js):%s]" icon="measure_power"
 
-        Text item=TPLinkPlug1_EnergyUsage_Month label="WZ Usage Month [JS(kwhprice.js):%s]" icon="measure_power"
-        Text item=TPLinkPlug2_EnergyUsage_Month label="WM Usage Month [JS(kwhprice.js):%s]" icon="measure_power"
+        Text item=TPLinkPlug1_EnergyUsage_Month_UI label="WZ Usage Month [JS(kwhprice.js):%s]" icon="measure_power"
+        Text item=TPLinkPlug2_EnergyUsage_Month_UI label="WM Usage Month [JS(kwhprice.js):%s]" icon="measure_power"
 
         Text item=TPLinkPlug1_EnergyUsage_Today_UI label="WZ Usage Today [%s]" icon="measure_power_meter"
         Text item=TPLinkPlug2_EnergyUsage_Today_UI label="WM Usage Today [%s]" icon="measure_power_meter"
@@ -341,7 +341,7 @@ sitemap main label="Home"
         Text item=HM_EM_EnergyCounter_Total_UI label="Usage Total [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
         Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
 
-        Text item=HM_EM_EnergyUsage_Month_UI label="Usage Month [JS(kwhprice.js):%s]" icon="measure_power_meter"
+        Text item=HM_EM_EnergyUsage_Month_UI label="Usage Month [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
         Text item=HM_EM_SignalStrength label="Signal Strength [%s]" icon="it_television"
 
         Text item=HM_EM_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"

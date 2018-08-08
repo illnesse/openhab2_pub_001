@@ -13,7 +13,7 @@ var Whtotal = 5723000;
 
 function getPricekWh(kwh)
 {
-    return "("+round((kwh * pricekWh),2)+" € )";
+    return "("+round((kwh * pricekWh),2)+" €)";
 }
 
 JSRule({
@@ -62,19 +62,18 @@ JSRule({
     }
 });
 
-JSRule({
-    name: "TPLinkUIUpdate",
-    description: "Line: "+__LINE__,
-    triggers: [
-        ItemStateChangeTrigger("TPLinkPlug1_Power"),
-        ItemStateChangeTrigger("TPLinkPlug2_Power")
-    ],
-    execute: function( module, input)
-    {
-        var triggeringItem = getItem(getTriggeringItemStr(input));
-        var toUpdate = triggeringItem.name.split("_")[0]
 
-        var itemPower = triggeringItem 
+function energyUpdate(id,kilo)
+{
+    // id is item id, kilo is 1000 for watts, 1 for kw
+    var toUpdate = id
+
+    var itemEnergyUsage;
+    var addwh = 0;
+
+    if (id != "HM_EM")
+    {
+        var itemPower = getItem(toUpdate+"_Power")
         var itemUI = getItem(toUpdate+"_UI")
         var itemSignal = getItem(toUpdate+"_Signal")
         var itemCurrent = getItem(toUpdate+"_Current")
@@ -82,63 +81,83 @@ JSRule({
         var out = round(itemPower.state,0) +" W ("+round(itemCurrent.state,2)+" A / "+round(itemVoltage.state,0)+" V) "+round(itemSignal.state,0)+" dBm"
         postUpdate(itemUI,out)
 
-        var itemEnergyUsage = getItem(toUpdate+"_EnergyUsage");
-        var itemEnergyUsage_Today = getItem(toUpdate+"_EnergyUsage_Today");
-        var itemEnergyUsage_Month = getItem(toUpdate+"_EnergyUsage_Month");
-        var itemEnergyUsage_Today_UI = getItem(toUpdate+"_EnergyUsage_Today_UI");
+        itemEnergyUsage = getItem(toUpdate+"_EnergyUsage");
+    }
+    else
+    {
+        itemEnergyUsage = getItem(toUpdate+"_EnergyCounter");
+        addwh = Whtotal;
+    }
 
-        var date = new Date();
-        date.setHours(0,0,0,0); //before midnight
+    var itemEnergyUsage_Total_UI = getItem(toUpdate+"_EnergyCounter_Total_UI");
+    var itemEnergyUsage_Today = getItem(toUpdate+"_EnergyUsage_Today");
+    var itemEnergyUsage_Month_UI = getItem(toUpdate+"_EnergyUsage_Month_UI");
+    var itemEnergyUsage_Today_UI = getItem(toUpdate+"_EnergyUsage_Today_UI");
 
-        var EnergyUsage_Month = 0;
+    var date = new Date();
+    date.setHours(2,0,0,0); //midnight
 
-        var EnergyUsage_Yesterday = HistoricItem(itemEnergyUsage.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
-        var EnergyUsage_Today = itemEnergyUsage.state - EnergyUsage_Yesterday;
-        logInfo(toUpdate+" EnergyUsage_Today: " + EnergyUsage_Today + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
+    var EnergyUsage_Month = 0;
 
-        var delta = round((EnergyUsage_Today - EnergyUsage_Yesterday),3);
-        var usagetoday = round(EnergyUsage_Today,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta + ") "+getPricekWh(EnergyUsage_Today);
+    var EnergyUsage_BeginOfDay = HistoricItem(itemEnergyUsage.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
+    var EnergyUsage_Today = itemEnergyUsage.state - EnergyUsage_BeginOfDay;
 
-        postUpdate(itemEnergyUsage_Today,EnergyUsage_Today)
-        postUpdate(itemEnergyUsage_Today_UI, usagetoday)
-        postUpdate(itemEnergyUsage_Month, EnergyUsage_Month)
+    date = new Date();
+    date.setDate(date.getDate() - 1);
+
+    var EnergyUsage_Yesterday = HistoricItem(itemEnergyUsage_Today.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
+
+    //logInfo(toUpdate +" itemEnergyUsage.state "+ itemEnergyUsage.state +" EnergyUsage_BeginOfDay "+ EnergyUsage_BeginOfDay + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
+
+    var delta = round((EnergyUsage_Today - EnergyUsage_Yesterday)/kilo,3);
+    var usagetoday = round(EnergyUsage_Today/kilo,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta + ") "+getPricekWh(EnergyUsage_Today/kilo);
+    
+    postUpdate(itemEnergyUsage_Total_UI, round(itemEnergyUsage.state + addwh,3));
+    postUpdate(itemEnergyUsage_Today, EnergyUsage_Today)
+    postUpdate(itemEnergyUsage_Today_UI, usagetoday)
+    postUpdate(itemEnergyUsage_Month_UI, EnergyUsage_Month)
+}
+
+JSRule({
+    name: "TPLinkUIUpdate",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemStateChangeTrigger("TPLinkPlug1_EnergyUsage"),
+        ItemStateChangeTrigger("TPLinkPlug2_EnergyUsage")
+    ],
+    execute: function( module, input)
+    {
+        var triggeringItem = getItem(getTriggeringItemStr(input));
+        energyUpdate(triggeringItem.name.split("_")[0],1);
     }
 });
 
-//var letzteAblesungWert = 561069
+JSRule({
+    name: "TPLinkUIUpdate",
+    description: "Line: "+__LINE__,
+    triggers: [
+        TimerTrigger("0 0/10 * * * ?"),
+        ItemCommandTrigger("TestBTN")
+    ],
+    execute: function( module, input)
+    {
+        energyUpdate("TPLinkPlug1",1);
+        energyUpdate("TPLinkPlug2",1);
+    }
+});
 
 
 JSRule({
     name: "Energy per Day",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateChangeTrigger("HM_EM_EnergyCounter")
+        ItemStateChangeTrigger("HM_EM_EnergyCounter"),
+        TimerTrigger("0 0/10 * * * ?"),
+        ItemCommandTrigger("TestBTN")
     ],
     execute: function( module, input)
     {
-        var itemEnergyCounter = getItem("HM_EM_EnergyCounter");
-        var itemEnergyCounter_Total_UI = getItem("HM_EM_EnergyCounter_Total_UI");
-        var itemEnergyUsage_Today = getItem("HM_EM_EnergyUsage_Today");
-        var itemEnergyUsage_Month_UI = getItem("HM_EM_EnergyUsage_Month_UI");
-        var itemEnergyUsage_Today_UI = getItem("HM_EM_EnergyUsage_Today_UI");
-        
-        var date = new Date();
-        date.setHours(0,0,0,0); //before midnight
-
-        var EnergyUsage_Month = 0;
-
-        //today so far
-        var EnergyUsage_Yesterday = HistoricItem(itemEnergyCounter.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
-        var EnergyUsage_Today = itemEnergyCounter.state - EnergyUsage_Yesterday;
-        logInfo("HM_EM EnergyUsage_Today: " + EnergyUsage_Today + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
-
-        var delta = round((EnergyUsage_Today - EnergyUsage_Yesterday)/1000,3);
-        var usagetoday = round(EnergyUsage_Today/1000,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta + ") "+getPricekWh(EnergyUsage_Today/1000);
-
-        postUpdate(itemEnergyCounter_Total_UI, round(itemEnergyCounter.state + Whtotal,3));
-        postUpdate(itemEnergyUsage_Today,EnergyUsage_Today)
-        postUpdate(itemEnergyUsage_Today_UI, usagetoday)
-        postUpdate(itemEnergyUsage_Month_UI, EnergyUsage_Month)
-        return;
+        energyUpdate("HM_EM",1000);
     }
 });
+

@@ -9,6 +9,16 @@ var gmail_array_temp = []
 
 var init = false;
 
+function containsAny(str, substrings) {
+    for (var i = 0; i != substrings.length; i++) {
+       var substring = substrings[i];
+       if (str.indexOf(substring) != - 1) {
+         return substring;
+       }
+    }
+    return null; 
+}
+
 JSRule({
     name: "GetMail",
     description: "Line: "+__LINE__,
@@ -56,7 +66,13 @@ JSRule({
             if (gmail_array[i].state == MODE_DEFAULT)
             {
                 logInfo("New Email: " + out);
-                if (init) sendCommand(itemTTSOut2,"Neue Email: "+ out)
+                if (init)
+                {
+                  if (containsAny(out, ["eclipse/smarthome", "bannedemailstring"]) != null)
+                  {
+                    sendCommand(itemTTSOut2,"Neue Email: "+ out)
+                  }
+                } 
                 gmail_array[i].state = MODE_DONE;
             }
             postUpdate(getItem("GMail_Acc1_Mail"+(i+1)+"__UI"),out)

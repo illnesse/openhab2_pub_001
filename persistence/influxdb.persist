@@ -15,13 +15,13 @@ Items {
 	HMDoor1, OsramSensorTriggered : strategy = everyChange
 
     HM_EM_Power, HM_EM_EnergyCounter : strategy = every5Minutes, restoreOnStartup
-    HM_EM_EnergyUsage_Today : strategy = everyChange
+    HM_EM_EnergyUsage_Today : strategy = every10Minutes
 
     gCalTimes* : strategy = everyChange, restoreOnStartup
     gLatency* : strategy = everyHour, restoreOnStartup
     gOnline* : strategy = everyHour, everyChange, restoreOnStartup
     gTPLinkPlugs* : strategy = every5Minutes, restoreOnStartup
-    TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = everyDay, restoreOnStartup
+    TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = every10Minutes
 
     ALARM1_PERSON1_H, ALARM1_PERSON1_M, ALARM1_PERSON1_D : strategy = everyChange, restoreOnStartup
 

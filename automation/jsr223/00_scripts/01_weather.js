@@ -21,9 +21,8 @@ JSRule({
     name: "tempUIOutdoor",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateUpdateTrigger("Temperature"),
-        ItemStateUpdateTrigger("Humidity"),
-        ItemCommandTrigger("SysStartup","ON")
+        ItemStateChangeTrigger("Temperature"),
+        ItemStateChangeTrigger("Humidity")
     ],
     execute: function( module, input)
     {
@@ -42,9 +41,8 @@ JSRule({
     name: "tempUIIndoor",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateUpdateTrigger("HMTemp1"),
-        ItemStateUpdateTrigger("HMTemp1HUM"),
-        ItemCommandTrigger("SysStartup","ON")
+        ItemStateChangeTrigger("HMTemp1"),
+        ItemStateChangeTrigger("HMTemp1HUM")
     ],
     execute: function( module, input)
     {
@@ -64,7 +62,6 @@ JSRule({
     description: "Line: "+__LINE__,
     triggers: [
         ItemCommandTrigger("TestBTN"),
-        ItemCommandTrigger("SysStartup","ON"),
         TimerTrigger("0 0 */3 ? * *")
     ],
     execute: function( module, input)

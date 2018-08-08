@@ -17,8 +17,11 @@ Number TPLinkPlug2_Voltage        "[%.2f]"        (gTPLinkAll, gTPLinkPlugs) { c
 
 Number Washingmachine_OpState
 
-Number TPLinkPlug1_EnergyUsage_Month "[%.2f]" (gTPLinkAll)
-Number TPLinkPlug2_EnergyUsage_Month "[%.2f]" (gTPLinkAll)
+Number TPLinkPlug1_EnergyCounter_Total_UI "[%.2f]" (gTPLinkAll)
+Number TPLinkPlug2_EnergyCounter_Total_UI "[%.2f]" (gTPLinkAll)
+
+Number TPLinkPlug1_EnergyUsage_Month_UI "[%.2f]" (gTPLinkAll)
+Number TPLinkPlug2_EnergyUsage_Month_UI "[%.2f]" (gTPLinkAll)
 
 Number TPLinkPlug1_EnergyUsage_Today "[%.2f]" (gTPLinkAll)
 Number TPLinkPlug2_EnergyUsage_Today "[%.2f]" (gTPLinkAll)

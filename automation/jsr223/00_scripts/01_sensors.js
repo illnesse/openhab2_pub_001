@@ -5,8 +5,7 @@ JSRule({
     name: "DoorSensor",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateChangeTrigger("HMDoor1"),
-        ItemCommandTrigger("SysStartup","ON")
+        ItemStateChangeTrigger("HMDoor1")
     ],
     execute: function( module, input)
     {
@@ -34,8 +33,7 @@ JSRule({
     name: "MotionSensor",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateUpdateTrigger("OsramSensorTriggered"),
-        ItemCommandTrigger("SysStartup","ON")
+        ItemStateUpdateTrigger("OsramSensorTriggered")
     ],
     execute: function( module, input)
     {

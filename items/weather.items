@@ -1,9 +1,11 @@
-String Temperature_UI_Outdoor "Aussentemperatur [%s]" <temperature>
-String Temperature_UI_Indoor "Innentemperatur [%s]" <temperature>
-Number Temperature "Aussentemperatur [%.1f °C]" <temperature> { channel="yahooweather:weather:XXXXXXX:temperature" }
-Number Humidity "Luftfeuchtigkeit [%.1f %%]" <humidity> { channel="yahooweather:weather:XXXXXXX:humidity" }
-Number Pressure "Luftdruck [%.1f hPa]" <pressure> { channel="yahooweather:weather:fueXXXXXXXrth:pressure" }
-Number FeelsLikeOutdoor "Feels Like [%.1f °C]" <temperature>
-Number FeelsLikeIndoor "Feels Like [%.1f °C]" <temperature>
+Group gTemp
 
-String PollenUI "Pollenbelastung (5 tage) [%s]"
+String Temperature_UI_Outdoor "Aussentemperatur [%s]" (gTemp)
+String Temperature_UI_Indoor "Innentemperatur [%s]" (gTemp)
+Number Temperature "Aussentemperatur [%.1f °C]" (gTemp) { channel="yahooweather:weather:XXXXX:temperature" }
+Number Humidity "Luftfeuchtigkeit [%.1f %%]" (gTemp) { channel="yahooweather:weather:XXXXX:humidity" }
+Number Pressure "Luftdruck [%.1f hPa]" (gTemp) { channel="yahooweather:weather:XXXXX:pressure" }
+Number FeelsLikeOutdoor "Feels Like [%.1f °C]" (gTemp)
+Number FeelsLikeIndoor "Feels Like [%.1f °C]" (gTemp)
+
+String PollenUI "Pollenbelastung (5 tage) [%s]" (gTemp)
