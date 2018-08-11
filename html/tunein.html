@@ -5,6 +5,7 @@
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/jquery.cookie.js"></script>
     <script src="../static/js/color-thief.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/basicui/material-icons.css">
     <style>
         body 
         {    
@@ -68,7 +69,7 @@
         }
 
         .header {
-            height: 50px;
+            height: 30px;
         }
 
         #list3 {
@@ -79,7 +80,7 @@
             justify-content: space-between;
             align-content: flex-start;
             width:102%;
-            height: 260px;
+            height: 286px;
             overflow-y: scroll;
         }
 
@@ -89,7 +90,7 @@
             background-color: transparent;
             border-radius: 4px;
             color: #999; 
-            width: 180px;
+            width: 100%;
             height: 22px;
             outline: none;
             padding-left:4px;
@@ -101,20 +102,59 @@
         .label
         {
             margin-left: 52px;
-            color: #ffffffa6;
+            margin-top: 3px;
+            margin-right: 10px;
+            color: #ffffff66;
             display: inline;
             font-size: 14px;
         }
         .searchform, form
         {
-            display: inline;
+            flex-grow: 1;
         }
         .l 
         {
-            width: 50%;
+            width: 98%;
             display: flex;
-            justify-content: space-between;
-            margin-top:4px;
+            justify-content: flex-start;
+            /* margin-top:4px; */
+        }
+
+        #player
+        {
+            position: fixed;
+            margin: 0 auto;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%,88%);
+            opacity: 0.8;
+            height: 100px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #closebtn
+        {
+            background: #000000;
+            color: #ffffff;
+            position: absolute;
+            width:17px;
+            height:17px;
+            right: 4px;
+            top: 4px;
+            cursor: pointer;
+            font-size: 17px !important;
+            border-radius: 3px;
+        }
+
+        .material-icons {
+            font-size: 17px !important;
+        }
+
+        iframe {
+            border: none;
+            border-radius: 5px;
+            height: 100px;
         }
 
         @media screen and (max-width: 850px)
@@ -125,10 +165,6 @@
             .label
             {
                 margin-left: 47px;
-            }
-            .l 
-            {
-                width: 100%;
             }
             #tuneinsearchtext
             {
@@ -146,13 +182,15 @@
                     <form id="tuneinsearch" ><input id="tuneinsearchtext" type="text"></form>
                 </div>
             </div>
-            <div class="r">
-
-            </div>
         </div>
         <div id="list3"></div>
     </div>
+    <div id="player">
+        <div id="closebtn"><i class="material-icons">close</i></div>
+        <iframe frameBorder="0" src="https://tunein.com/embed/player/s2585/"></iframe>
+    </div>
     <script>
+        var outputdevice = "local";
         var searchstring = $.cookie('tunein_loadlist');
         $("#tuneinsearchtext").val(searchstring);
 
@@ -167,20 +205,61 @@
 
         function initevents() 
         {
+            $.ajax({
+                    url:"/rest/items/TuneInPlayDevice",
+                    type:"GET",
+                    contentType:"text/plain",
+                    dataType:"json",
+                    success : function(text)
+                    {
+                        outputdevice = text.state;
+                        console.log("outputdevice set to",text.state);
+                    }
+                });
+
+
+            $("#closebtn").on("click", function( event ) 
+            {
+                $("#player").fadeOut(500);
+                $('#player iframe').attr('src', "about:blank")
+            });
+
             $(".linkitem").on("click", function( event ) 
             {
                 event.preventDefault();
                 var link = $( this ).data("link")
                 //var str = $("#ttstext",$parentdoc).val()
 
-                console.log(link);
-                $.ajax({
-                    url:"/rest/items/Echo2_RadioStationId",
-                    type:"POST",
-                    data:link,
-                    contentType:"text/plain",
-                    dataType:"json"
-                });
+                console.log("outputdevice",outputdevice);
+
+                if (outputdevice == "local")
+                {
+                    $('#player iframe').attr('src', "about:blank")
+                    $('#player iframe').attr('src', "https://tunein.com/embed/player/"+link+"/")
+                    $("#player").fadeIn(500);
+                }
+                else if (outputdevice == "echo1")
+                {
+                    console.log(link);
+                    $.ajax({
+                        url:"/rest/items/Echo1_RadioStationId",
+                        type:"POST",
+                        data:link,
+                        contentType:"text/plain",
+                        dataType:"json"
+                    });
+                }
+                else if (outputdevice == "echo2")
+                {
+                    console.log(link);
+                    $.ajax({
+                        url:"/rest/items/Echo2_RadioStationId",
+                        type:"POST",
+                        data:link,
+                        contentType:"text/plain",
+                        dataType:"json"
+                    });
+                }
 
             });
 

@@ -1,7 +1,7 @@
 Strategies {
 	everyMinute : "0 * * * * ?"
-	every5Minutes : "*/5 * * * * ?"
-    every10Minutes : "*/10 * * * * ?"
+	every5Minutes : "0 */5 * * * ?"
+    every10Minutes : "0 */10 * * * ?"
     everyHour   : "0 0 * * * ?"
     everyDay    : "0 0 0 * * ?"
 }
@@ -20,10 +20,8 @@ Items {
     gCalTimes* : strategy = everyChange, restoreOnStartup
     gLatency* : strategy = everyHour, restoreOnStartup
     gOnline* : strategy = everyHour, everyChange, restoreOnStartup
-    gTPLinkPlugs* : strategy = every5Minutes, restoreOnStartup
+    gTPLinkPlugs* : strategy = every10Minutes, restoreOnStartup
     TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = every10Minutes
-
-    ALARM1_PERSON1_H, ALARM1_PERSON1_M, ALARM1_PERSON1_D : strategy = everyChange, restoreOnStartup
 
     CPU_Load, CPU_Load1, CPU_Load5, CPU_Load15, Sensor_CPUTemp, CPU_Threads : strategy = every5Minutes
 	System_openHAB_Memory : strategy = every10Minutes

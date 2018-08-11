@@ -9,6 +9,8 @@ var gmail_array_temp = []
 
 var init = false;
 
+var mutedEmails = ["eclipse/smarthome", "codetheweb/tuyapi"];
+
 function containsAny(str, substrings) {
     for (var i = 0; i != substrings.length; i++) {
        var substring = substrings[i];
@@ -68,7 +70,7 @@ JSRule({
                 logInfo("New Email: " + out);
                 if (init)
                 {
-                  if (containsAny(out, ["eclipse/smarthome", "bannedemailstring"]) != null)
+                  if (containsAny(out, mutedEmails) == null)
                   {
                     sendCommand(itemTTSOut2,"Neue Email: "+ out)
                   }

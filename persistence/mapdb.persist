@@ -1,7 +1,7 @@
 Strategies {
 	everyMinute : "0 * * * * ?"
-	every5Minutes : "*/5 * * * * ?"
-    every10Minutes : "*/10 * * * * ?"
+	every5Minutes : "0 */5 * * * ?"
+    every10Minutes : "0 */10 * * * ?"
     everyHour   : "0 0 * * * ?"
     everyDay    : "0 0 0 * * ?"
 }
@@ -21,9 +21,12 @@ Items
     gSysInfo* : strategy = everyChange, restoreOnStartup
     gTemp* : strategy = everyChange, restoreOnStartup
 
+    TuneInPlayDevice : strategy = everyChange, restoreOnStartup
 	FeelsLikeOutdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     Temperature_UI_Outdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     itemEnergyUsage_Today_UI, TPLinkPlug1_UI, TPLinkPlug2_UI : strategy = everyChange, restoreOnStartup   
     PollenUI : strategy = everyChange, restoreOnStartup
     Washingmachine_OpState : strategy = everyChange, restoreOnStartup
+
+    ALARM1_PERSON1_H, ALARM1_PERSON1_M, ALARM1_PERSON1_D : strategy = everyChange, restoreOnStartup
 }

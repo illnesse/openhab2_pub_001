@@ -203,6 +203,7 @@ sitemap main label="Home"
 
 	Frame label="Tunein"
 	{
+        Switch item=TuneInPlayDevice label="Play on Device" icon="audio_volume_high" mappings=[echo1="ECHO1",echo2="ECHO2",local="LOCAL"]
         Webview url="/static/tunein.html" height=9
 	}
 
@@ -348,6 +349,8 @@ sitemap main label="Home"
         Text item=HM_EM_Power label="Power Current [%.0f W]" icon="measure_power"
 
         Image label="12" url="http://localhost:8080/static/12.png"
+
+        Image label="14" url="http://localhost:8080/static/14.png"
         
         Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1 |Homematic|http://192.168.178.45" icon="none"
         Text label="" icon="none"

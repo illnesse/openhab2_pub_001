@@ -459,10 +459,6 @@ a:hover
     background-color: rgba(30,30,30, 0.9) !important;
 }
 
-.bg_rss
-{
-    background: linear-gradient(to bottom, #26262b, #2b5b6585);
-}
 .bg_fritzbox
 {
     background: linear-gradient(to bottom, #292824e6, #1a191577);
@@ -476,9 +472,19 @@ a:hover
     width: 548px;
 }
 
+.bg_rss
+{
+    background: linear-gradient(to top, #0d0d0e57, #2d3535c9);
+}
 .bg_email 
 {
-    background: linear-gradient(to top, #16262878, #2b5b6585)
+    /* background: linear-gradient(to top, #16262878, #2b5b6585) */
+    background: linear-gradient(to top, #0d0d0e57, #2d3535c9);
+}
+.bg_gcal
+{
+    /* background-image: radial-gradient(circle at top right, #255660e2, #1b2425c4); */
+    background: linear-gradient(to top, #0d0d0e57, #2d3535c9);
 }
 
 .bg_energy
@@ -504,10 +510,6 @@ a:hover
 .bg_logreader
 {
     background: linear-gradient(to top, #11151ae0, #232127d1, #1419219e);
-}
-.bg_gcal
-{
-    background-image: radial-gradient(circle at top right, #255660e2, #1b2425c4);
 }
 .bg_sony
 {
