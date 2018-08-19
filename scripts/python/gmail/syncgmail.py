@@ -14,6 +14,7 @@ service = build('gmail', 'v1', http=creds.authorize(Http()))
 
 results = service.users().messages().list(userId='me').execute()
 
+bannedwords = ["eclipse/smarthome", "codetheweb/tuyapi","[OH2_System_Notification]"]
 messages = []
 if 'messages' in results:
     messages.extend(results['messages'])
@@ -28,24 +29,27 @@ for item in messages:
         for headeritem in message["payload"]["headers"]:
 
             #print(headeritem)
-            if headeritem["name"] == "From":
-                jsontemp["From"] = headeritem["value"]
-            if headeritem["name"] == "Date":
-                jsontemp["Date"] = headeritem["value"]
+            #if headeritem["name"] == "From":
+                #jsontemp["From"] = headeritem["value"]
+            #if headeritem["name"] == "Date":
+                #jsontemp["Date"] = headeritem["value"]
             if headeritem["name"] == "Subject":
                 jsontemp["Subject"] = headeritem["value"]
 
             jsontemp["id"] = i
             jsontemp["threadId"] = item['threadId']
-            jsontemp["snippet"] = message['snippet']
+            #jsontemp["snippet"] = message['snippet']
 
         if not "Subject" in jsontemp: 
             #print("wat")
             continue
+        if any (word in jsontemp["Subject"] for word in bannedwords):
+            #print("filtering " + jsontemp["Subject"])
+            continue
 
     jsonout.append(jsontemp)
     i = i + 1
-    if i == 10:
+    if i == 50:
         break
 
 print(json.dumps(jsonout))
