@@ -527,7 +527,8 @@ a:hover
 }
 .bg_echos
 {
-    background: linear-gradient(to bottom, #35235073, #48525112);
+    background: linear-gradient(to bottom, #121215d9, #141f2aad);
+    /* background: linear-gradient(to bottom, #35235073, #48525112); */
 }
 .bg_tunein
 {

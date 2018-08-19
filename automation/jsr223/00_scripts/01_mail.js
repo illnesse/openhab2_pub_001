@@ -9,7 +9,7 @@ var gmail_array_temp = []
 
 var init = false;
 
-var mutedEmails = ["eclipse/smarthome", "codetheweb/tuyapi"];
+var mutedEmails = ["eclipse/smarthome", "codetheweb/tuyapi","OH2_System_Notification"];
 
 function containsAny(str, substrings) {
     for (var i = 0; i != substrings.length; i++) {
@@ -35,7 +35,8 @@ JSRule({
         var itemTTSOut2 = getItem("TTSOut2");
         postUpdate(itemMail_Update,"updating...");
         
-        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/mailsync.sh", 1000 *10);
+        logInfo("GetMail: getting mails")
+        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/mailsync.sh", 1000 *60);
         //logInfo("GetMail: " + results1)
 
         if (results1 == "") return;
@@ -61,23 +62,26 @@ JSRule({
         }
         gmail_array = gmail_array_temp;
 
+        var items = 0;
         for(var i = 0; i < gmail_array.length; i++) 
         {
             var out = gmail_array[i].Subject //+" "+ gmail_array_temp[i].Date
-            //logInfo("state: "+gmail_array[i].state);
-            if (gmail_array[i].state == MODE_DEFAULT)
+
+            if ((containsAny(out, mutedEmails) == null) && (items < 10))
             {
-                logInfo("New Email: " + out);
-                if (init)
+                items++;
+                //logInfo("state: "+gmail_array[i].state);
+                if (gmail_array[i].state == MODE_DEFAULT)
                 {
-                  if (containsAny(out, mutedEmails) == null)
-                  {
-                    sendCommand(itemTTSOut2,"Neue Email: "+ out)
-                  }
-                } 
-                gmail_array[i].state = MODE_DONE;
+                    //logInfo("New Email: " + out);
+                    if (init)
+                    {
+                        sendCommand(itemTTSOut2,"Neue Email: "+ out)
+                    } 
+                    gmail_array[i].state = MODE_DONE;
+                }
+                postUpdate(getItem("GMail_Acc1_Mail"+(i+1)+"__UI"),out)
             }
-            postUpdate(getItem("GMail_Acc1_Mail"+(i+1)+"__UI"),out)
         }
 
         init = true;

@@ -6,8 +6,9 @@ var home_lon = "12.3456789";
 
 var delay = 400;
 
-function sendMQTT(broker, topic, message)
+function sendMQTT(broker, topic, message, quiet)
 {
+    quiet = quiet || false;
     var execResult;
     var command;
     if (broker == "broadlink")
@@ -19,7 +20,7 @@ function sendMQTT(broker, topic, message)
         command = "mosquitto_pub -h XXXXXXX -p XXXX -u XXXXXXX -P XXXXXXXXX -i XXXXXXXXXXXX -t " + topic + " -m \"" + message + "\"";
     }
     execResult = executeCommandLineAndWaitResponse(command, 1000 *3);
-    logInfo("sendMQTT " + topic);
+    if (!quiet) logInfo("sendMQTT " + topic);
     //logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
 }
 
@@ -59,7 +60,13 @@ JSRule({
         else if (triggeringItem.name == "MQTT_PC_SYSTEM") sendMQTT("cloudmqtt", "wt/system/commands/" + input.command, "true")
         else if (triggeringItem.name == "MQTT_PC_DESKTOP") sendMQTT("cloudmqtt", "wt/desktop/commands/" + input.command, "true")
         else if (triggeringItem.name == "aMQTT_PC_screen") sendMQTT("cloudmqtt","wt/desktop/commands/set_display_sleep", "true")
-        else if (triggeringItem.name == "aMQTT_PC_off") sendMQTT("cloudmqtt","wt/system/commands/shutdown", "true")
+        else if (triggeringItem.name == "aMQTT_PC_off") {
+            var state = getItem("aMQTT_PC_off").state;
+            logInfo(state);
+            if (state == OFF) sendMQTT("cloudmqtt","wt/system/commands/hibernate", "true")
+            else if (state == ON) sendCommand("WOL_PC",ON);
+        }
+         
         else if (triggeringItem.name == "aMQTT_PC_close") sendMQTT("cloudmqtt","wt/desktop/commands/close_active_window", "true")
 
         else if (triggeringItem.name == "aMQTT_SAT") sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
@@ -71,6 +78,9 @@ JSRule({
             sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
             sleep(delay);
             sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
+
+            var backlightstate = getItem("aMQTT_ALLES").state;
+            sendCommand("LED1Power",backlightstate);
         }
     }
 });

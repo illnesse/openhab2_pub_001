@@ -3,7 +3,6 @@ load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
 function querySNMP()
 {
-    var itemNASOnline = getItem("NASOnline");
     var execResult = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/snmpnas.sh",1000 * 10);
     if (execResult == null) return;
 
@@ -13,7 +12,6 @@ function querySNMP()
 
     if (arr.length <3)
     {
-        postUpdate(itemNASOnline,CLOSED);
         return; // offline
     }
 
@@ -61,9 +59,6 @@ JSRule({
     ],
     execute: function( module, input)
     {
-        var itemNASOnline = getItem("NASOnline");
-        //logInfo(input);
-        postUpdate(itemNASOnline,OPEN);
         createTimer(now().plusSeconds(20), function() 
         {
             querySNMP();
@@ -79,7 +74,7 @@ JSRule({
     ],
     execute: function( module, input)
     {
-        var itemNASOnline = getItem("NASOnline");
-        if (itemNASOnline.state == OPEN) querySNMP();
+        var itemNASLatency = getItem("NASLatency");
+        if (itemNASLatency.state != "UNDEF") querySNMP();
     }
 });

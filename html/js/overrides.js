@@ -13,12 +13,13 @@ var ImgIntervalTime = 300;
 
 var refreshImageItem;
 var refreshImageItemURL = "https://XXXXXXX.de/out.jpg";
+
 var syntaxhilight = true;
 
 //hack to avoid jetty mjpeg timeout
 function refreshSingleImage()
 {
-    if (!$parentdoc.hasFocus()) return;
+//    if (!$parentdoc.hasFocus()) return;
     if (!$refresh) return;
     var d = new Date();
     if (refreshImageItem === undefined) refreshImageItem = $('*[data-widget-id="0002"] img', $parentdoc);
@@ -28,7 +29,7 @@ function refreshSingleImage()
 
 function refreshAllImgs()
 {
-    if (!$parentdoc.hasFocus()) return;
+//    if (!$parentdoc.hasFocus()) return;
     //if (!$refresh) return;
     var d = new Date();
     $(".mdl-form__image img", $parentdoc).each(function()
@@ -39,7 +40,12 @@ function refreshAllImgs()
 
 function panelState(panel, state, anim)
 {
-    if (panel.hasClass("bg_cams")) $refresh = state;
+    if (panel.hasClass("bg_cams"))
+    {
+        $refresh = state;
+        console.warn("panelState() $refresh set to ",$refresh)
+    } 
+
     if (state)
     {
         if (anim)
@@ -236,7 +242,7 @@ else
 
     function eventlog()
     {
-        if (!$parentdoc.hasFocus()) return;
+        //if (!$parentdoc.hasFocus()) return;
         $.get( "/static/eventlog_tail.log", function( data )
         {
             //console.log(data.length);
@@ -248,7 +254,7 @@ else
 
     function openhablog() 
     {
-        if (!$parentdoc.hasFocus()) return;
+        //if (!$parentdoc.hasFocus()) return;
         var d = new Date();
         $.get( "/static/openhablog_tail.log?nocache"+d.getTime(), function( data )
         {
@@ -282,7 +288,7 @@ else
 
     function clock()
     {
-        if (!$parentdoc.hasFocus()) return;
+        //if (!$parentdoc.hasFocus()) return;
         var currentTime = new Date();
         var currentYear = currentTime.getFullYear();
         var currentMonth = currentTime.getMonth()+1;

@@ -14,14 +14,14 @@ Items {
 	HMTemp1, HMTemp1HUM : strategy = every5Minutes
 	HMDoor1, OsramSensorTriggered : strategy = everyChange
 
-    HM_EM_Power, HM_EM_EnergyCounter : strategy = every5Minutes, restoreOnStartup
+    HM_EM_Power, HM_EM_EnergyCounter : strategy = every5Minutes
     HM_EM_EnergyUsage_Today : strategy = every10Minutes
 
     gCalTimes* : strategy = everyChange, restoreOnStartup
-    gLatency* : strategy = everyHour, restoreOnStartup
-    gOnline* : strategy = everyHour, everyChange, restoreOnStartup
-    gTPLinkPlugs* : strategy = every10Minutes, restoreOnStartup
-    TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = every10Minutes
+    gLatency* : strategy = every5Minutes, restoreOnStartup
+    //gOnline* : strategy = everyHour, everyChange, restoreOnStartup
+    gTPLinkPlugs* : strategy = every5Minutes
+    TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = every5Minutes
 
     CPU_Load, CPU_Load1, CPU_Load5, CPU_Load15, Sensor_CPUTemp, CPU_Threads : strategy = every5Minutes
 	System_openHAB_Memory : strategy = every10Minutes

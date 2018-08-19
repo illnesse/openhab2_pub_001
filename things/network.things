@@ -3,8 +3,6 @@ Thing network:pingdevice:desktop [ hostname="192.168.178.33", refreshInterval=30
 Thing network:pingdevice:sonyaudio [ hostname="192.168.178.36", refreshInterval=300000 ]
 Thing network:pingdevice:surface [ hostname="192.168.178.21", refreshInterval=300000 ]
 Thing network:pingdevice:nas [ hostname="192.168.178.25", refreshInterval=60000 ]
-Thing network:pingdevice:handys [ hostname="192.168.178.20", retry=3, timeout=9000, refreshInterval=20000 ]
-Thing network:pingdevice:handyj [ hostname="192.168.178.24", retry=3, timeout=9000, refreshInterval=20000 ]
 Thing network:pingdevice:echo1 [ hostname="192.168.178.23", refreshInterval=300000 ]
 Thing network:pingdevice:echo2 [ hostname="192.168.178.29", refreshInterval=300000 ]
 Thing network:pingdevice:firetv [ hostname="192.168.178.26", refreshInterval=300000 ]
@@ -27,3 +25,6 @@ Thing network:pingdevice:led2 [ hostname="192.168.178.44", refreshInterval=30000
 
 Thing network:pingdevice:tplinkplug1 [ hostname="192.168.178.46", refreshInterval=300000 ]
 Thing network:pingdevice:tplinkplug2 [ hostname="192.168.178.47", refreshInterval=300000 ]
+
+Thing network:pingdevice:handys [ hostname="192.168.178.20", retry=2, timeout=5000, refreshInterval=20000 ]
+Thing network:pingdevice:handyj [ hostname="192.168.178.24", retry=2, timeout=5000, refreshInterval=20000 ]

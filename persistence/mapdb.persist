@@ -8,7 +8,7 @@ Strategies {
 
 Items 
 {
-    gPresence* : strategy = everyHour, restoreOnStartup
+    //gPresence* : strategy = everyHour, restoreOnStartup
     gCal_Event* : strategy = everyChange, restoreOnStartup
     gMail* : strategy = everyChange, restoreOnStartup
     gEchos* : strategy = everyChange, restoreOnStartup

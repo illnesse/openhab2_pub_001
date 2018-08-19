@@ -206,17 +206,16 @@
         function initevents() 
         {
             $.ajax({
-                    url:"/rest/items/TuneInPlayDevice",
-                    type:"GET",
-                    contentType:"text/plain",
-                    dataType:"json",
-                    success : function(text)
-                    {
-                        outputdevice = text.state;
-                        console.log("outputdevice set to",text.state);
-                    }
-                });
-
+                url:"/rest/items/TuneInPlayDevice",
+                type:"GET",
+                contentType:"text/plain",
+                dataType:"json",
+                success : function(text)
+                {
+                    outputdevice = text.state;
+                    console.log("outputdevice set to",text.state);
+                }
+            });
 
             $("#closebtn").on("click", function( event ) 
             {
@@ -232,35 +231,45 @@
 
                 console.log("outputdevice",outputdevice);
 
-                if (outputdevice == "local")
-                {
-                    $('#player iframe').attr('src', "about:blank")
-                    $('#player iframe').attr('src', "https://tunein.com/embed/player/"+link+"/")
-                    $("#player").fadeIn(500);
-                }
-                else if (outputdevice == "echo1")
-                {
-                    console.log(link);
-                    $.ajax({
-                        url:"/rest/items/Echo1_RadioStationId",
-                        type:"POST",
-                        data:link,
-                        contentType:"text/plain",
-                        dataType:"json"
-                    });
-                }
-                else if (outputdevice == "echo2")
-                {
-                    console.log(link);
-                    $.ajax({
-                        url:"/rest/items/Echo2_RadioStationId",
-                        type:"POST",
-                        data:link,
-                        contentType:"text/plain",
-                        dataType:"json"
-                    });
-                }
-
+                $.ajax({
+                    url:"/rest/items/TuneInPlayDevice",
+                    type:"GET",
+                    contentType:"text/plain",
+                    dataType:"json",
+                    success : function(text)
+                    {
+                        outputdevice = text.state;
+                        console.log("outputdevice set to",text.state);
+                        console.log(link);
+                        
+                        if (outputdevice == "local")
+                        {
+                            $('#player iframe').attr('src', "about:blank")
+                            $('#player iframe').attr('src', "https://tunein.com/embed/player/"+link+"/")
+                            $("#player").fadeIn(500);
+                        }
+                        else if (outputdevice == "echo1")
+                        {
+                            $.ajax({
+                                url:"/rest/items/Echo1_RadioStationId",
+                                type:"POST",
+                                data:link,
+                                contentType:"text/plain",
+                                dataType:"json"
+                            });
+                        }
+                        else if (outputdevice == "echo2")
+                        {
+                            $.ajax({
+                                url:"/rest/items/Echo2_RadioStationId",
+                                type:"POST",
+                                data:link,
+                                contentType:"text/plain",
+                                dataType:"json"
+                            });
+                        }
+                    }
+                });
             });
 
             $(window).on("load", function() {
@@ -341,7 +350,8 @@
                     {
                         //$.each(elem.Children, function(index, elem) 
                         //{
-                            if (elem.Image.indexOf("cdn-profiles") != -1) elem.Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+                            if (elem.Image.indexOf("cdn-profiles") != -1) elem.Image = "https://cdn-radiotime-logos.tunein.com/s0q.png";
+                            //"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
                             $("#list3").append(""+
                             "<div class=\"linkitem\" data-link=\""+elem.GuideId+"\">"+
                                 "<div>"+

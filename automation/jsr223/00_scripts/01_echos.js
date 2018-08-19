@@ -1,10 +1,10 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
-var Echo1TitlesTriggers = [];
+var EchoTitlesTriggers = [];
 itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTriggerItem) 
 {
-    Echo1TitlesTriggers.push(ItemStateChangeTrigger(gEchoTriggerItem.name));
+    EchoTitlesTriggers.push(ItemStateChangeTrigger(gEchoTriggerItem.name));
 });
 
 var TTS_OFF = 0;
@@ -12,21 +12,22 @@ var TTS_DEFAULT = 1;
 
 
 JSRule({
-    name: "Echo1Titles",
+    name: "EchoTitles",
     description: "Line: "+__LINE__,
-    triggers: Echo1TitlesTriggers,
+    triggers: EchoTitlesTriggers,
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
         var id = triggeringItem.name.split("_")[0];
         var itemProviderDisplayName = getItem(id+"_ProviderDisplayName");
+        var itemTitle = getItem(id+"_Title");
         var itemSubtitle1 = getItem(id+"_Subtitle1");
         var itemSubtitle2 = getItem(id+"_Subtitle2");
         var itemSubtitles = getItem(id+"_Subtitles");
 
         createTimer(now().plusSeconds(1), function() 
         {
-            var out = itemProviderDisplayName.state + " - " + itemSubtitle1.state + " - " + itemSubtitle2.state;
+            var out = itemTitle.state + " - " + itemProviderDisplayName.state + " - " + itemSubtitle1.state + " - " + itemSubtitle2.state;
             //logInfo(itemProviderDisplayName.state + " /////// "+ itemSubtitle1.state + " ///// " + itemSubtitle2.state +" ///// " + itemSubtitles.state);
             postUpdate(itemSubtitles,out);
         });
@@ -34,7 +35,7 @@ JSRule({
 });
 
 function TTSOut(id,quiet,out)
-    {
+{
     var itemTTSMode = getItem("TTSMode");
     var mode = (itemTTSMode.state != null) ? itemTTSMode.state : TTS_DEFAULT;
 

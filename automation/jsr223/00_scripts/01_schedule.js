@@ -45,9 +45,9 @@ JSRule({
         postUpdate(itemCal_Update,"updating...");
         
         var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX1@gmail.com list Cal_illnesse_", 1000 *5);
-        //logInfo("GetCalEvents: " + results)
+        //logInfo("GetCalEvents: " + results1)
         var results2 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX2@googlemail.com list Cal_janine_", 1000 *5);
-        //logInfo("GetCalEvents: " + results)
+        //logInfo("GetCalEvents: " + results2)
 
         if ((results1 == "") || (results2 == "")) return;
 
@@ -76,7 +76,7 @@ JSRule({
         //gcal_array = arrayUnique(gcal_array.concat(gcal_array_temp));
 
         gcal_array.sort(custom_sort);
-        gcal_array = gcal_array.slice(0,16);
+        gcal_array = gcal_array.slice(0,8);
         ScheduleCalEvents();
 
         //logInfo("gcal_array size: " + gcal_array.length);
@@ -234,13 +234,13 @@ JSRule({
                 postUpdate(itemTTSMode,TTS_OFF);
             }
             
-        //reset shit late night
-        if ((hour_now == 3) && (minute_now == 0))
-        {
-            logInfo("Resetting Echo Volume")
-            sendCommand(Echo1_Volume,30)
-            sendCommand(Echo2_Volume,50)
-        }
+            //reset shit late night
+            if ((hour_now == 3) && (minute_now == 0))
+            {
+                logInfo("Resetting Echo Volume")
+                sendCommand(Echo1_Volume,30)
+                sendCommand(Echo2_Volume,50)
+            }
         }
         else 
         {
@@ -270,7 +270,9 @@ JSRule({
         var ALARM1_PERSON1_M = getItem("ALARM1_PERSON1_M");
         var ALARM1_PERSON1_D = getItem("ALARM1_PERSON1_D");
 
-        if (isUninitialized(ALARM1_PERSON1_H.state) || isUninitialized(ALARM1_PERSON1_M.state) || isUninitialized(ALARM1_PERSON1_D.state)) return;
+        //logInfo("ALARM1_PERSON1_H.state " + ALARM1_PERSON1_H.state +" ALARM1_PERSON1_M.state " + ALARM1_PERSON1_M.state + " ALARM1_PERSON1_D.state " + ALARM1_PERSON1_D.state);
+        if ((ALARM1_PERSON1_H.state == null) || (ALARM1_PERSON1_M.state == null) || (ALARM1_PERSON1_D.state == null)) return;
+        //logInfo("im here");
 
         var minute = parseInt(ALARM1_PERSON1_M.state)
         var m_match = (minute == minute_now)

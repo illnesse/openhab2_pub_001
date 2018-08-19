@@ -3,7 +3,7 @@ load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
 var AtHomeSTimer = null;
 var AtHomeJTimer = null;
-
+/*
 var gLatencyTriggers = []
 itemRegistry.getItem("gLatency").getMembers().forEach(function (gLatencyItem) 
 {
@@ -11,7 +11,7 @@ itemRegistry.getItem("gLatency").getMembers().forEach(function (gLatencyItem)
 });
 
 JSRule({
-    name: "latencyupdates",
+    name: "gLatencyTriggers",
     description: "Line: "+__LINE__,
     triggers: gLatencyTriggers,
     execute: function( module, input){
@@ -29,7 +29,7 @@ JSRule({
         if ((itemLatency.state != "") && !isUninitialized(itemLatency))
         {
             online = "ONLINE"
-            pinglatency = Math.round( itemLatency.state ) + " ms"
+            pinglatency = " " + Math.round( itemLatency.state ) + " ms"
         }
         else
         {
@@ -37,21 +37,46 @@ JSRule({
             pinglatency = ""
         }
 
-        out = online +" "+ pinglatency
+        out = online + pinglatency
         postUpdate(itemPresence,out)
         //logInfo(toUpdate +": "+ out);
+    }
+});
+*/
+var gOnlineTriggers = []
+itemRegistry.getItem("gPresenceStatus").getMembers().forEach(function (gOnlineItem) 
+{
+    gOnlineTriggers.push(ItemStateChangeTrigger(gOnlineItem.name));
+});
+
+JSRule({
+    name: "gOnlineTriggers",
+    description: "Line: "+__LINE__,
+    triggers: gOnlineTriggers,
+    execute: function( module, input)
+    {
+        var triggeringItem = getItem(getTriggeringItemStr(input));
+        var toUpdate = triggeringItem.name.split("Latency")[0]
+        var online = (triggeringItem.state == "UNDEF") ? false : true;
+        // logInfo(toUpdate +" debug 0: "+ online+" ("+triggeringItem.state+")");
 
         if ((toUpdate == "HandyS") && isUninitialized(AtHomeSTimer))
         {
             var itemAtHomeS = getItem("AtHomeS");
-            if ((itemAtHomeS.state != ON) && (online == "ONLINE")) postUpdate(itemAtHomeS,ON)
-            else if ((itemAtHomeS.state != OFF) && (online == "OFFLINE"))
+            if ((itemAtHomeS.state != ON) && online) postUpdate(itemAtHomeS,ON)
+            else if ((itemAtHomeS.state != OFF) && !online)
             {
-                AtHomeSTimer = createTimer(now().plusSeconds(5*60), function() 
+                logInfo(toUpdate +" debug 1: "+ online);
+                AtHomeSTimer = createTimer(now().plusSeconds(2*60), function() 
                 {
                     var itemAtHomeS = getItem("AtHomeS");
-                    var itemOnline = getItem("HandySOnline");
-                    if (itemOnline.state == CLOSED) postUpdate(itemAtHomeS,OFF)
+                    var itemLatency = getItem("HandySLatency");
+                    logInfo(toUpdate +" debug 2: "+ (itemLatency.state != "UNDEF"));
+                    if (itemLatency.state == "UNDEF")
+                    {
+                        logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
+                        postUpdate(itemAtHomeS,OFF)
+                    } 
                     AtHomeSTimer = null;
                 });
             }
@@ -59,14 +84,20 @@ JSRule({
         else if ((toUpdate == "HandyJ") && isUninitialized(AtHomeJTimer))
         {
             var itemAtHomeJ = getItem("AtHomeJ");
-            if ((itemAtHomeJ.state != ON) && (online == "ONLINE")) postUpdate(itemAtHomeJ,ON)
-            else if ((itemAtHomeJ.state != OFF) && (online == "OFFLINE"))
+            if ((itemAtHomeJ.state != ON) && online) postUpdate(itemAtHomeJ,ON)
+            else if ((itemAtHomeJ.state != OFF) && !online)
             {
-                AtHomeJTimer = createTimer(now().plusSeconds(5*60), function() 
+                logInfo(toUpdate +" debug 1: "+ online);
+                AtHomeJTimer = createTimer(now().plusSeconds(2*60), function() 
                 {
                     var itemAtHomeJ = getItem("AtHomeJ");
-                    var itemOnline = getItem("HandyJOnline");
-                    if (itemOnline.state == CLOSED) postUpdate(itemAtHomeJ,OFF)
+                    var itemLatency = getItem("HandyJLatency");
+                    logInfo(toUpdate +" debug 2: "+ itemLatency.state);
+                    if (itemLatency.state == "UNDEF")
+                    {
+                        logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
+                        postUpdate(itemAtHomeJ,OFF)
+                    }
                     AtHomeJTimer = null;
                 });
             }
@@ -81,7 +112,7 @@ itemRegistry.getItem("gAtHome").getMembers().forEach(function (gAtHomeItem)
 });
 
 JSRule({
-    name: "presence logic",
+    name: "gAtHomeTriggers",
     description: "Line: "+__LINE__,
     triggers: gAtHomeTriggers,
     execute: function( module, input)

@@ -80,6 +80,8 @@ function energyUpdate(id,kilo)
         var itemVoltage = getItem(toUpdate+"_Voltage")
         var out = round(itemPower.state,0) +" W ("+round(itemCurrent.state,2)+" A / "+round(itemVoltage.state,0)+" V) "+round(itemSignal.state,0)+" dBm"
         postUpdate(itemUI,out)
+        //logInfo(itemPower.state +" W ("+itemCurrent.state+" A / "+itemVoltage.state+" V) "+itemSignal.state+" dBm");
+        //logInfo(itemPower.name +" W ("+itemCurrent.name+" A / "+itemVoltage.name+" V) "+itemSignal.name+" dBm");
 
         itemEnergyUsage = getItem(toUpdate+"_EnergyUsage");
     }
@@ -100,19 +102,34 @@ function energyUpdate(id,kilo)
     var EnergyUsage_Month = 0;
 
     var EnergyUsage_BeginOfDay = HistoricItem(itemEnergyUsage.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
-    var EnergyUsage_Today = itemEnergyUsage.state - EnergyUsage_BeginOfDay;
+
+    var itemEnergyUsage_state;
+    var EnergyUsage_Today 
+    if ((isNaN(itemEnergyUsage.state)) || (itemEnergyUsage.state == null))
+    {
+        itemEnergyUsage_state = 0;
+        EnergyUsage_Today = 0;
+    }
+    else
+    {
+        itemEnergyUsage_state = itemEnergyUsage.state;
+        EnergyUsage_Today = itemEnergyUsage_state - EnergyUsage_BeginOfDay;
+    }
+    // logInfo("isNaN(itemEnergyUsage.state): "+(isNaN(itemEnergyUsage.state)) +" itemEnergyUsage.state == null:"+ (itemEnergyUsage.state == null) +" isUninitialized(itemEnergyUsage): "+ (isUninitialized(itemEnergyUsage)))
+
+    if ((isNaN(EnergyUsage_Today)) || (EnergyUsage_Today == null)) EnergyUsage_Today = 0;
+    //logInfo("isNaN(EnergyUsage_Today): "+(isNaN(EnergyUsage_Today)) +" EnergyUsage_Today == null:"+ (EnergyUsage_Today == null) +" isUninitialized(EnergyUsage_Today): "+ (isUninitialized(EnergyUsage_Today)))
+    //logInfo(toUpdate +" EnergyUsage_Today: "+ EnergyUsage_Today +" itemEnergyUsage.state "+ itemEnergyUsage.state +" EnergyUsage_BeginOfDay "+ EnergyUsage_BeginOfDay + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
 
     date = new Date();
     date.setDate(date.getDate() - 1);
 
     var EnergyUsage_Yesterday = HistoricItem(itemEnergyUsage_Today.name, formatISOStringtoJodaDateTimeZone(date.toISOString())).state;
 
-    //logInfo(toUpdate +" itemEnergyUsage.state "+ itemEnergyUsage.state +" EnergyUsage_BeginOfDay "+ EnergyUsage_BeginOfDay + " since "+ formatISOStringtoJodaDateTimeZone(date.toISOString()));
-
     var delta = round((EnergyUsage_Today - EnergyUsage_Yesterday)/kilo,3);
     var usagetoday = round(EnergyUsage_Today/kilo,3) + " kWh (? " + ((delta > 0) ? "+":"") + delta + ") "+getPricekWh(EnergyUsage_Today/kilo);
-    
-    postUpdate(itemEnergyUsage_Total_UI, round(itemEnergyUsage.state + addwh,3));
+
+    postUpdate(itemEnergyUsage_Total_UI, round(itemEnergyUsage_state + addwh,3));
     postUpdate(itemEnergyUsage_Today, EnergyUsage_Today)
     postUpdate(itemEnergyUsage_Today_UI, usagetoday)
     postUpdate(itemEnergyUsage_Month_UI, EnergyUsage_Month)
