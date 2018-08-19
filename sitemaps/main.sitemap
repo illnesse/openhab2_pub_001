@@ -243,14 +243,14 @@ sitemap main label="Home"
         Text item=fboxDslUpstreamCurrRate label="DSL Upstream [JS(kbit_mbit.js):%s]"
         Text item=fboxDslDownstreamCurrRate label="DSL Downstream [JS(kbit_mbit.js):%s]"
 
-		Text item=fboxRinging icon="phone_call_in"
-		Text item=fboxRinging_Out icon="phone_call_out"
+		// Text item=fboxRinging icon="phone_call_in"
+		// Text item=fboxRinging_Out icon="phone_call_out"
 		
 		Text item=fboxTAM0NewMsg icon="phone_answering"
 		Text item=fboxMissedCalls icon="phone_missed_in"
 
-		Text item=Fritz_LastIncoming icon="phone_call_in"
-		Text item=Fritz_LastOutgoing icon="phone_call_out"
+		//Text item=Fritz_LastIncoming icon="phone_call_in"
+		//Text item=Fritz_LastOutgoing icon="phone_call_out"
 		Text item=Fritz_LastIncomingResolved icon="phone_missed_in"
 		Text item=Fritz_LastOutgoingResolved icon="phone_missed_out"
 
@@ -385,7 +385,7 @@ sitemap main label="Home"
         Switch item=Backupbtn label="Commit & Push Backup |Bitbucket Repository|https://bitbucket.org/XXXXXXX/all [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
         Switch item=Resetbtn label="Restart OH2 Service [%s]" icon="control_reset" mappings=[ON="RESTART"]
         Switch item=piReboot label="Reboot RasPi" icon="control_reset" mappings=[ON="REBOOT"]
-        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST ON"] visibility=[SysStartup==OFF]
+        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST ON"] visibility=[SysStartup!=ON]
         Switch item=SysStartupForce icon="audio_repeat" mappings=[OFF="TEST OFF"] visibility=[SysStartup==ON]
 
 		Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]

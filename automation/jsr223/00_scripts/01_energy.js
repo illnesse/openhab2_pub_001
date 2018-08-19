@@ -33,32 +33,38 @@ JSRule({
             postUpdate(itemWashingmachine_OpState,MODE_OFF)
             return;
         }
-
-        if (itemTPLinkPlug2_Power.state > 10) 
+        else
         {
-            postUpdate(itemWashingmachine_OpState,MODE_ACTIVE)
-        } 
-        else if (itemTPLinkPlug2_Power.state < 3.0) 
-        {
-            if (itemWashingmachine_OpState.state == MODE_OFF) postUpdate(itemWashingmachine_OpState,MODE_STANDBY)
-            else if (itemWashingmachine_OpState.state == MODE_ACTIVE) 
+            if (itemTPLinkPlug2_Power.state > 10) 
             {
-                if (isUninitialized(timer))
+                if (!isUninitialized(timer)) timer.cancel();
+                postUpdate(itemWashingmachine_OpState,MODE_ACTIVE)
+            } 
+            else if (itemTPLinkPlug2_Power.state < 3.0) 
+            {
+                if (itemWashingmachine_OpState.state == MODE_OFF) postUpdate(itemWashingmachine_OpState,MODE_STANDBY)
+                else if (itemWashingmachine_OpState.state == MODE_ACTIVE) 
                 {
-                    // there have been periods over 10+ min < 4.5 W
-                    timer = createTimer(now().plusSeconds(12*60), function() 
+                    if (isUninitialized(timer))
                     {
-                        if (itemTPLinkPlug2_Power.state < 4.5)
+                        var period = 10*60; //10 min?
+                        // there have been periods over 10+ min < 4.5 W
+                        timer = createTimer(now().plusSeconds(period), function() 
                         {
-                            sendCommand(itemTTSOut2,"Die Waschmaschine ist fertig!");
-                            postUpdate(itemWashingmachine_OpState,MODE_FINISHED);
-                        }
-                        timer = null;
-                    });
+                            if (maximumSince(itemTPLinkPlug2_Power,now().minusSeconds(period)) < 2.5)
+                            //if (itemTPLinkPlug2_Power.state < 2.5)
+                            {
+                                sendCommand(itemTTSOut2,"Die Waschmaschine ist fertig!");
+                                postUpdate(itemWashingmachine_OpState,MODE_FINISHED);
+                            }
+                            if (!isUninitialized(timer)) timer.cancel();
+                            timer = null;
+
+                        });
+                    }
                 }
             }
         }
-   
     }
 });
 

@@ -25,7 +25,7 @@ JSRule({
     
             var Call =                  Incoming ? getItem("fboxIncomingCall") : getItem("fboxOutgoingCall");
             var CallResolved =          Incoming ? getItem("fboxIncomingCallResolved") : getItem("fboxOutgoingCallResolved");
-            var LastNumber =            Incoming ? getItem("Fritz_LastIncoming") : getItem("Fritz_LastOutgoing");
+            //var LastNumber =            Incoming ? getItem("Fritz_LastIncoming") : getItem("Fritz_LastOutgoing");
             var LastNumberResolved =    Incoming ? getItem("Fritz_LastIncomingResolved") : getItem("Fritz_LastOutgoingResolved");
             var LastNumberTimeUI =      Incoming ? getItem("Fritz_LastIncomingTimeUI") : getItem("Fritz_LastOutgoingTimeUI");
             var CallPrefix = getItem("CallPrefix");
@@ -40,9 +40,9 @@ JSRule({
             if (CallerName.startsWith("Name not found for")) CallerName = "Unbekannt";
             
             sendCommand(itemTTSOut2,(Incoming ? "Anruf von " : "Anruf an ") + CallerName)
-            sendCommand(LastNumber,CallerNumber)
-            sendCommand(LastNumberResolved,CallerName)
-            tempcallprefix = (Incoming ? "Anruf von " : "Anruf an ") + LastNumberResolved.state + " ("+LastNumber.state+") ";
+            //sendCommand(LastNumber,CallerNumber)
+            sendCommand(LastNumberResolved,CallerNumber + " - " + CallerName)
+            tempcallprefix = (Incoming ? "Anruf von " : "Anruf an ") + LastNumberResolved.state;// + " ("+LastNumber.state+") ";
             postUpdate(CallPrefix, tempcallprefix);
         
             var time = formatUITimeStampfromJodaDate(now());

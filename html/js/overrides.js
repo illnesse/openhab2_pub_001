@@ -162,6 +162,8 @@ if($(window.frameElement).attr("data-injected") === undefined)
     $(".mdl-button--raised",$parentdoc).each(function()
     {
         $(this).addClass("cut-corner-btn");
+        $(this).removeClass("mdl-js-ripple-effect");
+        $(this).find("mdl-button__ripple-container").remove();
     });
 
     /*

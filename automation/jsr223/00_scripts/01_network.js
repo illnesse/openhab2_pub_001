@@ -60,48 +60,79 @@ JSRule({
         var online = (triggeringItem.state == "UNDEF") ? false : true;
         // logInfo(toUpdate +" debug 0: "+ online+" ("+triggeringItem.state+")");
 
-        if ((toUpdate == "HandyS") && isUninitialized(AtHomeSTimer))
+        if (online)
         {
-            var itemAtHomeS = getItem("AtHomeS");
-            if ((itemAtHomeS.state != ON) && online) postUpdate(itemAtHomeS,ON)
-            else if ((itemAtHomeS.state != OFF) && !online)
+            if (toUpdate == "HandyS")
             {
-                logInfo(toUpdate +" debug 1: "+ online);
-                AtHomeSTimer = createTimer(now().plusSeconds(2*60), function() 
-                {
-                    var itemAtHomeS = getItem("AtHomeS");
-                    var itemLatency = getItem("HandySLatency");
-                    logInfo(toUpdate +" debug 2: "+ (itemLatency.state != "UNDEF"));
-                    if (itemLatency.state == "UNDEF")
-                    {
-                        logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
-                        postUpdate(itemAtHomeS,OFF)
-                    } 
+                var itemAtHomeS = getItem("AtHomeS");
+                if (itemAtHomeS.state != ON) postUpdate(itemAtHomeS,ON)
+                if (!isUninitialized(AtHomeSTimer)) {
+                    AtHomeSTimer.cancel();
                     AtHomeSTimer = null;
-                });
+                }
             }
-        }
-        else if ((toUpdate == "HandyJ") && isUninitialized(AtHomeJTimer))
-        {
-            var itemAtHomeJ = getItem("AtHomeJ");
-            if ((itemAtHomeJ.state != ON) && online) postUpdate(itemAtHomeJ,ON)
-            else if ((itemAtHomeJ.state != OFF) && !online)
+            else if (toUpdate == "HandyJ")
             {
-                logInfo(toUpdate +" debug 1: "+ online);
-                AtHomeJTimer = createTimer(now().plusSeconds(2*60), function() 
-                {
-                    var itemAtHomeJ = getItem("AtHomeJ");
-                    var itemLatency = getItem("HandyJLatency");
-                    logInfo(toUpdate +" debug 2: "+ itemLatency.state);
-                    if (itemLatency.state == "UNDEF")
-                    {
-                        logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
-                        postUpdate(itemAtHomeJ,OFF)
-                    }
+                var itemAtHomeJ = getItem("AtHomeJ");
+                if (itemAtHomeJ.state != ON) postUpdate(itemAtHomeJ,ON)
+                if (!isUninitialized(AtHomeJTimer)) {
+                    AtHomeJTimer.cancel();
                     AtHomeJTimer = null;
-                });
+                }
             }
         }
+        else
+        {
+            if ((toUpdate == "HandyS") && isUninitialized(AtHomeSTimer))
+            {
+                var itemAtHomeS = getItem("AtHomeS");
+                if (itemAtHomeS.state != OFF)
+                {
+                    logInfo(toUpdate +" debug 1: "+ online);
+                    AtHomeSTimer = createTimer(now().plusSeconds(2*60), function() 
+                    {
+                        var itemAtHomeS = getItem("AtHomeS");
+                        var itemLatency = getItem("HandySLatency");
+                        logInfo(toUpdate +" debug 2: "+ (itemLatency.state != "UNDEF"));
+                        if (itemLatency.state == "UNDEF")
+                        {
+                            logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
+                            postUpdate(itemAtHomeS,OFF)
+                        } 
+                        if (!isUninitialized(AtHomeSTimer)) 
+                        {
+                            AtHomeSTimer.cancel();
+                            AtHomeSTimer = null;
+                        }
+                    });
+                }
+            }
+            else if ((toUpdate == "HandyJ") && isUninitialized(AtHomeJTimer))
+            {
+                var itemAtHomeJ = getItem("AtHomeJ");
+                if (itemAtHomeJ.state != OFF)
+                {
+                    logInfo(toUpdate +" debug 1: "+ online);
+                    AtHomeJTimer = createTimer(now().plusSeconds(2*60), function() 
+                    {
+                        var itemAtHomeJ = getItem("AtHomeJ");
+                        var itemLatency = getItem("HandyJLatency");
+                        logInfo(toUpdate +" debug 2: "+ itemLatency.state);
+                        if (itemLatency.state == "UNDEF")
+                        {
+                            logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
+                            postUpdate(itemAtHomeJ,OFF)
+                        }
+                        if (!isUninitialized(AtHomeJTimer))
+                        {
+                            AtHomeJTimer.cancel();
+                            AtHomeJTimer = null;
+                        }
+                    });
+                }
+            }
+        }
+
     }
 });
 

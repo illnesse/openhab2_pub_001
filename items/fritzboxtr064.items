@@ -48,11 +48,11 @@ Call    fboxOutgoingCallResolved    "Outgoing call (resolved): [%1$s to %2s]"   
 
 Number  fboxMissedCalls     "Missed Calls [%s]"         {fritzboxtr064="missedCallsInDays:1"}
 
-String  Fritz_LastIncoming		"Last Call In [%s]"	(gFritzBox)
+//String  Fritz_LastIncoming		"Last Call In [%s]"	(gFritzBox)
 //String  Fritz_LastIncomingDest		"letzter eingehender Anruf an [%s]"		
 String  Fritz_LastIncomingResolved	"Last Caller [%s]" (gFritzBox)
 
-String  Fritz_LastOutgoing		"Last Call Out [%s]"	(gFritzBox)
+//String  Fritz_LastOutgoing		"Last Call Out [%s]"	(gFritzBox)
 //String  Fritz_LastOutgoingDest		"letzter ausgehender Anruf an [%s]"		
 String  Fritz_LastOutgoingResolved	"Last Caller [%s]" (gFritzBox)
 
