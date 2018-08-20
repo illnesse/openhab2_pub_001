@@ -11,12 +11,13 @@ var LogIntervalTime = 5000;
 var AllImgIntervalTime = 30000;
 var ImgIntervalTime = 300;
 
-var refreshImageItem;
-var refreshImageItemURL = "https://XXXXXXX.de/out.jpg";
+//var refreshImageItem;
+//var refreshImageItemURL = "https://XXXXXXX.de/out.jpg";
 
 var syntaxhilight = true;
 
 //hack to avoid jetty mjpeg timeout
+/*
 function refreshSingleImage()
 {
 //    if (!$parentdoc.hasFocus()) return;
@@ -26,7 +27,7 @@ function refreshSingleImage()
     refreshImageItem.attr("src", refreshImageItemURL +"?nocache"+ d.getTime());
     //$('*[data-widget-id="0002"] img', $parentdoc).attr("src",  $('*[data-widget-id="0002"] img', $parentdoc).parent().data("proxied-url")+"&"+d.getTime());
 }
-
+*/
 function refreshAllImgs()
 {
 //    if (!$parentdoc.hasFocus()) return;
@@ -40,12 +41,13 @@ function refreshAllImgs()
 
 function panelState(panel, state, anim)
 {
+/*
     if (panel.hasClass("bg_cams"))
     {
         $refresh = state;
         console.warn("panelState() $refresh set to ",$refresh)
     } 
-
+*/
     if (state)
     {
         if (anim)
@@ -66,7 +68,7 @@ function panelState(panel, state, anim)
             panel.css({"opacity":1.0,"max-height": 2000});
             panel.find(".collapse_btn").removeClass("btn_rotated");
         }
-        refreshSingleImage();
+//        refreshSingleImage();
         refreshAllImgs();
     }
     else
@@ -140,12 +142,13 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("alarm") >= 0 ) $panel.addClass("panel_custom bg_alarm");
         else if ($h5text.indexOf("energy") >= 0 ) panelcss($panel,$h5,"energy","tplink");
         else if ($h5text.indexOf("nas snmp") >= 0 ) panelcss($panel,$h5,"asustor","asustor");
+/*        
         else if ($h5text.indexOf("ip cams") >= 0 ) 
         {
             $panel.addClass("panel_custom bg_cams");
             $panel.find(".mdl-form__image").parent().addClass("cam_panel");
         }
-        
+*/
         else if ($h5text.indexOf("devices") >= 0 ) $panel.addClass("panel_custom bg_devices");
         else if ($h5text.indexOf("rss") >= 0 ) $panel.addClass("panel_custom bg_rss");
         else {$panel.addClass("bg_default");}
@@ -346,7 +349,7 @@ else
         // refreshAllImgs();
 
         var refreshAllImgInterval = setInterval(refreshAllImgs,AllImgIntervalTime);
-        var refreshImgInterval = setInterval(refreshSingleImage,ImgIntervalTime);
+//        var refreshImgInterval = setInterval(refreshSingleImage,ImgIntervalTime);
 
         if ($(".mdl-form > h5",$parentdoc).length >= 1)
         {

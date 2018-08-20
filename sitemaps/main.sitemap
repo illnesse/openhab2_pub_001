@@ -1,12 +1,13 @@
 sitemap main label="Home"
 {
+    /*
     Frame label="IP Cams"
 	{
         Video url="http://192.168.178.27:8081/" encoding="mjpeg"
         Video url="http://192.168.178.27:8082/" encoding="mjpeg"
 		Image url="https://XXXXXXX.de/XXXXXXX.jpg"
     }
-
+    */
 	Frame label="Samsung TV WZ"
 	{
 		Switch item=MQTT_TV label="Power" icon="control_on_off" mappings=[power="PWR"]
@@ -237,11 +238,11 @@ sitemap main label="Home"
         Switch item=fboxWifi24 icon="it_router" mappings=[ON="ON",OFF="OFF"]
         Switch item=fboxGuestWifi icon="it_router" mappings=[ON="ON",OFF="OFF"]
 
-        Text item=fboxWanTotalBytesSent label="DSL total bytes sent [JS(b_mb.js):%s]"
-        Text item=fboxWanTotalBytesReceived label="DSL total bytes received [JS(b_mb.js):%s]"
+        Text item=fboxWanTotalBytesSent label="DSL total bytes sent [JS(b_mb.js):%s]" icon="none"
+        Text item=fboxWanTotalBytesReceived label="DSL total bytes received [JS(b_mb.js):%s]" icon="none"
 
-        Text item=fboxDslUpstreamCurrRate label="DSL Upstream [JS(kbit_mbit.js):%s]"
-        Text item=fboxDslDownstreamCurrRate label="DSL Downstream [JS(kbit_mbit.js):%s]"
+        Text item=fboxDslUpstreamCurrRate label="DSL Upstream [JS(kbit_mbit.js):%s]" icon="none"
+        Text item=fboxDslDownstreamCurrRate label="DSL Downstream [JS(kbit_mbit.js):%s]" icon="none"
 
 		// Text item=fboxRinging icon="phone_call_in"
 		// Text item=fboxRinging_Out icon="phone_call_out"
@@ -396,15 +397,15 @@ sitemap main label="Home"
         Switch item=TTSMode label="TTS Mode [JS(ttsmode.js):%s]"icon="none" mappings=[1="ON"] visibility=[TTSMode!=1]
 
         Image label="4" url="http://localhost:8080/static/4.png"
-        
+
 		Text item=System_CPU_Uptime icon="player"
 		Text item=System_openHAB_Uptime icon="player"
 
 		Text item=System_openHAB_Memory label="OH2 Mem [JS(kb_mb.js):%s]" icon="player"
 		Text item=System_openHAB_DBSize label="InfluxDB Size [%.0f MB]" icon="player"
 
-		Text item=Sensor_CPUTemp icon="none"
-		Text item=CPU_Threads icon="none"
+		Text item=Sensor_CPUTemp label="CPU Temp" icon="none"
+		Text item=CPU_Threads label="CPU Threads" icon="none"
 
         Text item=CPU_UI label="CPU [%s]" icon="player"
         Text item=Memory_UI label="Memory [%s]" icon="player"
