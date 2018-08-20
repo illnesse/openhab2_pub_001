@@ -89,7 +89,7 @@ JSRule({
                 if (itemAtHomeS.state != OFF)
                 {
                     logInfo(toUpdate +" debug 1: "+ online);
-                    AtHomeSTimer = createTimer(now().plusSeconds(2*60), function() 
+                    AtHomeSTimer = createTimer(now().plusSeconds(3*60), function() 
                     {
                         var itemAtHomeS = getItem("AtHomeS");
                         var itemLatency = getItem("HandySLatency");
@@ -113,7 +113,7 @@ JSRule({
                 if (itemAtHomeJ.state != OFF)
                 {
                     logInfo(toUpdate +" debug 1: "+ online);
-                    AtHomeJTimer = createTimer(now().plusSeconds(2*60), function() 
+                    AtHomeJTimer = createTimer(now().plusSeconds(3*60), function() 
                     {
                         var itemAtHomeJ = getItem("AtHomeJ");
                         var itemLatency = getItem("HandyJLatency");

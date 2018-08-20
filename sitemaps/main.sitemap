@@ -395,9 +395,8 @@ sitemap main label="Home"
         Switch item=TTSMode label="TTS Mode [JS(ttsmode.js):%s]" icon="none" mappings=[0="OFF"] visibility=[TTSMode!=0]
         Switch item=TTSMode label="TTS Mode [JS(ttsmode.js):%s]"icon="none" mappings=[1="ON"] visibility=[TTSMode!=1]
 
-        Text label="" icon="none"
-        Text label="" icon="none"
-
+        Image label="4" url="http://localhost:8080/static/4.png"
+        
 		Text item=System_CPU_Uptime icon="player"
 		Text item=System_openHAB_Uptime icon="player"
 
@@ -413,7 +412,6 @@ sitemap main label="Home"
         Text item=Storage_UI label="Storage [%s]" icon="player"
         Text item=Network_UI label="Network [%s]" icon="player"
 
-        Image label="4" url="http://localhost:8080/static/4.png"
 		Image label="2" url="http://localhost:8080/static/2.png"
 		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1|PaperUI|http://192.168.178.31:8080/paperui/index.html|Rest API|http://192.168.178.31:8080/doc/index.html" icon="none"
 	}	
@@ -458,9 +456,8 @@ sitemap main label="Home"
         Text item=TPLinkPlug2Latency label="TPLinkPlug2 (WM) [JS(latencyUI.js):%s]" icon="message_socket"
 
 		Image label="6" url="http://localhost:8080/static/6.png"
-        Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
-		Text label="" icon="none"
 
+        Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
         Text item=SpeedtestSummary icon="info_info"
         Switch item=SpeedtestRerun label="Start Speedtest [%s]" mappings=[ON="Start"] icon="info_info"
 

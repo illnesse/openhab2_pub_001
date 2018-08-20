@@ -562,6 +562,10 @@ a:hover
     {
         width: calc(33% - 16px);
     }
+    .bg_net .mdl-cell--6-col
+    {
+        width: calc(33% - 16px);
+    }
 }
 /*
 .mdl-form:hover
