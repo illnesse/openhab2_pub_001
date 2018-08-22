@@ -212,7 +212,7 @@ a:hover
 @media (min-width: 840px)
 {
     .mdl-cell--12-col {
-        margin: 8px 0 8px 0;
+        margin: 8px 0 4px 0;
     }
 /* .mdl-cell {
     margin: 8px 0 8px 0;
@@ -235,6 +235,10 @@ a:hover
 {
     width: 100%;
     display: inline-flex;
+}
+
+.mdl-form__row--height-auto.mdl-form__row {
+    padding: 0 8px;
 }
 
 @media screen and (min-width: 1200px)
