@@ -230,6 +230,9 @@ else
 
     function calcContainerHeight() 
     {
+        $(".page-content",$parentdoc).removeClass("mdl-grid");
+        
+        /*
         var $total_panels_height = 0;
         $(".mdl-form",$parentdoc).each(function()
         {
@@ -242,7 +245,7 @@ else
         //console.log("total height: " + $total_panels_height, "column height: " + $height_columns);
 
         $(".page-content",$parentdoc).css({height:$height_columns});
-
+        */
     }
 
     function eventlog()

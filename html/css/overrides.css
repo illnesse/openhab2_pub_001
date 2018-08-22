@@ -209,17 +209,46 @@ a:hover
     }
 }
 
+@media (min-width: 840px)
+{
+    .mdl-cell--12-col {
+        margin: 8px 0 8px 0;
+    }
+/* .mdl-cell {
+    margin: 8px 0 8px 0;
+} */
+}
+
+.page-content
+{
+    max-width: 95%;
+    height: auto;
+    margin: 0 auto;
+
+    /* padding-left: -8px; */
+
+    /* flex-flow: column wrap; */
+    /* border: solid 1px red; */
+
+}
+.mdl-form
+{
+    width: 100%;
+    display: inline-flex;
+}
+
 @media screen and (min-width: 1200px)
 {
     .page-content
     {
         max-width: 95%;
-        flex-flow: column wrap;
-        height: 3500px;
-    }
-    .mdl-form
-    {
-        width: 49%;
+     
+        -webkit-column-count: 2;
+        -webkit-column-gap:   10px;  
+        -moz-column-count:    2;
+        -moz-column-gap:      10px;
+        column-count:         2;
+        column-gap:           10px;
     }
 }
 
@@ -228,12 +257,6 @@ a:hover
     .page-content
     {
         max-width: 80%;
-        flex-flow: column wrap;
-        height: 3500px;
-    }
-    .mdl-form
-    {
-        max-width: 49% !important;
     }
 }
 
@@ -599,6 +622,7 @@ a:hover
     transform-origin: 54% 0;
     transform: rotate(45deg);
     z-index: -1;
+    pointer-events: none;
 }
 .cut-corner-btn.mdl-button:hover:after {
     background: #f7f7f744;
