@@ -207,7 +207,7 @@ JSRule({
     ],
     execute: function( module, input)
     {
-        var execResult = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/grafana.sh",60*1000 *4);
+        var execResult = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/grafana/grafana.sh",60*1000 *4);
         //logInfo("generated Grafana images")
     }
 });

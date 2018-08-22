@@ -1,3 +1,15 @@
+#!/usr/bin/env bash
+cd /etc/openhab2/scripts/sh/grafana
+./grafana-export.sh
+
+cd /etc/openhab2/misc
+tar cfz grafana_backup-$(date +%Y-%m-%d_%H-%M).tar.gz grafana
+rm -rf grafana
+
+influxd backup -portable /etc/openhab2/misc/influxdb
+tar cfz influxdb_backup-$(date +%Y-%m-%d_%H-%M).tar.gz influxdb
+rm -rf influxdb
+
 backuploc="/home/openhabian/oh2bak/oh2_2"
 confdir="/etc/openhab2"
 
