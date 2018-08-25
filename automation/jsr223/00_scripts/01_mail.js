@@ -11,16 +11,6 @@ var init = false;
 
 var mutedEmails = ["eclipse/smarthome", "codetheweb/tuyapi","OH2_System_Notification"];
 
-function containsAny(str, substrings) {
-    for (var i = 0; i != substrings.length; i++) {
-       var substring = substrings[i];
-       if (str.indexOf(substring) != - 1) {
-         return substring;
-       }
-    }
-    return null; 
-}
-
 JSRule({
     name: "GetMail",
     description: "Line: "+__LINE__,

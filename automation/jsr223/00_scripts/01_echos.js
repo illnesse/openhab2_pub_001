@@ -1,8 +1,6 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
-var kodiurl = "http://192.168.178.26:8080/jsonrpc?request=";
-
 var EchoTitlesTriggers = [];
 itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTriggerItem) 
 {
@@ -11,8 +9,6 @@ itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTrigge
 
 var TTS_OFF = 0;
 var TTS_DEFAULT = 1;
-
-
 
 JSRule({
     name: "FireTVCmd",
@@ -25,13 +21,46 @@ JSRule({
         var cmd = input.command;
 
         logInfo("FireTVCmd cmd: "+cmd);
-        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/firetv_keyevent.sh 192.168.178.26 "+cmd, 1000 *10);
-        //logInfo("FireTVCmd result: " + results1)
 
-        var kodireturn = HTTP.sendHttpGetRequest(kodiurl + '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "season", "episode", "duration", "showtitle", "tvshowid", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 1 }, "id": "VideoGetItem"}');
-        var kodiresult = JSON.parse(kodireturn)
-        var label = kodiresult.item.label
-        getItem("Kodi_title",label)
+        if (cmd == "startkodi")
+        {
+            var results0 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/firetv_shellstart.sh 192.168.178.26 org.xbmc.kodi/.Splash", 1000 *10);
+            logInfo(results0);
+        }
+        else
+        {
+            var results0 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/firetv_keyevent.sh 192.168.178.26 "+cmd, 1000 *10);
+            var results1 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
+
+            logInfo(results1.result[0].type);
+
+            if (results1.result[0].type == "video")
+            {
+                var results2 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "season", "episode", "duration", "showtitle", "tvshowid", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 1 }, "id": "VideoGetItem"}');
+                var label = results2.result.item.label;
+                var thumbnail = decodeKodiThumbnailURL(results2.result.item.thumbnail);
+                postUpdate("Kodi_title",label);
+                if (thumbnail == "") thumbnail = "http://localhost:8080/static/null.png";
+                postUpdate("Kodi_thumbnail",thumbnail);
+
+                //logInfo(label +" "+ thumbnail );
+            }
+            else if (results1.result[0].type == "audio")
+            {
+                var results2 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "duration", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 0 }, "id": "AudioGetItem"}');
+                var label = results2.result.item.label;
+                var thumbnail = decodeKodiThumbnailURL(results2.result.item.fanart);
+                postUpdate("Kodi_title",label);
+                if (thumbnail == "") thumbnail = "http://localhost:8080/static/null.png";
+                postUpdate("Kodi_thumbnail",thumbnail);
+
+                //logInfo(label +" "+ thumbnail );
+            }
+            else
+            {
+    
+            }
+        }
     }
 });
 

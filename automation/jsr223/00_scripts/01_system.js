@@ -120,7 +120,7 @@ JSRule({
                 sendCommand(itemSysStartupForce,OFF);
             });
 
-            sendMail("XXXX@gmail.com", "[OH2_System_Notification] SysStartupForce", "SysStartupForce");
+            sendNotification("SysStartupForce","SysStartupForce");
         }
     }
 });
@@ -248,19 +248,14 @@ JSRule({
     {
         var itemlogreaderErrors = getItem("logreaderErrors");
         var itemlogreaderLastError = getItem("logreaderLastError");
-        //var itemTTSOut2 = getItem("TTSOut2");
 
         var errorstring = "";
         if (!itemlogreaderLastError.state != null)
         {
             errorstring = itemlogreaderLastError.state.toString().split("] - ")[1]
         }
-        
         var msg = "Systemfehler " + itemlogreaderErrors.state.toString() + ": " + errorstring;
-        //sendCommand(itemTTSOut2,msg);
-        //logInfo(errorstring);
-        sendMail("XXXXX@gmail.com", "[OH2_System_Notification] "+msg, msg);
-        //sendPushbulletNote("illnesse@gmail.com", "Logreader ERR", msg)
+        sendNotification(msg, msg);
     }
 });
 
@@ -274,17 +269,13 @@ JSRule({
     {
         var itemlogreaderWarnings = getItem("logreaderWarnings");
         var itemlogreaderLastWarning = getItem("logreaderLastWarning");
-        //var itemTTSOut2 = getItem("TTSOut2");
 
         var errorstring = "";
         if (!itemlogreaderLastWarning.state != null)
         {
             errorstring = itemlogreaderLastWarning.state.toString().split("] - ")[1]
         }
-        
         var msg = "Systemwarnung " + itemlogreaderWarnings.state.toString() + ": " + errorstring;
-        //sendCommand(itemTTSOut2,msg);
-        //logInfo(errorstring);
-        sendMail("XXXXXX@gmail.com", "[OH2_System_Notification] "+msg, msg);
+        sendNotification(msg, msg);
     }
 });

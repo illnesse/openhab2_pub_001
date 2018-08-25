@@ -1,6 +1,80 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/js-joda.js');
 
+var kodiurl = "http://192.168.178.26:8080/jsonrpc?request=";
+
+function decodeKodiThumbnailURL(str)
+{
+    var r = str;
+    r = decodeURIComponent(r);
+    r = r.replace("image://","");
+    r = r.replace(".jpg/",".jpg");
+    //r = r.replace("/original/","/w300/");
+    return r;
+}
+
+function kodiCall(call)
+{
+    var kodireturn = HTTP.sendHttpGetRequest(kodiurl + encodeURI(call));
+    //logInfo(kodireturn);
+    return JSON.parse(kodireturn);
+}
+function sendKodiNotification(title,msg)
+{
+    var call = '{"jsonrpc":"2.0","method":"GUI.ShowNotification","params":{"title":"'+title+'","message":"'+msg+'"},"id":1}';
+    kodiCall(call);
+}
+function sendNotification(title,msg)
+{
+    sendKodiNotification("[OH2_System_Notification] "+title,msg);
+    sendMail("XXX@gmail.com", "[OH2_System_Notification] "+title, msg);
+}
+
+function sendMQTT(broker, topic, message, quiet)
+{
+    quiet = quiet || false;
+    var execResult;
+    var command;
+    if (broker == "broadlink")
+    {
+        command = "mosquitto_pub -t " + topic + " -m \"" + message + "\"";
+    }
+    else if (broker == "cloudmqtt")
+    {
+        command = "mosquitto_pub -h XXX.com -p 19777 -u XXX -P XXX -i XXX -t " + topic + " -m \"" + message + "\"";
+    }
+    execResult = executeCommandLineAndWaitResponse(command, 1000 *3);
+    if (!quiet) logInfo("sendMQTT " + topic);
+    //logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
+}
+
+function custom_sort(a, b) {
+    return jodaDate(a.start.dateTime).compareTo(jodaDate(b.start.dateTime));
+}
+
+function arrayUnique(array) {
+    var a = array.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) 
+        {
+            if((a[i].id) === (a[j].id))
+                logInfo(a[i].summary +" state: "+ a[i].state);
+                a.splice(j--, 1);
+        }
+    }
+    return a;
+}
+
+function containsAny(str, substrings) {
+    for (var i = 0; i != substrings.length; i++) {
+       var substring = substrings[i];
+       if (str.indexOf(substring) != - 1) {
+         return substring;
+       }
+    }
+    return null; 
+}
+
 function sleep(ms) 
 {
     java.lang.Thread.sleep(ms);

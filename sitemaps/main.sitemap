@@ -81,22 +81,13 @@ sitemap main label="Home"
 	}
 	Frame label="Kodi/FireTV WZ"
 	{
-        Switch item=FireTV_CMD label="FireTV CMD" icon="none" mappings=[88='◀◀',85='❚❚ ▶',87='▶▶']
-        Switch item=FireTV_CMD label="FireTV CMD" icon="none" mappings=[66='OK',4='BACK',3='HOME',1='MENU']
-        Switch item=FireTV_CMD label="FireTV CMD" icon="none" mappings=[19='UP',20='DOWN',21='LEFT',22='RIGHT']
-        
-        Text label="" icon="none"
-        Text label="" icon="none"
-        Text label="" icon="none"
+        Switch item=FireTV_CMD label="Player" icon="none" mappings=[88='◀◀',85='❚❚ ▶',87='▶▶']
+        Switch item=FireTV_CMD label="Menu" icon="none" mappings=[66='OK',4='BACK',3='HOME',1='MENU']
+        Switch item=FireTV_CMD label="Controls" icon="none" mappings=[startkodi="KODI",19='▲',20='▼',21='◀',22='▶']
 
-		Selection item=Kodi_control icon="audio_playlist" mappings=[PLAY='Play', PAUSE='Pause', NEXT='Next', PREVIOUS='Previous', FASTFORWARD='Fastforward', REWIND='Rewind']
-        Default   item=Kodi_control icon="audio_playlist"
-		Text      item=Kodi_title icon="audio_playlist"
-        Switch    item=Kodi_stop icon="audio_playlist" mappings=[ON='STOP']
-		Text      item=Kodi_artist icon="audio_playlist"
-		Selection item=Kodi_input  icon="audio_playlist" mappings=[Up='Up', Down='Down', Left='Left', Right='Right', Select='Select', Back='Back', Home='Home', ContextMenu='ContextMenu', Info='Info']
-		Selection item=Kodi_systemcommand  icon="audio_playlist" mappings=[Shutdown='Herunterfahren', Suspend='Bereitschaft', Reboot='Neustart']
-		Text      item=Kodi_mediatype icon="audio_playlist"
+		Text item=Kodi_title icon="audio_playlist"        
+
+        Image item=Kodi_thumbnail visibility=[Kodi_thumbnail!="http://localhost:8080/static/null.png"]
 	}
     Frame label="RSS"
 	{

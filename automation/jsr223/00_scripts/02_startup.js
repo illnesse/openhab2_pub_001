@@ -21,37 +21,3 @@ function startup()
 }
 
 startup();
-
-
-/*
-
-JSRule({
-    name: "SystemStarted",
-    description: "Line: "+__LINE__,
-    triggers: [
-        StartupTrigger()
-    ],
-    execute: function( module, input)
-    {
-        var itemSysStartup = getItem("SysStartup");
-        sendCommand(itemSysStartup,ON);
-
-        createTimer(now().plusSeconds(180), function() 
-        {
-            var itemSysStartupForce = getItem("SysStartupForce");
-            sendCommand(itemSysStartup,OFF);
-            sendCommand(itemSysStartupForce,OFF);
-
-            var itemSpeedtestRerun = getItem("SpeedtestRerun");
-            var itemSpeedtestSummary = getItem("SpeedtestSummary");
-
-            if (itemSpeedtestRerun.state == NULL) postUpdate(itemSpeedtestRerun,OFF)
-            if (itemSpeedtestSummary.state == NULL || itemSpeedtestSummary.state == "") postUpdate(itemSpeedtestSummary,"-")
-
-            sendCommand(itemSysStartup,OFF);
-            sendCommand(itemSysStartupForce,OFF);
-        });
-    }
-});
-
-*/

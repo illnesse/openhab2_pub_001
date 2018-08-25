@@ -3,47 +3,8 @@ load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
 var AtHomeSTimer = null;
 var AtHomeJTimer = null;
-/*
-var gLatencyTriggers = []
-itemRegistry.getItem("gLatency").getMembers().forEach(function (gLatencyItem) 
-{
-    gLatencyTriggers.push(ItemStateChangeTrigger(gLatencyItem.name));
-});
-
-JSRule({
-    name: "gLatencyTriggers",
-    description: "Line: "+__LINE__,
-    triggers: gLatencyTriggers,
-    execute: function( module, input){
-        var triggeringItem = getItem(getTriggeringItemStr(input));
-        var toUpdate = triggeringItem.name.split("Latency")[0]
-        var itemLatency = triggeringItem
-        var itemPresence = getItem(toUpdate + "Presence");
-        var itemOnline = getItem(toUpdate + "Online");
-
-        var out, online, pinglatency;
-
-        if ((itemOnline.state == OPEN) || isUninitialized(itemOnline)) online = "ONLINE"
-        else online = "OFFLINE"
-
-        if ((itemLatency.state != "") && !isUninitialized(itemLatency))
-        {
-            online = "ONLINE"
-            pinglatency = " " + Math.round( itemLatency.state ) + " ms"
-        }
-        else
-        {
-            online = "OFFLINE"
-            pinglatency = ""
-        }
-
-        out = online + pinglatency
-        postUpdate(itemPresence,out)
-        //logInfo(toUpdate +": "+ out);
-    }
-});
-*/
 var gOnlineTriggers = []
+
 itemRegistry.getItem("gPresenceStatus").getMembers().forEach(function (gOnlineItem) 
 {
     gOnlineTriggers.push(ItemStateChangeTrigger(gOnlineItem.name));

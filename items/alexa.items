@@ -5,6 +5,8 @@ Group gEchoGroup (gEchos)
 Group gEchoTriggers
 
 String FireTV_CMD
+String Kodi_title                 "Title [%s]"
+String Kodi_thumbnail
 
 String Echo1_Subtitles            "Subtitles [%s]"                         (gEcho1)
 String Echo2_Subtitles            "Subtitles [%s]"                         (gEcho2)

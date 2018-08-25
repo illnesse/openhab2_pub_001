@@ -13,24 +13,6 @@ var MODE_OVER = 4;
 var TTS_OFF = 0;
 var TTS_DEFAULT = 1;
 
-function custom_sort(a, b) {
-    return jodaDate(a.start.dateTime).compareTo(jodaDate(b.start.dateTime));
-}
-
-function arrayUnique(array) {
-    var a = array.concat();
-    for(var i=0; i<a.length; ++i) {
-        for(var j=i+1; j<a.length; ++j) 
-        {
-            if((a[i].id) === (a[j].id))
-                logInfo(a[i].summary +" state: "+ a[i].state);
-                a.splice(j--, 1);
-        }
-    }
-    return a;
-}
-
-
 JSRule({
     name: "GetCalEvents",
     description: "Line: "+__LINE__,

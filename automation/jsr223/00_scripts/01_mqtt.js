@@ -6,24 +6,6 @@ var home_lon = "12.3456789";
 
 var delay = 400;
 
-function sendMQTT(broker, topic, message, quiet)
-{
-    quiet = quiet || false;
-    var execResult;
-    var command;
-    if (broker == "broadlink")
-    {
-        command = "mosquitto_pub -t " + topic + " -m \"" + message + "\"";
-    }
-    else if (broker == "cloudmqtt")
-    {
-        command = "mosquitto_pub -h XXXXXXX -p XXXX -u XXXXXXX -P XXXXXXXXX -i XXXXXXXXXXXX -t " + topic + " -m \"" + message + "\"";
-    }
-    execResult = executeCommandLineAndWaitResponse(command, 1000 *3);
-    if (!quiet) logInfo("sendMQTT " + topic);
-    //logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
-}
-
 var gMQTT_CommandTriggers = [];
 itemRegistry.getItem("gMQTT_CommandsStr").getMembers().forEach(function (gMQTT_CommandsStrItem) 
 {
