@@ -224,7 +224,7 @@ a:hover
     max-width: 95%;
     height: auto;
     margin: 0 auto;
-
+    margin-bottom: 40px;
     /* padding-left: -8px; */
 
     /* flex-flow: column wrap; */
@@ -483,7 +483,8 @@ a:hover
 
 .bg_kodi
 {
-    background-color: rgba(30,30,30, 0.9) !important;
+    background: linear-gradient(to top, #0d0d0e57, #2d2a2f);
+    /* background-color: rgba(30,30,30, 0.9) !important; */
 }
 
 .bg_fritzbox
@@ -561,7 +562,11 @@ a:hover
 {
     background: linear-gradient(to bottom, #121215d9, #141f2aad);
 }
-.bg_klima
+.bg_sensors
+{
+    background: linear-gradient(to top, #243438b3, #254b54bd);
+}
+.bg_batteries
 {
     background: linear-gradient(to top, #243438b3, #254b54bd);
 }
@@ -630,6 +635,9 @@ a:hover
 }
 .cut-corner-btn.mdl-button:hover:after {
     background: #f7f7f744;
+}
+.cut-corner-btn.mdl-button:active:after {
+    background: #f7f7f7aa;
 }
 
 .mdl-form__setpoint .mdl-button, .mdl-form__colorpicker .mdl-button, .mdl-form__rollerblind .mdl-button {

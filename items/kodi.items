@@ -5,7 +5,7 @@ Switch Kodi_Play "Kodi_Play"
 //Dimmer Kodi_volume                "Volume [%d]"               { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:volume" }
 Player Kodi_control               "Control"                   { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:control" }
 Switch Kodi_stop                  "Stop"                      { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:stop" }
-String Kodi_title                 "Title [%s]"                { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:title" }
+String Kodi_title                 "Title [%s]"
 //String Kodi_showtitle             "Show title [%s]"           { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:showtitle" }
 //String Kodi_album                 "Album [%s]"                { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:album" }
 String Kodi_artist                "Artist [%s]"               { channel="kodi:kodi:5a3c16a5-2d7a-eb19-8bc7-16e206255f1c:artist" }

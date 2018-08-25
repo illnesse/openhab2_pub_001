@@ -132,7 +132,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("a/c") >= 0 ) $panel.addClass("panel_custom bg_ac");
         else if ($h5text.indexOf("echo") >= 0 ) panelcss($panel,$h5,"echos","alexa");
         else if ($h5text.indexOf("tunein") >= 0 ) panelcss($panel,$h5,"tunein","tunein");
-        else if ($h5text.indexOf("klima") >= 0 ) panelcss($panel,$h5,"klima","homematic");
+        else if ($h5text.indexOf("sensors") >= 0 ) panelcss($panel,$h5,"sensors","homematic");
         else if ($h5text.indexOf("calendar") >= 0 ) panelcss($panel,$h5,"gcal","google");
         else if ($h5text.indexOf("e-mail") >= 0 ) panelcss($panel,$h5,"email","google");
         else if ($h5text.indexOf("network") >= 0 ) $panel.addClass("panel_custom bg_net");
@@ -141,6 +141,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("logreader") >= 0 ) $panel.addClass("panel_custom bg_logreader");
         else if ($h5text.indexOf("alarm") >= 0 ) $panel.addClass("panel_custom bg_alarm");
         else if ($h5text.indexOf("energy") >= 0 ) panelcss($panel,$h5,"energy","tplink");
+        else if ($h5text.indexOf("batteries") >= 0 ) $panel.addClass("panel_custom bg_batteries");
         else if ($h5text.indexOf("nas snmp") >= 0 ) panelcss($panel,$h5,"asustor","asustor");
 /*        
         else if ($h5text.indexOf("ip cams") >= 0 ) 

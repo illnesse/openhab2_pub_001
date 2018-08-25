@@ -12,11 +12,12 @@ Items {
 	Humidity, Pressure, Temperature, FeelsLike : strategy = everyChange
 
 	HMTemp1, HMTemp1HUM : strategy = every5Minutes
-	HMDoor1, OsramSensorTriggered : strategy = everyChange
+	HMDoor1, OsramSensorTriggered, OsramSensor_2_Triggered, OsramSensor_3_Triggered : strategy = everyChange
 
     HM_EM_Power, HM_EM_EnergyCounter : strategy = every5Minutes
     HM_EM_EnergyUsage_Today : strategy = every10Minutes
 
+    gBatteries* : strategy = everyMinute, restoreOnStartup
     gCalTimes* : strategy = everyChange, restoreOnStartup
     gLatency* : strategy = every5Minutes, restoreOnStartup
     //gOnline* : strategy = everyHour, everyChange, restoreOnStartup

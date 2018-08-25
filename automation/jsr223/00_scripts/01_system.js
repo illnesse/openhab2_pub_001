@@ -224,15 +224,15 @@ JSRule({
         var itemSystem_openHAB_Memory = getItem("System_openHAB_Memory");
         var itemSystem_openHAB_DBSize = getItem("System_openHAB_DBSize");
         
-        var execResultUptime = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/uptime.sh",1000);
+        var execResultUptime = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/uptime.sh",1000*3);
         //logInfo("stats 1 "+execResultUptime)
         if (execResultUptime != "") postUpdate( itemSystem_openHAB_Uptime, execResultUptime);
 
-        var execResultMemory = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/memory.sh",1000);
+        var execResultMemory = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/memory.sh",1000*3);
         //logInfo("stats 2 "+execResultMemory)
         if (execResultMemory != "") postUpdate( itemSystem_openHAB_Memory, execResultMemory );
 
-        var execResultDBSize = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/dbsize.sh",1000);
+        var execResultDBSize = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/dbsize.sh",1000*3);
         //logInfo("stats 3 "+execResultDBSize)
         if (execResultDBSize != "") postUpdate( itemSystem_openHAB_DBSize, execResultDBSize );
     }

@@ -1,0 +1,9 @@
+Group gBatteries
+
+Number OSRAM_Sensor_1_Battery (gBatteries) {channel="osramlightify:motionsensor:00-0D-6F-00-0F-71-0E-21:battery"}
+Number OSRAM_Sensor_2_Battery (gBatteries) {channel="osramlightify:motionsensor:00-0D-6F-00-0E-05-83-C5:battery"}
+Number OSRAM_Sensor_3_Battery (gBatteries) {channel="osramlightify:motionsensor:00-0D-6F-00-0E-63-9B-4E:battery"}
+
+Number  HM_EM_LowBattery (gBatteries)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#LOWBAT" }
+Number  HMTemp1LowBatt   (gBatteries)  { channel="homematic:HmIP-STH:PEQ0174170:000E5709B28DEE:0#LOW_BAT" }
+Number  HMDoor1LowBatt   (gBatteries)  { channel="homematic:HM-Sec-SCo:PEQ0174170:OEQ1199810:0#LOWBAT" }

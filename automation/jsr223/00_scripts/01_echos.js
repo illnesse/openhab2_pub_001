@@ -1,6 +1,8 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
+var kodiurl = "http://192.168.178.26:8080/jsonrpc?request=";
+
 var EchoTitlesTriggers = [];
 itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTriggerItem) 
 {
@@ -10,6 +12,28 @@ itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTrigge
 var TTS_OFF = 0;
 var TTS_DEFAULT = 1;
 
+
+
+JSRule({
+    name: "FireTVCmd",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemCommandTrigger("FireTV_CMD")
+    ],
+    execute: function( module, input)
+    {
+        var cmd = input.command;
+
+        logInfo("FireTVCmd cmd: "+cmd);
+        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/firetv_keyevent.sh 192.168.178.26 "+cmd, 1000 *10);
+        //logInfo("FireTVCmd result: " + results1)
+
+        var kodireturn = HTTP.sendHttpGetRequest(kodiurl + '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "season", "episode", "duration", "showtitle", "tvshowid", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 1 }, "id": "VideoGetItem"}');
+        var kodiresult = JSON.parse(kodireturn)
+        var label = kodiresult.item.label
+        getItem("Kodi_title",label)
+    }
+});
 
 JSRule({
     name: "EchoTitles",

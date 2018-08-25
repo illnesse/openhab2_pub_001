@@ -79,8 +79,16 @@ sitemap main label="Home"
 		Switch item=MQTT_FAN label="Power" icon="control_on_off" mappings=[power="PWR"]
 		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="▼",up="▲"]
 	}
-	Frame label="Kodi WZ"
+	Frame label="Kodi/FireTV WZ"
 	{
+        Switch item=FireTV_CMD label="FireTV CMD" icon="none" mappings=[88='◀◀',85='❚❚ ▶',87='▶▶']
+        Switch item=FireTV_CMD label="FireTV CMD" icon="none" mappings=[66='OK',4='BACK',3='HOME',1='MENU']
+        Switch item=FireTV_CMD label="FireTV CMD" icon="none" mappings=[19='UP',20='DOWN',21='LEFT',22='RIGHT']
+        
+        Text label="" icon="none"
+        Text label="" icon="none"
+        Text label="" icon="none"
+
 		Selection item=Kodi_control icon="audio_playlist" mappings=[PLAY='Play', PAUSE='Pause', NEXT='Next', PREVIOUS='Previous', FASTFORWARD='Fastforward', REWIND='Rewind']
         Default   item=Kodi_control icon="audio_playlist"
 		Text      item=Kodi_title icon="audio_playlist"
@@ -93,7 +101,7 @@ sitemap main label="Home"
     Frame label="RSS"
 	{
         Text label="Fefe's Blog" icon="message_empty"
-        Webview url="/static/rss.html" height=4
+        Webview url="/static/rss.html" height=3
 	}
     Frame label="E-Mail"
     {
@@ -302,11 +310,38 @@ sitemap main label="Home"
         Text label="" icon="none"
         Text label="" icon="none"
         Text label="" icon="none"
+
         //Switch item=AtHomeS
         //Switch item=AtHomeJ
-		Text item=OsramSensorTriggeredUI label="Motion Sensor [%s]" icon="message_presence_active"
-		//Text item=HMDoor1 label="Haustüre" icon="fts_door"
-        Text item=HMDoor1UI label="Door" icon="fts_door"
+	}
+
+
+    Frame label="NAS SNMP Stats" 
+	{
+	    Text label="NAS is OFFLINE" icon="info_info" visibility=[NASLatency == UNDEF]
+	    Switch item= WOL_NAS icon="it_nas" mappings=[ON="WOL"] visibility=[NASLatency == UNDEF]
+
+        Text item=SNMP_NAS_hwModelName icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_sysSerialNumber icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_sysADMVersion icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_sysUptime icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_sysTime icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_sysAsustorID icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_hwTotalMem icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_hwProcessor icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_cpuUsage icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_fanSpeed icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_netPacketSent icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_diskID icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_diskModel icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_diskStatus icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_volumeName icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_volumeFileSystem icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=SNMP_NAS_volumeTotalSize icon="info_info" visibility=[NASLatency != UNDEF]
+        Text label="" icon="none"
+        
+        Text label="NAS UI |asustor|http://192.168.178.25:8000/portal/?5AB145E1" icon="none"
+        Text label="" icon="none"
 	}
 
     Frame label="Energy"
@@ -345,7 +380,7 @@ sitemap main label="Home"
         Text label="" icon="none"
     }
 
-	Frame label="Klima"
+	Frame label="Sensors"
 	{
 		Text item=Temperature_UI_Outdoor label="Temp Aussen" icon="temp_temperature"
 		//Text item=Temperature label="Temp Aussen" icon="temp_temperature"
@@ -357,6 +392,15 @@ sitemap main label="Home"
 		Text item=PollenUI icon="message_attention"
 		Text item=Pressure icon="measure_pressure_bar"
 		
+		Text item=OsramSensorTriggeredUI label="Motion Sensor 1 (G) [%s]" icon="message_presence_active"
+        Text item=HMDoor1UI label="Door" icon="fts_door"
+
+        Text item=OsramSensor_2_TriggeredUI label="Motion Sensor 2 (WZ) [%s]" icon="message_presence_active"
+        Text label="" icon="none"
+
+        Text item=OsramSensor_3_TriggeredUI label="Motion Sensor 3 (K) [%s]" icon="message_presence_active"
+        Text label="" icon="none"
+       
 /*
 		Text label="Wetter Details" icon="weather_cloudy"
 		{
@@ -381,6 +425,19 @@ sitemap main label="Home"
 		Image label="8" url="http://localhost:8080/static/8.png"
 		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
 	}
+	Frame label="Batteries"
+	{
+        Text item=OSRAM_Sensor_1_Battery label="OSRAM Sensor 1 Battery [%s %%]" icon="measure_battery_50"
+        Text item=HM_EM_LowBattery label="Homematic Energy Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+
+        Text item=OSRAM_Sensor_2_Battery label="OSRAM Sensor 2 Battery [%s %%]" icon="measure_battery_50"
+        Text item=HMTemp1LowBatt label="Homematic Temperature Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+
+        Text item=OSRAM_Sensor_3_Battery label="OSRAM Sensor 3 Battery [%s %%]" icon="measure_battery_50"
+        Text item=HMDoor1LowBatt label="Homematic Door Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+        
+        Image label="20" url="http://localhost:8080/static/20.png"
+    }
 	Frame label="System Stats"
 	{
         Switch item=Backupbtn label="Commit & Push Backup |Bitbucket Repository|https://bitbucket.org/XXXXXXX/all [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
@@ -416,22 +473,11 @@ sitemap main label="Home"
 		Image label="2" url="http://localhost:8080/static/2.png"
 		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1|PaperUI|http://192.168.178.31:8080/paperui/index.html|Rest API|http://192.168.178.31:8080/doc/index.html" icon="none"
 	}	
-
-    Frame label="LogReader" 
-	{
-        Text item=logreaderLastError icon="info_error"
-        Text item=logreaderLastWarning icon="info_warning"
-        Text item=logreaderErrors icon="audio_playlist"
-        Text item=logreaderWarnings icon="audio_playlist"
-	
-        Webview url="/static/overrides.html" height=14
-	}
-
 	Frame label="Network"
 	{
-		Text item=RouterLatency label="Router |FritzUI|http://192.168.178.1 [JS(latencyUI.js):%s]" icon="it_router"
+		Text item=RouterLatency label="Router [JS(latencyUI.js):%s]" icon="it_router"
 		Text item=DesktopLatency label="Desktop [JS(latencyUI.js):%s]" icon="it_pc"
-		Text item=NASLatency label="NAS |asustor|http://192.168.178.25:8000/portal/?XXXX [JS(latencyUI.js):%s]" icon="it_nas"
+		Text item=NASLatency label="NAS [JS(latencyUI.js):%s]" icon="it_nas"
 		Text item=HandySLatency label="Handy S [JS(latencyUI.js):%s]" icon="it_smartphone"
 		Text item=HandyJLatency label="Handy J [JS(latencyUI.js):%s]" icon="it_smartphone"
 		Text item=SonyAudioLatency label="Sony Audio [JS(latencyUI.js):%s]" icon="it_media_player"
@@ -439,7 +485,7 @@ sitemap main label="Home"
 		Text item=Echo1Latency label="Echo 1 [JS(latencyUI.js):%s]" icon="message_empty"
 		Text item=Echo2Latency label="Echo 2 [JS(latencyUI.js):%s]" icon="message_empty"
 		Text item=RaspberryPiLatency label="Raspi OH2 [JS(latencyUI.js):%s]" icon="it_server"
-		Text item=RaspberryMaticLatency label="Raspi CCU3 |Homematic|http://192.168.178.45 [JS(latencyUI.js):%s]" icon="it_server"
+		Text item=RaspberryMaticLatency label="Raspi CCU3 [JS(latencyUI.js):%s]" icon="it_server"
 		Text item=PS4Latency label="PS4 [JS(latencyUI.js):%s]" icon="scene_gaming_3"
 		Text item=OSRAMGatewayLatency label="OSRAM Gateway [JS(latencyUI.js):%s]" icon="it_media_player"
 		Text item=FireTVLatency label="FireTV [JS(latencyUI.js):%s]" icon="it_media_player"
@@ -463,28 +509,13 @@ sitemap main label="Home"
         Switch item=SpeedtestRerun label="Start Speedtest [%s]" mappings=[ON="Start"] icon="info_info"
 
 	}
-
-    Frame label="NAS SNMP Stats" 
+    Frame label="LogReader" 
 	{
-	    Text label="NAS is OFFLINE" icon="info_info" visibility=[NASLatency == UNDEF]
-	    Switch item= WOL_NAS icon="it_nas" mappings=[ON="WOL"] visibility=[NASLatency == UNDEF]
-
-        Text item=SNMP_NAS_hwModelName icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_sysSerialNumber icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_sysADMVersion icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_sysUptime icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_sysTime icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_sysAsustorID icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_hwTotalMem icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_hwProcessor icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_cpuUsage icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_fanSpeed icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_netPacketSent icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_diskID icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_diskModel icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_diskStatus icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_volumeName icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_volumeFileSystem icon="info_info" visibility=[NASLatency != UNDEF]
-        Text item=SNMP_NAS_volumeTotalSize icon="info_info" visibility=[NASLatency != UNDEF]
+        Text item=logreaderLastError icon="info_error"
+        Text item=logreaderLastWarning icon="info_warning"
+        Text item=logreaderErrors icon="audio_playlist"
+        Text item=logreaderWarnings icon="audio_playlist"
+	
+        Webview url="/static/overrides.html" height=14
 	}
 }

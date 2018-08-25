@@ -33,12 +33,19 @@ JSRule({
     name: "MotionSensor",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateUpdateTrigger("OsramSensorTriggered")
+        ItemStateUpdateTrigger("OsramSensorTriggered"),
+        ItemStateUpdateTrigger("OsramSensor_2_Triggered"),
+        ItemStateUpdateTrigger("OsramSensor_3_Triggered"),
     ],
     execute: function( module, input)
     {
-        var itemOsramSensorTriggered = getItem("OsramSensorTriggered");
-        var itemOsramSensorTriggeredUI = getItem("OsramSensorTriggeredUI");
+        var triggeringItem = getItem(getTriggeringItemStr(input));
+        var toUpdate = triggeringItem.name.split("Triggered")[0]
+
+        //logInfo(toUpdate);
+
+        var itemOsramSensorTriggered = getItem(toUpdate+"Triggered");
+        var itemOsramSensorTriggeredUI = getItem(toUpdate+"TriggeredUI");
 
         var state = input.state;
         if (isUninitialized(state)) state = itemOsramSensorTriggered.state;

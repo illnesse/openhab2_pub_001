@@ -44,14 +44,16 @@ JSRule({
         var itemCal_Update = getItem("Cal_Update");
         postUpdate(itemCal_Update,"updating...");
         
-        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX1@gmail.com list Cal_illnesse_", 1000 *5);
-        //logInfo("GetCalEvents: " + results1)
-        var results2 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX2@googlemail.com list Cal_janine_", 1000 *5);
-        //logInfo("GetCalEvents: " + results2)
+        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX1@gmail.com list", 1000 *5);
+        // logInfo("GetCalEvents: " + results1)
+        var results2 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX2@googlemail.com list", 1000 *5);
+        // logInfo("GetCalEvents: " + results2)
+        var results3 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXXX@group.calendar.google.com list", 1000 *5);
+        // logInfo("GetCalEvents: " + results2)
 
-        if ((results1 == "") || (results2 == "")) return;
+        if ((results1 == "") || (results2 == "") || (results3 == "")) return;
 
-        gcal_array_temp = JSON.parse(results1).concat(JSON.parse(results2));
+        gcal_array_temp = JSON.parse(results1).concat(JSON.parse(results2)).concat(JSON.parse(results3));
         //logInfo("gcal_array_temp size: " + gcal_array_temp.length);
 
         for(var i = 0; i < gcal_array_temp.length; i++)

@@ -1,6 +1,5 @@
 Group gSensors
 
-Switch  HM_EM_LowBattery "Low Battery [%s]" (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#LOWBAT" }
 Number  HM_EM_SignalStrength "Signal Strength [%s]"  (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#SIGNAL_STRENGTH" }
 Number  HM_EM_Power "power [%.0f W]"  (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#POWER" }
 Number  HM_EM_EnergyCounter "Energy Counter [%.2f Wh]" (gSensors)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#ENERGY_COUNTER" }
@@ -14,6 +13,16 @@ Number  HMTemp1HUM  "HMTemp1HUM [%s %%]" (gSensors) { channel="homematic:HmIP-ST
 Contact  HMDoor1 "HMDoor1 [%s]" (gSensors) { channel="homematic:HM-Sec-SCo:PEQ0174170:OEQ1199810:1#STATE" }
 String  HMDoor1UI "HMDoor1 [%s]" (gSensors)
 
-Switch OsramSensorTriggered "Sensor triggered [%s]" (gSensors) { channel="osramlightify:motionsensor:XX-XX-XX-XX-XX-XX-XX-XX:triggered" }
-String OsramSensorTriggeredUI "Sensor triggered [%s]" (gSensors) 
+//Number  HMTemp1Signal  "HMTemp1Signal" { channel="homematic:HmIP-STH:ccu:000E5709B28DEE:0#SIGNAL_STRENGTH" }
+//Number  HMTemp1TempSet  "HMTemp1TempSet [%.1f °C]" { channel="homematic:HmIP-STH:ccu:000E5709B28DEE:1#SET_POINT_TEMPERATURE" }
+//Number  HMDoor1Signal  "HMDoor1Signal [%s]" { channel="homematic:HM-Sec-SCo:ccu:OEQ1199810:0#SIGNAL_STRENGTH" }
+//String  HMDoor1Error  "HMDoor1Error [%s]" { channel="homematic:HM-Sec-SCo:ccu:OEQ1199810:1#ERROR" }
 
+Switch OsramSensorTriggered "Sensor 1 triggered [%s]" (gSensors) { channel="osramlightify:motionsensor:XXX:triggered" }
+String OsramSensorTriggeredUI "Sensor 1 triggered [%s]" (gSensors) 
+
+Switch OsramSensor_2_Triggered "Sensor 2 triggered [%s]" (gSensors) { channel="osramlightify:motionsensor:XXX:triggered" }
+String OsramSensor_2_TriggeredUI "Sensor 2 triggered [%s]" (gSensors) 
+
+Switch OsramSensor_3_Triggered "Sensor 3 triggered [%s]" (gSensors) { channel="osramlightify:motionsensor:XXX:triggered" }
+String OsramSensor_3_TriggeredUI "Sensor 3 triggered [%s]" (gSensors) 
