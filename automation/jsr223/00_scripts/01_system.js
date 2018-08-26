@@ -1,8 +1,6 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
-//s
-
 JSRule({
     name: "Backupbtn",
     description: "Line: "+__LINE__,

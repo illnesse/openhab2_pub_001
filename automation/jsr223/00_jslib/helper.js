@@ -2,6 +2,7 @@
 load('/etc/openhab2/automation/jsr223/00_jslib/js-joda.js');
 
 var kodiurl = "http://192.168.178.26:8080/jsonrpc?request=";
+var broadlink_delay = 400;
 
 function decodeKodiThumbnailURL(str)
 {
@@ -19,11 +20,13 @@ function kodiCall(call)
     //logInfo(kodireturn);
     return JSON.parse(kodireturn);
 }
+
 function sendKodiNotification(title,msg)
 {
     var call = '{"jsonrpc":"2.0","method":"GUI.ShowNotification","params":{"title":"'+title+'","message":"'+msg+'"},"id":1}';
     kodiCall(call);
 }
+
 function sendNotification(title,msg)
 {
     sendKodiNotification("[OH2_System_Notification] "+title,msg);

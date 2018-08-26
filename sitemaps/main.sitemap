@@ -92,7 +92,7 @@ sitemap main label="Home"
     Frame label="RSS"
 	{
         Text label="Fefe's Blog" icon="message_empty"
-        Webview url="/static/rss.html" height=3
+        Webview url="/static/rss.html" height=3 icon="none"
 	}
     Frame label="E-Mail"
     {
@@ -192,7 +192,7 @@ sitemap main label="Home"
 	Frame label="Tunein"
 	{
         Switch item=TuneInPlayDevice label="Play on Device" icon="audio_volume_high" mappings=[echo1="ECHO SZ",echo2="ECHO WZ",local="LOCAL"]
-        Webview url="/static/tunein.html" height=9
+        Webview url="/static/tunein.html" height=9 icon="none"
 	}
 
     Frame label="Mobiles / GPS" 
@@ -227,7 +227,7 @@ sitemap main label="Home"
         Text item=MQTT_Phone_S_WhatsappUI icon="message_notice"
         Text item=MQTT_Phone_J_WhatsappUI icon="message_notice"
 
-        Webview url="/static/map.html" height=5
+        Webview url="/static/map.html" height=5 icon="none"
     }
 	Frame label="FRITZ!Box"
 	{	
@@ -507,6 +507,6 @@ sitemap main label="Home"
         Text item=logreaderErrors icon="audio_playlist"
         Text item=logreaderWarnings icon="audio_playlist"
 	
-        Webview url="/static/overrides.html" height=14
+        Webview url="/static/overrides.html" height=14 icon="none"
 	}
 }

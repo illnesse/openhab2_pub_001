@@ -4,7 +4,6 @@ Switch SAT_ON
 Switch AUDIO_ON
 */
 
-Group:Switch gMQTT_CommandsSw
 Group:String gMQTT_CommandsStr
 
 String MQTT_TV "Samsung TV" (gMQTT_CommandsStr)
@@ -16,22 +15,6 @@ String MQTT_AC "A/C" (gMQTT_CommandsStr)
 String MQTT_FAN "FAN" (gMQTT_CommandsStr)
 String MQTT_PC_SYSTEM "PC System" (gMQTT_CommandsStr)
 String MQTT_PC_DESKTOP "PC Desktop" (gMQTT_CommandsStr)
-
-Switch aMQTT_PC_screen "PC Screen" (gMQTT_CommandsSw) ["Switchable"] 
-Switch aMQTT_PC_off "PC Power" (gMQTT_CommandsSw) ["Switchable"] 
-Switch aMQTT_PC_close "PC Close" (gMQTT_CommandsSw) ["Switchable"] 
-
-Switch aMQTT_FAN_power "Ventilator Power" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_FAN_rot "Ventilator Rot" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_FAN_up "Ventilator stärker" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_FAN_down "Ventilator schwächer" (gMQTT_CommandsSw) ["Switchable"]
-
-Switch aMQTT_ALLES "Glotze" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_TV "a_TV_Power" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_SAT "a_SAT_Power" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_AUDIO "a_Audio_Power" (gMQTT_CommandsSw) ["Switchable"]
-Switch aSonyVolume "aSonyVolume" (gMQTT_CommandsSw) ["Switchable"]
-Switch aMQTT_AUDIO_MUTE "a_Audio_Mute" (gMQTT_CommandsSw) ["Switchable"]
 
 Group:Switch:OR(ON, OFF) gMQTT_SAT_ch
 
