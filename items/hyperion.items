@@ -1,0 +1,14 @@
+Group gHyperion
+
+Dimmer HyperionBrightness 			"Brightness [%s]" (gHyperion) 	{ channel="hyperion:serverNG:myServer:brightness"}
+String HyperionEffect				"Current effect [%s]" (gHyperion) 	{ channel="hyperion:serverNG:myServer:effect"}
+Color HyperionMyColor				"Color" (gHyperion)	 { channel="hyperion:serverNG:myServer:color"}
+Switch HyperionClear          "Clear priority" (gHyperion)  { channel="hyperion:serverNG:myServer:clear"}
+Switch HyperionClear_all          "Clear_all priority" (gHyperion)  { channel="hyperion:serverNG:myServer:clear_all"}
+
+Switch HyperionEnabled (gHyperion) {channel="hyperion:serverNG:myServer:hyperionenabled"}
+Switch HyperionBlackBorderEnabled (gHyperion) {channel="hyperion:serverNG:myServer:blackborder"}
+Switch HyperionSmoothingEnabled (gHyperion) {channel="hyperion:serverNG:myServer:smoothing"}
+Switch HyperionGrabberEnabled (gHyperion) {channel="hyperion:serverNG:myServer:grabber"}
+//Switch HyperionV4lEnabled (gHyperion) {channel="hyperion:serverNG:myServer:v4l"}
+Switch HyperionLedDeviceEnabled (gHyperion) {channel="hyperion:serverNG:myServer:leddevice"}

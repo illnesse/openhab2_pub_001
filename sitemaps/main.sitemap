@@ -13,6 +13,63 @@ sitemap main label="Home"
 		Switch item=MQTT_TV label="Power" icon="control_on_off" mappings=[power="PWR"]
 		Switch item=MQTT_TV label="Volume" icon="audio_playlist" mappings=[input="INPUT",mute="MUTE",volumedown="-",volumeup="+"] //visibility=[TV_ON==ON]
 	}
+    Frame label="Hyperion Ambilight WZ"
+	{
+        Slider item=HyperionBrightness icon="light_led_stripe"
+        Selection item=HyperionEffect icon="light_led_stripe" mappings=[
+            "Atomic swirl" = "Atomic swirl", 
+            "Blue mood blobs" = "Blue mood blobs", 
+            "Breath" = "Breath", 
+            "Candle" = "Candle", 
+            "Cinema brighten lights" = "Cinema brighten lights", 
+            "Cinema dim lights" = "Cinema dim lights", 
+            "Cold mood blobs" = "Cold mood blobs", 
+            "Color traces" = "Color traces", 
+            "Double swirl" = "Double swirl", 
+            "Fire" = "Fire", 
+            "Flags Germany/Sweden" = "Flags Germany/Sweden", 
+            "Full color mood blobs" = "Full color mood blobs", 
+            "Green mood blobs" = "Green mood blobs", 
+            "Knight rider" = "Knight rider", 
+            "Light clock" = "Light clock", 
+            "Lights" = "Lights", 
+            "Notify blue" = "Notify blue", 
+            "Pac-Man" = "Pac-Man", 
+            "Police Lights Single" = "Police Lights Single", 
+            "Police Lights Solid" = "Police Lights Solid", 
+            "Rainbow mood" = "Rainbow mood", 
+            "Rainbow swirl" = "Rainbow swirl", 
+            "Rainbow swirl fast" = "Rainbow swirl fast", 
+            "Random" = "Random", 
+            "Red mood blobs" = "Red mood blobs", 
+            "Running dots" = "Running dots", 
+            "Snake" = "Snake", 
+            "Sparks" = "Sparks", 
+            "Strobe red" = "Strobe red", 
+            "Strobe white" = "Strobe white", 
+            "System Shutdown" = "System Shutdown", 
+            "Trails" = "Trails", 
+            "Trails color" = "Trails color", 
+            "Warm mood blobs" = "Warm mood blobs", 
+            "X-Mas" = "X-Mas"
+        ]
+        Switch item=HyperionClear icon="none" mappings=[ON="CLEAR"] 
+        Switch item=HyperionClear_all icon="none" mappings=[ON="CLEAR"] 
+        Colorpicker item=HyperionMyColor icon="light_led_stripe_rgb"
+        
+        Switch item=HyperionEnabled label="Enabled [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionEnabled!=OFF]
+        Switch item=HyperionEnabled label="Enabled [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionEnabled!=ON]
+        Switch item=HyperionBlackBorderEnabled label="Black Border Detection [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionBlackBorderEnabled!=OFF]
+        Switch item=HyperionBlackBorderEnabled label="Black Border Detection [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionBlackBorderEnabled!=ON]
+        Switch item=HyperionSmoothingEnabled label="Smoothing [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionSmoothingEnabled!=OFF]
+        Switch item=HyperionSmoothingEnabled label="Smoothing [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionSmoothingEnabled!=ON]
+        Switch item=HyperionGrabberEnabled label="Grabber [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionGrabberEnabled!=OFF]
+        Switch item=HyperionGrabberEnabled label="Grabber [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionGrabberEnabled!=ON]
+        //Switch item=HyperionV4lEnabled label="V4l [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionV4lEnabled!=OFF]
+        //Switch item=HyperionV4lEnabled label="V4l [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionV4lEnabled!=ON]
+        Switch item=HyperionLedDeviceEnabled label="LED Device [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionLedDeviceEnabled!=OFF]
+        Switch item=HyperionLedDeviceEnabled label="LED Device [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionLedDeviceEnabled!=ON]
+    }
 	Frame label="SAT Receiver WZ"
 	{
 		Switch item=MQTT_SAT label="Power" icon="control_on_off" mappings=[power="PWR"] 
@@ -50,9 +107,9 @@ sitemap main label="Home"
 			64="CNN",
 			70="Astro TV"
 		] //visibility=[SAT_ON==ON]
-		Switch item=MQTT_SAT label="Program" icon="audio_playlist" mappings=[list="LIST",guide="GUIDE",channeldown="▼",channelup="▲"]
+		Switch item=MQTT_SAT label="Program" icon="audio_playlist" mappings=[list="LIST",guide="GUIDE",channeldown="â–¼",channelup="â–²"]
         Text label="" icon="none"
-        Switch item=MQTT_SAT label="[]" icon="none" mappings=[exit="EXIT",ok="OK",down="▾",up="▴"]
+        Switch item=MQTT_SAT label="[]" icon="none" mappings=[exit="EXIT",ok="OK",down="â–¾",up="â–´"]
 	}
 	Frame label="Sony AV Receiver WZ"
 	{
@@ -72,23 +129,81 @@ sitemap main label="Home"
 	Frame label="A/C WZ"
 	{
 		Switch item=MQTT_AC label="Power" icon="control_on_off" mappings=[power="PWR"]
-		Switch item=MQTT_AC label="Stuff" icon="audio_playlist" mappings=[fan="FAN",fan2="FAN2",rotate="ROT",down="▼",up="▲"]
+		Switch item=MQTT_AC label="Stuff" icon="audio_playlist" mappings=[fan="FAN",fan2="FAN2",rotate="ROT",down="â–¼",up="â–²"]
 	}
 	Frame label="Fan WZ"
 	{
 		Switch item=MQTT_FAN label="Power" icon="control_on_off" mappings=[power="PWR"]
-		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="▼",up="▲"]
+		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="â–¼",up="â–²"]
 	}
 	Frame label="Kodi/FireTV WZ"
 	{
-        Switch item=FireTV_CMD label="Player" icon="none" mappings=[88='◀◀',85='❚❚ ▶',87='▶▶']
-        Switch item=FireTV_CMD label="Menu" icon="none" mappings=[66='OK',4='BACK',3='HOME',1='MENU']
-        Switch item=FireTV_CMD label="Controls" icon="none" mappings=[startkodi="KODI",19='▲',20='▼',21='◀',22='▶']
+        Switch item=FireTV_CMD label="Player" icon="none" mappings=[88='<<',85='||',85='>',87='>>']
+        Switch item=FireTV_CMD label="Menu" icon="none" mappings=[66='OK',4='BACK',3='HOME',1='MENU',scanlibrary="SCAN"]
+        Switch item=FireTV_CMD label="Controls" icon="none" mappings=[startkodi="KODI",19='â–²',20='â–¼',21='â—€',22='â–¶']
 
 		Text item=Kodi_title icon="audio_playlist"        
 
         Image item=Kodi_thumbnail visibility=[Kodi_thumbnail!="http://localhost:8080/static/null.png"]
 	}
+
+	Frame label="Echo SZ"
+	{
+		Default item=Echo1_Player icon="message_empty"
+		Selection item=Echo1_RadioStationId icon="it_radio"
+			mappings=[ 
+			''='Off', 
+			's2585'='Sleepbot Environmental Broadcast', 
+			's2225'='Limbik Frequencies', 
+			's25021'='Jam FM', 
+			's110956'='Traxx FM Tech Minimal', 
+			's268514'='sunshine live - Drum n Bass', 
+			'p526035'='Monday Night HAZE'
+			]
+		Slider  item=Echo1_Volume icon="audio_volume_high" 
+		Text 	item=Echo1_Subtitles icon="none"
+	}
+
+	Frame label="Echo WZ"
+	{
+		Default item=Echo2_Player icon="message_empty"
+		Selection item=Echo2_RadioStationId icon="it_radio"
+			mappings=[ 
+			''='Off', 
+			's2585'='Sleepbot Environmental Broadcast', 
+			's2225'='Limbik Frequencies', 
+			's25021'='Jam FM', 
+			's110956'='Traxx FM Tech Minimal', 
+			's268514'='sunshine live - Drum n Bass', 
+			'p526035'='Monday Night HAZE'
+			]
+		Slider  item=Echo2_Volume icon="audio_volume_high" 
+		Text 	item=Echo2_Subtitles icon="none"
+	}
+
+	Frame label="Echo Group"
+	{
+		Default item=EchoGroup1_Player icon="message_empty"
+		Selection item=EchoGroup1_RadioStationId icon="it_radio"
+			mappings=[ 
+			''='Off', 
+			's177719'='BASS RADIO - [www.bassradio.fm]', 
+			's100978'='Dubstep.fm', 
+			's2585'='Sleepbot Environmental Broadcast', 
+			's2225'='Limbik Frequencies', 
+			's25021'='Jam FM', 
+			's110956'='Traxx FM Tech Minimal', 
+			's268514'='sunshine live - Drum n Bass', 
+			'p526035'='Monday Night HAZE'
+			]
+	}
+
+	Frame label="Tunein"
+	{
+        Switch item=TuneInPlayDevice label="Play on Device" icon="audio_volume_high" mappings=[echo1="ECHO SZ",echo2="ECHO WZ",local="LOCAL"]
+        Webview url="/static/tunein.html" height=9 icon="none"
+	}
+
     Frame label="RSS"
 	{
         Text label="Fefe's Blog" icon="message_empty"
@@ -109,6 +224,14 @@ sitemap main label="Home"
         Text item=GMail_Acc1_Mail9__UI icon="message_mail" 
         Text item=GMail_Acc1_Mail10__UI icon="message_mail" 
     }
+
+    Frame label="Alarms" 
+	{
+        Selection item=ALARM1_PERSON1_D icon="time_alarm_clock" mappings=[90="OFF", 15="MO-FR", 67="SAT-SUN", 17="MO-SUN"]
+        Setpoint item=ALARM1_PERSON1_H  icon="time_alarm_clock" minValue=0 maxValue=23 step=1
+        Setpoint item=ALARM1_PERSON1_M  icon="time_alarm_clock" minValue=0 maxValue=59 step=1
+	}
+
     Frame label="Calendar Events"
     {
         Switch item=Cal_Update label="Update |Google Calendar|https://calendar.google.com [%s]" icon="time_calendar" mappings=[ON="UPDATE"]
@@ -124,75 +247,6 @@ sitemap main label="Home"
 
         Text item=Cal_Event4__UI icon="time_calendar" 
         Text item=Cal_Event8__UI icon="time_calendar" 
-	}
-
-    Frame label="Alarms" 
-	{
-        Selection item=ALARM1_PERSON1_D icon="time_alarm_clock" mappings=[90="OFF", 15="MO-FR", 67="SAT-SUN", 17="MO-SUN"]
-        Setpoint item=ALARM1_PERSON1_H  icon="time_alarm_clock" minValue=0 maxValue=23 step=1
-        Setpoint item=ALARM1_PERSON1_M  icon="time_alarm_clock" minValue=0 maxValue=59 step=1
-	}
-
-
-	Frame label="Echo SZ"
-	{
-		Default item=Echo1_Player icon="message_empty"
-		Selection item=Echo1_RadioStationId icon="it_radio"
-			mappings=[ 
-			''='Off', 
-			's2585'='Sleepbot Environmental Broadcast', 
-			's2225'='Limbik Frequencies', 
-			's25021'='Jam FM', 
-			's110956'='Traxx FM Tech Minimal', 
-			's268514'='sunshine live - Drum n Bass', 
-			'p526035'='Monday Night HAZE'
-			]
-		Slider  item=Echo1_Volume icon="audio_volume_high" 
-		// Text    item=Echo1_Title icon="none"
-		Text 	item=Echo1_Subtitles icon="none"
-	}
-
-	Frame label="Echo WZ"
-	{
-		Default item=Echo2_Player icon="message_empty"
-		Selection item=Echo2_RadioStationId icon="it_radio"
-			mappings=[ 
-			''='Off', 
-			's2585'='Sleepbot Environmental Broadcast', 
-			's2225'='Limbik Frequencies', 
-			's25021'='Jam FM', 
-			's110956'='Traxx FM Tech Minimal', 
-			's268514'='sunshine live - Drum n Bass', 
-			'p526035'='Monday Night HAZE'
-			]
-		Slider  item=Echo2_Volume icon="audio_volume_high" 
-		// Text    item=Echo2_Title icon="none"
-		Text 	item=Echo2_Subtitles icon="none"
-	}
-
-	Frame label="Echo Group"
-	{
-		Default item=EchoGroup1_Player icon="message_empty"
-		Selection item=EchoGroup1_RadioStationId icon="it_radio"
-			mappings=[ 
-			''='Off', 
-			's177719'='BASS RADIO - [www.bassradio.fm]', 
-			's100978'='Dubstep.fm', 
-			's2585'='Sleepbot Environmental Broadcast', 
-			's2225'='Limbik Frequencies', 
-			's25021'='Jam FM', 
-			's110956'='Traxx FM Tech Minimal', 
-			's268514'='sunshine live - Drum n Bass', 
-			'p526035'='Monday Night HAZE'
-			]
-		Text    item=EchoGroup1_Title icon="none"
-		Text 	item=EchoGroup1_Subtitles icon="none"
-	}
-
-	Frame label="Tunein"
-	{
-        Switch item=TuneInPlayDevice label="Play on Device" icon="audio_volume_high" mappings=[echo1="ECHO SZ",echo2="ECHO WZ",local="LOCAL"]
-        Webview url="/static/tunein.html" height=9 icon="none"
 	}
 
     Frame label="Mobiles / GPS" 
@@ -235,7 +289,8 @@ sitemap main label="Home"
         Text item=fboxVersion icon="it_router"
 
         Switch item=fboxWifi24 icon="it_router" mappings=[ON="ON",OFF="OFF"]
-        Switch item=fboxGuestWifi icon="it_router" mappings=[ON="ON",OFF="OFF"]
+        //Switch item=fboxGuestWifi icon="it_router" mappings=[ON="ON",OFF="OFF"]
+        Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
 
         Text item=fboxWanTotalBytesSent label="DSL total bytes sent [JS(b_mb.js):%s]" icon="none"
         Text item=fboxWanTotalBytesReceived label="DSL total bytes received [JS(b_mb.js):%s]" icon="none"
@@ -256,14 +311,12 @@ sitemap main label="Home"
 
 		Text item=Fritz_LastIncomingTimeUI icon="phone_answering"
 		Text item=Fritz_LastOutgoingTimeUI icon="phone_answering"
-
-        Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
 	}
 
 	Frame label="Devices"
 	{
-        Switch item=TuyaSocket1 label="Plug 1 [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket1!=ON]
-		Switch item=TuyaSocket1 label="Plug 1 [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket1==ON]
+        Switch item=TuyaSocket1 label="Plug 1 (Baby) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket1!=ON]
+		Switch item=TuyaSocket1 label="Plug 1 (Baby) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket1==ON]
         Switch item=TuyaSocket2 label="Plug 2 (Bett) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket2!=ON]
 		Switch item=TuyaSocket2 label="Plug 2 (Bett) [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket2==ON]
         Switch item=TuyaSocket3 label="Plug 3 (Mosquito) [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket3!=ON]
@@ -298,9 +351,9 @@ sitemap main label="Home"
         Slider  item=LED2FlashSpeed icon="none" 
         Text label="" icon="none"
 
-        Text label="" icon="none"
-        Text label="" icon="none"
-        Text label="" icon="none"
+        // Text label="" icon="none"
+        // Text label="" icon="none"
+        // Text label="" icon="none"
 
         //Switch item=AtHomeS
         //Switch item=AtHomeJ
@@ -309,8 +362,9 @@ sitemap main label="Home"
 
     Frame label="NAS SNMP Stats" 
 	{
-	    Text label="NAS is OFFLINE" icon="info_info" visibility=[NASLatency == UNDEF]
-	    Switch item= WOL_NAS icon="it_nas" mappings=[ON="WOL"] visibility=[NASLatency == UNDEF]
+	    Text label="NAS ONLINE |asustor|http://192.168.178.25:8000/portal/?5AB145E1" icon="info_info" visibility=[NASLatency != UNDEF]
+        Text label="NAS OFFLINE |asustor|http://192.168.178.25:8000/portal/?5AB145E1" icon="info_info" visibility=[NASLatency == UNDEF]
+	    Switch item=WOL_NAS icon="it_nas" mappings=[ON="WOL"]
 
         Text item=SNMP_NAS_hwModelName icon="info_info" visibility=[NASLatency != UNDEF]
         Text item=SNMP_NAS_sysSerialNumber icon="info_info" visibility=[NASLatency != UNDEF]
@@ -329,10 +383,7 @@ sitemap main label="Home"
         Text item=SNMP_NAS_volumeName icon="info_info" visibility=[NASLatency != UNDEF]
         Text item=SNMP_NAS_volumeFileSystem icon="info_info" visibility=[NASLatency != UNDEF]
         Text item=SNMP_NAS_volumeTotalSize icon="info_info" visibility=[NASLatency != UNDEF]
-        Text label="" icon="none"
         
-        Text label="NAS UI |asustor|http://192.168.178.25:8000/portal/?5AB145E1" icon="none"
-        Text label="" icon="none"
 	}
 
     Frame label="Energy"
@@ -354,14 +405,14 @@ sitemap main label="Home"
 
         Image label="10" url="http://localhost:8080/static/10.png"
 
+        Text item=HM_EM_Power label="Power Current [%.2f W]" icon="measure_power"
         Text item=HM_EM_EnergyCounter_Total_UI label="Usage Total [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
-        Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
-
-        Text item=HM_EM_EnergyUsage_Month_UI label="Usage Month [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
-        Text item=HM_EM_SignalStrength label="Signal Strength [%s]" icon="it_television"
 
         Text item=HM_EM_EnergyUsage_Today_UI label="Usage Today [%s]" icon="measure_power_meter"
-        Text item=HM_EM_Power label="Power Current [%.0f W]" icon="measure_power"
+        Text item=HM_EM_EnergyUsage_Month_UI label="Usage Month [JS(kwhprice_1000.js):%s]" icon="measure_power_meter"
+        
+        // Text item=HM_EM_LowBattery label="Low Battery [%s]" icon="it_television"
+        // Text item=HM_EM_SignalStrength label="Signal Strength [%s]" icon="it_television"
 
         Image label="12" url="http://localhost:8080/static/12.png"
 
@@ -386,12 +437,14 @@ sitemap main label="Home"
 		Text item=OsramSensorTriggeredUI label="Motion Sensor 1 (G) [%s]" icon="message_presence_active"
         Text item=HMDoor1UI label="Door" icon="fts_door"
 
-        Text item=OsramSensor_2_TriggeredUI label="Motion Sensor 2 (WZ) [%s]" icon="message_presence_active"
-        Text label="" icon="none"
+        Text item=OsramSensor_2_TriggeredUI label="Motion Sensor 2 (K) [%s]" icon="message_presence_active"
+        Text item=AtHomeS icon="message_presence_geo_active"
 
-        Text item=OsramSensor_3_TriggeredUI label="Motion Sensor 3 (K) [%s]" icon="message_presence_active"
-        Text label="" icon="none"
+        Text item=OsramSensor_3_TriggeredUI label="Motion Sensor 3 (WZ) [%s]" icon="message_presence_active"
+        Text item=AtHomeJ icon="message_presence_geo_active"
        
+        Text item=MQTT_NodeMCU_MultiSensor_1_MotionUI label="Motion Sensor 4 (SZ) [%s]" icon="message_presence_active"
+        Text label="" icon="none"
 /*
 		Text label="Wetter Details" icon="weather_cloudy"
 		{
@@ -418,24 +471,23 @@ sitemap main label="Home"
 	}
 	Frame label="Batteries"
 	{
-        Text item=OSRAM_Sensor_1_Battery label="OSRAM Sensor 1 Battery [%s %%]" icon="measure_battery_50"
+        Text item=OSRAM_Sensor_1_Battery label="OSRAM Sensor 1 (G) [%s %%]" icon="measure_battery_50"
+        Text item=OSRAM_Sensor_2_Battery label="OSRAM Sensor 2 (K) [%s %%]" icon="measure_battery_50"
+        Text item=OSRAM_Sensor_3_Battery label="OSRAM Sensor 3 (WZ) [%s %%]" icon="measure_battery_50"
+
         Text item=HM_EM_LowBattery label="Homematic Energy Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
-
-        Text item=OSRAM_Sensor_2_Battery label="OSRAM Sensor 2 Battery [%s %%]" icon="measure_battery_50"
         Text item=HMTemp1LowBatt label="Homematic Temperature Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
-
-        Text item=OSRAM_Sensor_3_Battery label="OSRAM Sensor 3 Battery [%s %%]" icon="measure_battery_50"
         Text item=HMDoor1LowBatt label="Homematic Door Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
         
-        Image label="20" url="http://localhost:8080/static/20.png"
+        //Image label="20" url="http://localhost:8080/static/20.png"
     }
 	Frame label="System Stats"
 	{
         Switch item=Backupbtn label="Commit & Push Backup |Bitbucket Repository|https://bitbucket.org/XXXXXXX/all [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
         Switch item=Resetbtn label="Restart OH2 Service [%s]" icon="control_reset" mappings=[ON="RESTART"]
         Switch item=piReboot label="Reboot RasPi" icon="control_reset" mappings=[ON="REBOOT"]
-        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST ON"] visibility=[SysStartup!=ON]
-        Switch item=SysStartupForce icon="audio_repeat" mappings=[OFF="TEST OFF"] visibility=[SysStartup==ON]
+        Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST ON"] visibility=[SysStartup==0]
+        Switch item=SysStartupForce icon="audio_repeat" mappings=[OFF="TEST OFF"] visibility=[SysStartup!=0]
 
 		Switch item=fboxReboot label="Reboot Fritz!Box |FritzUI|http://192.168.178.1" icon="control_reset" mappings=[ON="REBOOT"]
         Switch item=TestBTN icon="message_attention" mappings=[ON="TEST BTN"]
@@ -461,6 +513,9 @@ sitemap main label="Home"
         Text item=Storage_UI label="Storage [%s]" icon="player"
         Text item=Network_UI label="Network [%s]" icon="player"
 
+        Text item=System_openHAB_Version icon="player"
+        Text label="" icon="none"
+
 		Image label="2" url="http://localhost:8080/static/2.png"
 		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1|PaperUI|http://192.168.178.31:8080/paperui/index.html|Rest API|http://192.168.178.31:8080/doc/index.html" icon="none"
 	}	
@@ -482,7 +537,7 @@ sitemap main label="Home"
 		Text item=FireTVLatency label="FireTV [JS(latencyUI.js):%s]" icon="it_media_player"
 		Text item=BlackBeanLatency label="Black Bean [JS(latencyUI.js):%s]" icon="it_media_player"
         Text item=BabyCamLatency label="Baby Cam [JS(latencyUI.js):%s]" icon="it_media_player"
-		Text item=Socket1Latency label="Socket 1 [JS(latencyUI.js):%s]" icon="message_socket"
+		Text item=Socket1Latency label="Socket 1 (Baby) [JS(latencyUI.js):%s]" icon="message_socket"
 		Text item=Socket2Latency label="Socket 2 (Bett Licht) [JS(latencyUI.js):%s]" icon="message_socket"
 		Text item=Socket3Latency label="Socket 3 [JS(latencyUI.js):%s]" icon="message_socket"
 		Text item=Socket4Latency label="Socket 4 [JS(latencyUI.js):%s]" icon="message_socket"
@@ -504,9 +559,8 @@ sitemap main label="Home"
 	{
         Text item=logreaderLastError icon="info_error"
         Text item=logreaderLastWarning icon="info_warning"
-        Text item=logreaderErrors icon="audio_playlist"
-        Text item=logreaderWarnings icon="audio_playlist"
-	
+        Text item=logreaderUI icon="audio_playlist"
+        Switch item=ResetLogErrorsbtn mappings=[ON="RESET"] icon="info_info"
         Webview url="/static/overrides.html" height=14 icon="none"
 	}
 }

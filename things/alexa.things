@@ -3,7 +3,6 @@ Bridge amazonechocontrol:account:account1 "Amazon Account" @ "Accounts" [amazonS
     Thing echo                 echo1 "Alexa" @ "Schlafzimmer" [serialNumber="XXXXXXX"]
     Thing echo                 echo2 "Alexa" @ "Wohnzimmer" [serialNumber="XXXXXXX"]
 	Thing wha                  group1 "Group" @ "Überall" [serialNumber="XXXXXXX"]
-	Thing echo                 firetv1 "FireTV" @ "Wohnzimmer" [serialNumber="XXXXXXX"]
-
+	//Thing echo                 firetv1 "FireTV" @ "Wohnzimmer" [serialNumber="XXXXXXX"]
     // Thing flashbriefingprofile flashbriefing1 "Flash Briefing" @ "Flash Briefings" 
 }

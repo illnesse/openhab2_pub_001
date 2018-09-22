@@ -109,12 +109,12 @@ JSRule({
             var itemSysStartup = getItem("SysStartup");
             var itemTTSOut2 = getItem("TTSOut2");
 
-            sendCommand(itemSysStartup,ON);
+            sendCommand(itemSysStartup,2);
 
             createTimer(now().plusSeconds(1), function() 
             {
                 sendCommand(itemTTSOut2,"Force Reset test!");
-                sendCommand(itemSysStartup,OFF);
+                sendCommand(itemSysStartup,0);
                 sendCommand(itemSysStartupForce,OFF);
             });
 
@@ -201,7 +201,7 @@ JSRule({
     name: "RefreshGrafanaImgs",
     description: "Line: "+__LINE__,
     triggers: [
-        TimerTrigger("0 0/4 * * * ?")
+        TimerTrigger("0 0/5 * * * ?")
     ],
     execute: function( module, input)
     {
@@ -211,28 +211,75 @@ JSRule({
 });
 
 JSRule({
-    name: "SystemStats",
+    name: "SystemStats high",
     description: "Line: "+__LINE__,
     triggers: [
         TimerTrigger("0 0/1 * * * ?")
     ],
     execute: function( module, input)
     {
-        var itemSystem_openHAB_Uptime = getItem("System_openHAB_Uptime");
-        var itemSystem_openHAB_Memory = getItem("System_openHAB_Memory");
-        var itemSystem_openHAB_DBSize = getItem("System_openHAB_DBSize");
-        
         var execResultUptime = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/uptime.sh",1000*3);
         //logInfo("stats 1 "+execResultUptime)
-        if (execResultUptime != "") postUpdate( itemSystem_openHAB_Uptime, execResultUptime);
+        if (execResultUptime != "") postUpdate( "System_openHAB_Uptime", execResultUptime);
 
         var execResultMemory = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/memory.sh",1000*3);
         //logInfo("stats 2 "+execResultMemory)
-        if (execResultMemory != "") postUpdate( itemSystem_openHAB_Memory, execResultMemory );
+        if (execResultMemory != "") postUpdate( "System_openHAB_Memory", execResultMemory );
+    }
+});
 
+
+JSRule({
+    name: "SystemStats low",
+    description: "Line: "+__LINE__,
+    triggers: [
+        TimerTrigger("0 0/30 * * * ?"),
+        ItemCommandTrigger("TestBTN")
+    ],
+    execute: function( module, input)
+    {
         var execResultDBSize = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/dbsize.sh",1000*3);
         //logInfo("stats 3 "+execResultDBSize)
-        if (execResultDBSize != "") postUpdate( itemSystem_openHAB_DBSize, execResultDBSize );
+        if (execResultDBSize != "") postUpdate( "System_openHAB_DBSize", execResultDBSize );
+
+        var execResultVersion = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/version.sh",1000*3);
+        //logInfo("stats 3 "+execResultDBSize)
+        if (execResultVersion != "") postUpdate( "System_openHAB_Version", execResultVersion );
+
+    }
+});
+
+JSRule({
+    name: "Reset Log Errors",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemCommandTrigger("ResetLogErrorsbtn")
+    ],
+    execute: function( module, input)
+    {
+        logInfo("Resetting Log Errors & Warnings");
+        postUpdate( "logreaderLastError", "-" );
+        postUpdate( "logreaderLastWarning", "-" );
+        postUpdate( "logreaderErrors", 0 );
+        postUpdate( "logreaderWarnings", 0 );
+    }
+});
+
+
+JSRule({
+    name: "logreaderUI",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemStateChangeTrigger("logreaderErrors"),
+        ItemStateChangeTrigger("logreaderWarnings")
+    ],
+    execute: function( module, input)
+    {
+        sleep(100);
+        var itemlogreaderErrors = getItem("logreaderErrors");
+        var itemlogreaderWarnings = getItem("logreaderWarnings");
+
+        postUpdate( "logreaderUI", itemlogreaderErrors.state + " / " + itemlogreaderWarnings.state );
     }
 });
 
@@ -252,7 +299,7 @@ JSRule({
         {
             errorstring = itemlogreaderLastError.state.toString().split("] - ")[1]
         }
-        var msg = "Systemfehler " + itemlogreaderErrors.state.toString() + ": " + errorstring;
+        var msg = "ERROR " + itemlogreaderErrors.state.toString() + ": " + errorstring;
         sendNotification(msg, msg);
     }
 });
@@ -273,7 +320,7 @@ JSRule({
         {
             errorstring = itemlogreaderLastWarning.state.toString().split("] - ")[1]
         }
-        var msg = "Systemwarnung " + itemlogreaderWarnings.state.toString() + ": " + errorstring;
+        var msg = "WARNING " + itemlogreaderWarnings.state.toString() + ": " + errorstring;
         sendNotification(msg, msg);
     }
 });

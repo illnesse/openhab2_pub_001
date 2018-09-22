@@ -12,22 +12,27 @@ if not creds or creds.invalid:
     creds = tools.run_flow(flow, store)
 service = build('gmail', 'v1', http=creds.authorize(Http()))
 
-results = service.users().messages().list(userId='me').execute()
+results = service.users().messages().list(userId='me',includeSpamTrash=0, q="-in:chats -from:me -subject:[eclipse/smarthome] -subject:[codetheweb/tuyapi] -subject:[OH2_System_Notification] -subject:[openHAB] -subject:[openhab/openhab-distro] ", maxResults=20).execute()
+#labelIds=["INBOX"], 
 
-bannedwords = ["eclipse/smarthome", "codetheweb/tuyapi","[OH2_System_Notification]"]
+#bannedwords = ["[eclipse/smarthome]", "[codetheweb/tuyapi]","[OH2_System_Notification]","[openHAB]","[openhab/openhab-distro]" ]
 messages = []
 if 'messages' in results:
     messages.extend(results['messages'])
+
+#for item in messages:
+    #print(item)
 
 i = 0
 jsonout = []
 for item in messages:
     jsontemp = {}
-    message = service.users().messages().get(userId='me', id=item['threadId']).execute()
+    message = service.users().messages().get(userId='me', id=item['id']).execute()
 
     if message["threadId"]:
+        #jsontemp["id"] = i
+        jsontemp["threadId"] = item['threadId']
         for headeritem in message["payload"]["headers"]:
-
             #print(headeritem)
             #if headeritem["name"] == "From":
                 #jsontemp["From"] = headeritem["value"]
@@ -35,23 +40,17 @@ for item in messages:
                 #jsontemp["Date"] = headeritem["value"]
             if headeritem["name"] == "Subject":
                 jsontemp["Subject"] = headeritem["value"]
-
-            jsontemp["id"] = i
-            jsontemp["threadId"] = item['threadId']
             #jsontemp["snippet"] = message['snippet']
-
         if not "Subject" in jsontemp: 
-            #print("wat")
             continue
-        if any (word in jsontemp["Subject"] for word in bannedwords):
+        #if any (word in jsontemp["Subject"] for word in bannedwords):
             #print("filtering " + jsontemp["Subject"])
-            continue
+         #   continue
 
     jsonout.append(jsontemp)
     i = i + 1
-    if i == 50:
+    if i == 10:
         break
-
-print(json.dumps(jsonout))
 #for jsonitem in jsonout:
-    #print(jsonitem)
+#    print(jsonitem)
+print(json.dumps(jsonout))

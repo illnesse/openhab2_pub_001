@@ -1,8 +1,18 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/js-joda.js');
 
-var kodiurl = "http://192.168.178.26:8080/jsonrpc?request=";
+var kodiip = "192.168.178.26";
+var kodiurl = "http://"+kodiip+":8080/jsonrpc?request=";
 var broadlink_delay = 400;
+
+var TTS_OFF = 0;
+var TTS_DEFAULT = 1;
+
+var VOL_OFF = 0;
+var VOL_QUIET = 30;
+var VOL_NORMAL = 40;
+
+var Notifications = "";
 
 function decodeKodiThumbnailURL(str)
 {
@@ -14,8 +24,29 @@ function decodeKodiThumbnailURL(str)
     return r;
 }
 
+function IsAlive(target)
+{
+    var state = false;
+    
+    try 
+    {
+        if (target == "kodi") state = Ping.checkVitality(kodiip, 8080, 500);
+        
+        logInfo("pinging "+target+": "+state);
+        return state;
+    }
+    catch(err) 
+    {
+        return false;
+    } 
+    return false;
+}
+
 function kodiCall(call)
 {
+    //logInfo("################ "+me+" Line: "+__LINE__+"  #################");	
+    //print("Ping localhost: 	" + Ping.checkVitality(kodiip, 22, 500));
+
     var kodireturn = HTTP.sendHttpGetRequest(kodiurl + encodeURI(call));
     //logInfo(kodireturn);
     return JSON.parse(kodireturn);
@@ -29,8 +60,11 @@ function sendKodiNotification(title,msg)
 
 function sendNotification(title,msg)
 {
-    sendKodiNotification("[OH2_System_Notification] "+title,msg);
-    sendMail("XXX@gmail.com", "[OH2_System_Notification] "+title, msg);
+    var itemNotifications = getItem("Notifications");
+    postUpdate(itemNotifications,itemNotifications.state + title + ": " + msg + "\n");
+
+    //sendKodiNotification("[OH2_System_Notification] "+title,msg);
+    //sendMail("xxx@gmail.com", "[OH2_System_Notification] "+title, msg);
 }
 
 function sendMQTT(broker, topic, message, quiet)
@@ -38,7 +72,7 @@ function sendMQTT(broker, topic, message, quiet)
     quiet = quiet || false;
     var execResult;
     var command;
-    if (broker == "broadlink")
+    if (broker == "local")
     {
         command = "mosquitto_pub -t " + topic + " -m \"" + message + "\"";
     }
@@ -136,7 +170,7 @@ function formatISOStringtoJodaDateTimeZone(isostring)
 	var ScriptExecution 		= Java.type("org.eclipse.smarthome.model.script.actions.ScriptExecution");
 	var ScriptServiceUtil 		= Java.type("org.eclipse.smarthome.model.script.ScriptServiceUtil");
     var ExecUtil 				= Java.type("org.eclipse.smarthome.io.net.exec.ExecUtil");
-	
+	var Ping                    = Java.type('org.eclipse.smarthome.model.script.actions.Ping');
 	//Types
 	var UnDefType 				= Java.type("org.eclipse.smarthome.core.types.UnDefType");
 	var StringListType 			= Java.type("org.eclipse.smarthome.core.library.types.StringListType");	

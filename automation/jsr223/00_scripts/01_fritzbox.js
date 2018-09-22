@@ -52,9 +52,7 @@ JSRule({
         if (triggeringItem.state == ON)
         {
             var CallBegin = getItem("CallBegin");
-            command = "mosquitto_pub -t broadlink/audio/sony/mute -m \"replay\""
-            execResult = executeCommandLineAndWaitResponse(command, 1000 * 3)
-            //logInfo("fboxRinging mute audio " +execResult )
+            sendMQTT("local","broadlink/audio/sony/mute", "replay")
             tempcallbegin = formatTimeStampfromJodaDate(DateTime.now().minusHours(2));
             postUpdate(CallBegin, tempcallbegin);
         }
@@ -63,9 +61,7 @@ JSRule({
             var CallPrefix = getItem("CallPrefix");
             var CallBegin = getItem("CallBegin");
             var CallEnd = getItem("CallEnd");
-            command = "mosquitto_pub -t broadlink/audio/sony/mute -m \"replay\""
-            execResult = executeCommandLineAndWaitResponse(command, 1000 * 3)
-            //logInfo("fboxRinging unmute audio " + execResult)
+            sendMQTT("local","broadlink/audio/sony/mute", "replay")
             tempcallend = formatTimeStampfromJodaDate(DateTime.now().minusHours(2));
             postUpdate(CallEnd, tempcallend);
 

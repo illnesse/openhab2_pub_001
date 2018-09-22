@@ -24,7 +24,7 @@ JSRule({
         {
             sendCommand(itemTTSOut2,"Haustüre geschlossen.")
         }
-        persist(itemHMDoor1);
+        //persist(itemHMDoor1);
         postUpdate(itemHMDoor1UI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)
     }
 });
@@ -33,24 +33,18 @@ JSRule({
     name: "MotionSensor",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateUpdateTrigger("OsramSensorTriggered"),
-        ItemStateUpdateTrigger("OsramSensor_2_Triggered"),
-        ItemStateUpdateTrigger("OsramSensor_3_Triggered"),
+        ItemStateChangeTrigger("OsramSensorTriggered"),
+        ItemStateChangeTrigger("OsramSensor_2_Triggered"),
+        ItemStateChangeTrigger("OsramSensor_3_Triggered"),
+        ItemStateChangeTrigger("MQTT_NodeMCU_MultiSensor_1_Motion")
     ],
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
-        var toUpdate = triggeringItem.name.split("Triggered")[0]
-
-        //logInfo(toUpdate);
-
-        var itemOsramSensorTriggered = getItem(toUpdate+"Triggered");
-        var itemOsramSensorTriggeredUI = getItem(toUpdate+"TriggeredUI");
-
         var state = input.state;
-        if (isUninitialized(state)) state = itemOsramSensorTriggered.state;
+        if (isUninitialized(state)) state = triggeringItem.state;
 
-        persist(itemOsramSensorTriggered);
-        postUpdate(itemOsramSensorTriggeredUI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)
+        var itemSensorTriggeredUI = getItem(triggeringItem.name+"UI");
+        postUpdate(itemSensorTriggeredUI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)
     }
 });

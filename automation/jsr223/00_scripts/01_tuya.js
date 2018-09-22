@@ -14,69 +14,64 @@ var TuyaLED1Config = "-type light -ip 192.168.178.43 -id XXXXXXX -key XXXXXXX "
 var TuyaLED2Config = "-type light -ip 192.168.178.44 -id XXXXXXX -key XXXXXXX "
 
 JSRule({
-    name: "hmdoor1",
+    name: "SysStartup_Tyua",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemCommandTrigger("SysStartup","ON")
+        ItemCommandTrigger("SysStartup",2)
     ],
     execute: function( module, input)
     {
-        var itemSysStartup = getItem("SysStartup");
+        var itemTuyaSocket1 = getItem("TuyaSocket1");
+        var itemTuyaSocket2 = getItem("TuyaSocket2");
+        var itemTuyaSocket3 = getItem("TuyaSocket3");
+        var itemTuyaSocket4 = getItem("TuyaSocket4");
+        var itemTuyaSocket5 = getItem("TuyaSocket5");
+        var itemTuyaSocket6 = getItem("TuyaSocket6");
 
-        if (itemSysStartup.state==ON)
+        var execResult
+
+        execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket1Config + " STATE", 1000 * 3);
+        if ((execResult == "ON") || (execResult == "OFF")) 
         {
-            var itemTuyaSocket1 = getItem("TuyaSocket1");
-            var itemTuyaSocket2 = getItem("TuyaSocket2");
-            var itemTuyaSocket3 = getItem("TuyaSocket3");
-            var itemTuyaSocket4 = getItem("TuyaSocket4");
-            var itemTuyaSocket5 = getItem("TuyaSocket5");
-            var itemTuyaSocket6 = getItem("TuyaSocket6");
-
-            var execResult
-
-            execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket1Config + " STATE", 1000 * 3);
-            if ((execResult == "ON") || (execResult == "OFF")) 
-            {
-                postUpdate(itemTuyaSocket1,execResult);
-                logInfo("SocketsAtStart / TuyaSocket1 " + execResult);
-            }
-            sleep(2000);
-            execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket2Config + " STATE", 1000 * 3);
-            if ((execResult == "ON") || (execResult == "OFF")) 
-            {
-                postUpdate(itemTuyaSocket2,execResult);
-                logInfo("SocketsAtStart / TuyaSocket2 " + execResult);
-            }
-            sleep(2000);
-            execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket3Config + " STATE", 1000 * 3);
-            if ((execResult == "ON") || (execResult == "OFF")) 
-            {
-                postUpdate(itemTuyaSocket3,execResult);
-                logInfo("SocketsAtStart / TuyaSocket3 " + execResult);
-            }
-            sleep(2000);
-            execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket4Config + " STATE", 1000 * 3);
-            if ((execResult == "ON") || (execResult == "OFF")) 
-            {
-                postUpdate(itemTuyaSocket4,execResult);
-                logInfo("SocketsAtStart / TuyaSocket4 " + execResult);
-            }
-            sleep(2000);
-            execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket5Config + " STATE", 1000 * 3);
-            if ((execResult == "ON") || (execResult == "OFF")) 
-            {
-                postUpdate(itemTuyaSocket5,execResult);
-                logInfo("SocketsAtStart / TuyaSocket5 " + execResult);
-            }
-            sleep(2000);
-            execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket6Config + " STATE", 1000 * 3);
-            if ((execResult == "ON") || (execResult == "OFF")) 
-            {
-                postUpdate(itemTuyaSocket6,execResult);
-                logInfo("SocketsAtStart / TuyaSocket6 " + execResult);
-            }
-            sleep(2000);
+            postUpdate(itemTuyaSocket1,execResult);
+            logInfo("SocketsAtStart / TuyaSocket1 " + execResult);
         }
+        sleep(2000);
+        execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket2Config + " STATE", 1000 * 3);
+        if ((execResult == "ON") || (execResult == "OFF")) 
+        {
+            postUpdate(itemTuyaSocket2,execResult);
+            logInfo("SocketsAtStart / TuyaSocket2 " + execResult);
+        }
+        sleep(2000);
+        execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket3Config + " STATE", 1000 * 3);
+        if ((execResult == "ON") || (execResult == "OFF")) 
+        {
+            postUpdate(itemTuyaSocket3,execResult);
+            logInfo("SocketsAtStart / TuyaSocket3 " + execResult);
+        }
+        sleep(2000);
+        execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket4Config + " STATE", 1000 * 3);
+        if ((execResult == "ON") || (execResult == "OFF")) 
+        {
+            postUpdate(itemTuyaSocket4,execResult);
+            logInfo("SocketsAtStart / TuyaSocket4 " + execResult);
+        }
+        sleep(2000);
+        execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket5Config + " STATE", 1000 * 3);
+        if ((execResult == "ON") || (execResult == "OFF")) 
+        {
+            postUpdate(itemTuyaSocket5,execResult);
+            logInfo("SocketsAtStart / TuyaSocket5 " + execResult);
+        }
+        sleep(2000);
+        execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket6Config + " STATE", 1000 * 3);
+        if ((execResult == "ON") || (execResult == "OFF")) 
+        {
+            postUpdate(itemTuyaSocket6,execResult);
+            logInfo("SocketsAtStart / TuyaSocket6 " + execResult);
+        }
+        sleep(2000);
     }
 });
 
@@ -225,10 +220,10 @@ JSRule({
         {   
             var itemLED1Flash = getItem("LED1Flash");
             var itemLED1FlashSpeed = getItem("LED1FlashSpeed");
-            if (isUninitialized(type)) type = itemLED1Flash.state;
-            if (isUninitialized(type)) type = 1;
-            if (isUninitialized(speed)) speed = itemLED1FlashSpeed.state;
-            if (isUninitialized(speed)) speed = 1;
+            if (type == null) type = itemLED1Flash.state;
+            if (type == null) type = 1;
+            if (speed == null) speed = itemLED1FlashSpeed.state;
+            if (speed == null) speed = 1;
             tuyaConfig = TuyaLED1Config + " FLASH -flashid " + type + " -flashspeed " + speed;
         }
         else if ((triggeringItem.name == "LED2Flash") || (triggeringItem.name == "LED2FlashSpeed"))
@@ -236,10 +231,10 @@ JSRule({
             var itemLED2Flash = getItem("LED2Flash");
             var itemLED2FlashSpeed = getItem("LED2FlashSpeed");
 
-            if (isUninitialized(type)) type = itemLED2Flash.state;
-            if (isUninitialized(type)) type = 1;
-            if (isUninitialized(speed)) speed = itemLED2FlashSpeed.state;
-            if (isUninitialized(speed)) speed = 1;
+            if (type == null) type = itemLED2Flash.state;
+            if (type == null) type = 1;
+            if (speed == null) speed = itemLED2FlashSpeed.state;
+            if (speed == null) speed = 1;
             tuyaConfig = TuyaLED2Config + " FLASH -flashid " + type + " -flashspeed " + speed;
         }
 
@@ -258,9 +253,6 @@ JSRule({
         }
     }
 });
-
-
-
 
 JSRule({
     name: "TuyaLEDPower",

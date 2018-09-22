@@ -10,14 +10,11 @@ var MODE_WITHIN_NEXT_HOUR = 2;
 var MODE_NOW = 3;
 var MODE_OVER = 4;
 
-var TTS_OFF = 0;
-var TTS_DEFAULT = 1;
-
 JSRule({
     name: "GetCalEvents",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemCommandTrigger("SysStartup","ON"),
+        ItemCommandTrigger("SysStartup",2),
         TimerTrigger("0 0/30 * * * ?"),
         ItemCommandTrigger("Cal_Update")
     ],
@@ -210,10 +207,11 @@ JSRule({
 
         //turn off tts
         var itemTTSMode = getItem("TTSMode");
-        if ((hour_now >= 23) && (hour_now <= 5))
+        if ((hour_now >= 23) || (hour_now <= 5))
         {
             if (itemTTSMode.state != TTS_OFF)
             {
+                logInfo("ttsmode off hour_now: "+hour_now);
                 sendCommand(itemTTSOut2,"TTS deaktiviert");
                 postUpdate(itemTTSMode,TTS_OFF);
             }
@@ -222,8 +220,8 @@ JSRule({
             if ((hour_now == 3) && (minute_now == 0))
             {
                 logInfo("Resetting Echo Volume")
-                sendCommand(Echo1_Volume,30)
-                sendCommand(Echo2_Volume,50)
+                sendCommand(Echo1_Volume,VOL_QUIET)
+                sendCommand(Echo2_Volume,VOL_NORMAL)
             }
         }
         else 
@@ -235,6 +233,7 @@ JSRule({
             {
                 if (itemTTSMode.state != TTS_OFF)
                 {
+                    logInfo("ttsmode off hour_now: "+hour_now);
                     sendCommand(itemTTSOut2,"TTS deaktiviert");
                     postUpdate(itemTTSMode,TTS_OFF);
                 }
@@ -243,6 +242,7 @@ JSRule({
             {
                 if (itemTTSMode.state != TTS_DEFAULT) 
                 {
+                    logInfo("ttsmode on hour_now: "+hour_now);
                     postUpdate(itemTTSMode,TTS_DEFAULT);
                     sendCommand(itemTTSOut2,"TTS aktiviert");
                 }
@@ -267,17 +267,19 @@ JSRule({
             var TTSOut1Quiet = getItem("TTSOut1Quiet");
     
             var day_number = JsJodaNow.dayOfWeek().value()
+            var day_number_tomorrow = JsJodaNow.plusDays(1).dayOfWeek().value()
             var d_begin = parseInt(ALARM1_PERSON1_D.state.toString().substr(0,1));
             var d_end = parseInt(ALARM1_PERSON1_D.state.toString().substr(1,2));
             var d_match = ((day_number >= d_begin) && (day_number <= d_end));
+            var d_match_tomorrow = ((day_number_tomorrow >= d_begin) && (day_number_tomorrow <= d_end));
             var h_match = (hour == hour_now)
 
-            //logInfo(" d_begin "+d_begin+" d_end "+d_end+" d_match "+d_match+" h_match "+h_match+" m_match "+m_match);
+            //logInfo(" d_begin "+d_begin+" d_end "+d_end+" d_match "+d_match+" d_match_tomorrow "+d_match_tomorrow+" h_match "+h_match+" m_match "+m_match);
 
             if (d_match && m_match)
             {
                 var magic = (hour < bedtime_hours) ? 24 : 0
-                if ((hour - bedtime_hours + magic) == hour_now)
+                if (((hour - bedtime_hours + magic) == hour_now) && d_match_tomorrow)
                 {
                     sendCommand(itemTTSOut2,"In "+bedtime_hours+" Stunden klingelt der Wecker. Zeit ins Bett zu gehen!")
                     logInfo("Alarm: go to bed reminder")

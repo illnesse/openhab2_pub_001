@@ -86,7 +86,8 @@ iframe
 
 body,h5,.mdl-layout-title
 {
-	font-family: 'Roboto Condensed', sans-serif !important;
+    font-family: 'Roboto Condensed', sans-serif !important;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
 }
 
 a
@@ -473,7 +474,8 @@ a:hover
 
 .bg_default
 {
-    background-color: rgba(30,30,30, 0.9) !important;
+    background-color: rgba(30, 30, 30, 0.54) !important;
+    /* background-color: rgba(30,30,30, 0.9) !important; */
 }
 
 .bg_hdmi
@@ -521,7 +523,12 @@ a:hover
 }
 .bg_tv
 {
-    background: linear-gradient(to bottom, #69586175, #2d1a29e6);
+    background-color: rgba(30, 30, 30, 0.54) !important;
+    /* background: linear-gradient(to bottom, #69586175, #2d1a29e6); */
+}
+.bg_hyperion
+{
+    background: linear-gradient(to bottom, #454b5a94, #2f5a58e6);
 }
 .bg_sat
 {
@@ -551,7 +558,8 @@ a:hover
 }
 .bg_ac
 {
-	background-color: rgba(45,45,45, 0.9) !important;
+    background-color: rgba(30, 30, 30, 0.54) !important;
+	/* background-color: rgba(45,45,45, 0.9) !important; */
 }
 .bg_echos
 {
@@ -595,6 +603,10 @@ a:hover
         width: calc(33% - 16px);
     }
     .bg_net .mdl-cell--6-col
+    {
+        width: calc(33% - 16px);
+    }
+    .bg_batteries .mdl-cell--6-col
     {
         width: calc(33% - 16px);
     }

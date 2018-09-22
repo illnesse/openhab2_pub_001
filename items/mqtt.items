@@ -60,7 +60,7 @@ String   MQTT_Phone_S_TimeStamp         "Timestamp [%s]" (gMQTT_Phone_Strings)
 String   MQTT_Phone_S_Conn         "Details [%s]" (gMQTT_Phone_Strings) 
 String   MQTT_Phone_S_Battery      "Battery [%s%%]" (gMQTT_Phone_Strings) 
 String   MQTT_Phone_S_DistanceDuration      "Distance/Duration [%s]" (gMQTT_Phone_Strings) 
-Location MQTT_Phone_S_location (gMQTT_Phone_Locations) 
+String   MQTT_Phone_S_location (gMQTT_Phone_Locations) 
 
 String	 MQTT_Phone_J_PositionRaw  "Raw Data" { mqtt="<[cloudmqtt:owntracks/XXXXXXX/huaweip8:state:default]" }
 String   MQTT_Phone_J_Info         "Location J [%s]" (gMQTT_Phone_Strings) 
@@ -68,7 +68,7 @@ String   MQTT_Phone_J_TimeStamp         "Timestamp [%s]" (gMQTT_Phone_Strings)
 String   MQTT_Phone_J_Conn         "Details [%s]" (gMQTT_Phone_Strings) 
 String   MQTT_Phone_J_Battery      "Battery [%s%%]" (gMQTT_Phone_Strings) 
 String   MQTT_Phone_J_DistanceDuration      "Distance/Duration [%s]" (gMQTT_Phone_Strings) 
-Location MQTT_Phone_J_location (gMQTT_Phone_Locations) 
+String   MQTT_Phone_J_location (gMQTT_Phone_Locations) 
 
 String	 MQTT_Phone_S_Update  "Update [%s]"	
 String	 MQTT_Phone_J_Update  "Update [%s]"	

@@ -14,7 +14,7 @@ String CallBegin (gCalTimes)
 String CallEnd (gCalTimes)
 
 
-Switch SysStartup "System Start [%s]"
+Number SysStartup "System Start [%s]"
 Switch SysStartupForce "System Start Test [%s]"
 
 String Backupbtn "Push to Bitbucket"
@@ -37,6 +37,7 @@ String ALARM1_PERSON1_D    "Day"
 Number System_openHAB_Uptime "Uptime openHAB [JS(duration.js):%s]"
 Number System_openHAB_Memory "openHAB Memory Usage [%s kB]"
 Number System_openHAB_DBSize "influxDB Database Size [%s MB]"
+Number System_openHAB_Version "OpenHAB Version [#%d]"
 
 Number System_CPU_Uptime "Uptime server [JS(duration.js):%s]" { channel="systeminfo:computer:raspberrypi:cpu#uptime" }
 
@@ -44,3 +45,7 @@ String   logreaderLastError         "Last error [%s]"                           
 String   logreaderLastWarning       "Last warning [%s]"                                    { channel="logreader:reader:openhablog:lastWarningEvent" }
 Number   logreaderErrors            "Error events matched [%d]"                            { channel="logreader:reader:openhablog:errorEvents" }
 Number   logreaderWarnings          "Warning events matched [%d]"                          { channel="logreader:reader:openhablog:warningEvents" }
+String   logreaderUI                "Errors/Warnings [%s]"
+Switch   ResetLogErrorsbtn          "Reset Log Errors"
+
+String Notifications

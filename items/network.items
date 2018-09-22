@@ -1,5 +1,4 @@
 Group:Number gLatency
-Group:Number gPresenceStatus
 
 Number RouterLatency (gLatency) {channel="network:pingdevice:router:latency"}
 Number DesktopLatency (gLatency) {channel="network:pingdevice:desktop:latency"}
@@ -26,8 +25,8 @@ Number LED2Latency (gLatency) {channel="network:pingdevice:led2:latency"}
 Number TPLinkPlug1Latency (gLatency) {channel="network:pingdevice:tplinkplug1:latency"}
 Number TPLinkPlug2Latency (gLatency) {channel="network:pingdevice:tplinkplug2:latency"}
 
-Number HandySLatency (gLatency,gPresenceStatus) {channel="network:pingdevice:handys:latency"}
-Number HandyJLatency (gLatency,gPresenceStatus) {channel="network:pingdevice:handyj:latency"}
+Number HandySLatency (gLatency) {channel="network:pingdevice:handys:latency"}
+Number HandyJLatency (gLatency) {channel="network:pingdevice:handyj:latency"}
 
 Group gSpeedtest
 String      SpeedtestSummary        "Speedtest [%s]"             (gSpeedtest)

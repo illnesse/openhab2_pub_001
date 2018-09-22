@@ -17,13 +17,13 @@ JSRule({
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
-        if      (triggeringItem.name == "MQTT_TV") sendMQTT("broadlink","broadlink/tv/samsung/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_AUDIO") sendMQTT("broadlink","broadlink/audio/sony/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_SWITCH") sendMQTT("broadlink","broadlink/hdmiswitch/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_AC") sendMQTT("broadlink","broadlink/ac/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_FAN") sendMQTT("broadlink","broadlink/fan/obi/" + input.command, "replay")
-        else if (triggeringItem.name == "MQTT_PC_SYSTEM") sendMQTT("cloudmqtt", "wt/system/commands/" + input.command, "true")
-        else if (triggeringItem.name == "MQTT_PC_DESKTOP") sendMQTT("cloudmqtt", "wt/desktop/commands/" + input.command, "true")
+        if      (triggeringItem.name == "MQTT_TV") sendMQTT("local","broadlink/tv/samsung/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_AUDIO") sendMQTT("local","broadlink/audio/sony/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_SWITCH") sendMQTT("local","broadlink/hdmiswitch/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_AC") sendMQTT("local","broadlink/ac/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_FAN") sendMQTT("local","broadlink/fan/obi/" + input.command, "replay")
+        else if (triggeringItem.name == "MQTT_PC_SYSTEM") sendMQTT("local", "wt/system/commands/" + input.command, "true")
+        else if (triggeringItem.name == "MQTT_PC_DESKTOP") sendMQTT("local", "wt/desktop/commands/" + input.command, "true")
     }
 });
 
@@ -44,28 +44,28 @@ JSRule({
             var ChannelNumber = parseInt(receivedCommand)
             if (ChannelNumber > 9)
             {
-                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
+                sendMQTT("local","broadlink/sat/humax/0", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
+                sendMQTT("local","broadlink/sat/humax/0", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand.toString().substring(0, 1), "replay")
+                sendMQTT("local","broadlink/sat/humax/" + receivedCommand.toString().substring(0, 1), "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand.toString().substring(1, 2), "replay")
+                sendMQTT("local","broadlink/sat/humax/" + receivedCommand.toString().substring(1, 2), "replay")
             }
             else
             {
-                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
+                sendMQTT("local","broadlink/sat/humax/0", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
+                sendMQTT("local","broadlink/sat/humax/0", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/0", "replay")
+                sendMQTT("local","broadlink/sat/humax/0", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand, "replay")
+                sendMQTT("local","broadlink/sat/humax/" + receivedCommand, "replay")
             }
         }
         else
         {
-            sendMQTT("broadlink","broadlink/sat/humax/" + receivedCommand, "replay")
+            sendMQTT("local","broadlink/sat/humax/" + receivedCommand, "replay")
         }
     }
 });
@@ -75,7 +75,7 @@ JSRule({
     description: "Line: "+__LINE__,
     triggers: [
         ItemCommandTrigger("MQTT_Phone_S_Update"),
-        ItemCommandTrigger("SysStartup","ON"),
+        ItemCommandTrigger("SysStartup",2),
         TimerTrigger("0 */15 * ? * *")
     ],
     execute: function( module, input)
@@ -90,7 +90,7 @@ JSRule({
     description: "Line: "+__LINE__,
     triggers: [
         ItemCommandTrigger("MQTT_Phone_J_Update"),
-        ItemCommandTrigger("SysStartup","ON"),
+        ItemCommandTrigger("SysStartup",2),
         TimerTrigger("0 */15 * ? * *")
     ],
     execute: function( module, input)
@@ -143,6 +143,30 @@ JSRule({
 
         if (d) postUpdate(itemCallsIn, time + " 　" + name);
         else postUpdate(itemCallsOut, time + " 　" + name);
+    }
+});
+
+
+JSRule({
+    name: "MQTT_NodeMCU_MultiSensor_1 parse",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemStateChangeTrigger("MQTT_NodeMCU_MultiSensor_1")
+    ],
+    execute: function( module, input)
+    {
+        //logInfo(input.newState);
+        var triggeringItem = getItem(getTriggeringItemStr(input));
+        var selector = triggeringItem.name;
+
+        var itemTemp = getItem(selector+"_Temp");
+        var itemHum = getItem(selector+"_Hum");
+        var itemMotion = getItem(selector+"_Motion");
+
+        var json = JSON.parse(input.newState);
+        postUpdate(itemTemp,json.temperature);
+        postUpdate(itemHum,json.humidity);
+        postUpdate(itemMotion,((json.motion == "motion detected")?ON:OFF));
     }
 });
 

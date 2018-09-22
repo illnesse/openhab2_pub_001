@@ -517,7 +517,8 @@
                 */
             }
 
-            var refreshCoords = setInterval(function(){
+            function getCoords()
+            {
                 $.ajax({
                     url     : "../rest/items/MQTT_Phone_J_location/state/",
                     data    : {},
@@ -548,7 +549,11 @@
                         }
                     }
                 });
+            }
 
+            getCoords();
+            var refreshCoords = setInterval(function(){
+                getCoords();
             },30000);
         }
     </script>

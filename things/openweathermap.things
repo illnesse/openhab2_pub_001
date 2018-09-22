@@ -1,0 +1,4 @@
+Bridge openweathermap:weather-api:api "OpenWeatherMap API" [apikey="4d92602d7394b6829abc629b3648753c", refreshInterval=10, language="de"] {
+    Thing weather local "Local weather" [location="49.48,10.99"]
+    //Thing daily-forecast local "Local forecast" [location="49.48,10.99"]
+}

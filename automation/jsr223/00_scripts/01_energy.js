@@ -24,11 +24,14 @@ JSRule({
     ],
     execute: function( module, input)
     {
+
+        energyUpdate("TPLinkPlug2",1);
+
         var itemTPLinkPlug2_Power = getItem("TPLinkPlug2_Power");
         var itemTTSOut2 = getItem("TTSOut2");
         var itemWashingmachine_OpState = getItem("Washingmachine_OpState");
 
-        if (itemTPLinkPlug2_Power.state < 0.2) 
+        if ((itemTPLinkPlug2_Power.state < 0.2) || (itemWashingmachine_OpState.state == MODE_FINISHED))
         {
             postUpdate(itemWashingmachine_OpState,MODE_OFF)
             return;
@@ -84,9 +87,9 @@ function energyUpdate(id,kilo)
         var itemSignal = getItem(toUpdate+"_Signal")
         var itemCurrent = getItem(toUpdate+"_Current")
         var itemVoltage = getItem(toUpdate+"_Voltage")
-        var out = round(itemPower.state,0) +" W ("+round(itemCurrent.state,2)+" A / "+round(itemVoltage.state,0)+" V) "+round(itemSignal.state,0)+" dBm"
+        var out = round(itemPower.state,2) +" W ("+round(itemCurrent.state,2)+" A / "+round(itemVoltage.state,0)+" V) "+round(itemSignal.state,0)+" dBm"
         postUpdate(itemUI,out)
-        //logInfo(itemPower.state +" W ("+itemCurrent.state+" A / "+itemVoltage.state+" V) "+itemSignal.state+" dBm");
+        //logInfo(toUpdate +": "+ itemPower.state +" W ("+itemCurrent.state+" A / "+itemVoltage.state+" V) "+itemSignal.state+" dBm");
         //logInfo(itemPower.name +" W ("+itemCurrent.name+" A / "+itemVoltage.name+" V) "+itemSignal.name+" dBm");
 
         itemEnergyUsage = getItem(toUpdate+"_EnergyUsage");

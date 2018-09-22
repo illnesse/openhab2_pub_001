@@ -13,22 +13,22 @@ String Kodi_thumbnail
 
 String TuneInPlayDevice
 
-String Echo1_Subtitles            "Subtitles [%s]"                         (gEcho1)
-String Echo2_Subtitles            "Subtitles [%s]"                         (gEcho2)
-String EchoGroup1_Subtitles       "Subtitles [%s]"                         (gEchoGroup)
+String Echo1_Subtitles            "Title [%s]"                         (gEcho1)
+String Echo2_Subtitles            "Title [%s]"                         (gEcho2)
+String EchoGroup1_Subtitles       "Title [%s]"                         (gEchoGroup)
 
 Player Echo1_Player               "Player"                            (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:player"}
-Dimmer Echo1_Volume               "Volume [%.0f %%]" <soundvolume>    (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:volume"}
+Dimmer Echo1_Volume               "Volume [%.0f %%]"                  (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:volume"}
 String Echo1_Title                "Title"                             (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:title"}
 String Echo1_Subtitle1            "Subtitle 1"                        (gEcho1, gEchoTriggers) {channel="amazonechocontrol:echo:account1:echo1:subtitle1"}
 String Echo1_Subtitle2            "Subtitle 2"                        (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:subtitle2"}
 String Echo1_ProviderDisplayName  "Provider"                          (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:providerDisplayName"}
 String Echo1_RadioStationId       "TuneIn Radio Station Id"           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:radioStationId"}
-String Echo1_TTS                "Text to Speech"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:textToSpeech"}
-String Echo1_StartCommand       "Start Command"                           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:startCommand"}
+String Echo1_TTS                "Text to Speech"                      (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:textToSpeech"}
+String Echo1_StartCommand       "Start Command"                       (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:startCommand"}
 
 Player Echo2_Player               "Player"                            (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:player"}
-Dimmer Echo2_Volume               "Volume [%.0f %%]" <soundvolume>    (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:volume"}
+Dimmer Echo2_Volume               "Volume [%.0f %%]"                  (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:volume"}
 String Echo2_Title                "Title"                             (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:title"}
 String Echo2_Subtitle1            "Subtitle 1"                        (gEcho2, gEchoTriggers) {channel="amazonechocontrol:echo:account1:echo2:subtitle1"}
 String Echo2_Subtitle2            "Subtitle 2"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:subtitle2"}
@@ -38,9 +38,9 @@ String Echo2_TTS                "Text to Speech"                           (gEch
 String Echo2_StartCommand       "Start Command"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:startCommand"}
 
 Player EchoGroup1_Player               "Player"                            (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:player"}
-String EchoGroup1_Title                "Title"                             (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:title"}
-String EchoGroup1_Subtitle1            "Subtitle 1"                        (gEchoGroup, gEchoTriggers) {channel="amazonechocontrol:wha:dcc1f0f1:subtitle1"}
-String EchoGroup1_Subtitle2            "Subtitle 2"                        (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:subtitle2"}
+// String EchoGroup1_Title                "Title"                             (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:title"}
+// String EchoGroup1_Subtitle1            "Subtitle 1"                        (gEchoGroup, gEchoTriggers) {channel="amazonechocontrol:wha:dcc1f0f1:subtitle1"}
+// String EchoGroup1_Subtitle2            "Subtitle 2"                        (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:subtitle2"}
 String EchoGroup1_ProviderDisplayName  "Provider"                          (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:providerDisplayName"}
 String EchoGroup1_RadioStationId       "TuneIn Radio Station Id"           (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:radioStationId"}
 

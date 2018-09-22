@@ -11,8 +11,8 @@ Items {
     Sunrise_Time, Sunset_Time : strategy = everyHour
 	Humidity, Pressure, Temperature, FeelsLike : strategy = everyChange
 
-	HMTemp1, HMTemp1HUM : strategy = every5Minutes
-	HMDoor1, OsramSensorTriggered, OsramSensor_2_Triggered, OsramSensor_3_Triggered : strategy = everyChange
+	MQTT_NodeMCU_MultiSensor_1_Hum, MQTT_NodeMCU_MultiSensor_1_Temp, HMTemp1, HMTemp1HUM : strategy = every5Minutes
+	HMDoor1, OsramSensorTriggered, OsramSensor_2_Triggered, OsramSensor_3_Triggered, MQTT_NodeMCU_MultiSensor_1_Motion : strategy = everyChange
 
     HM_EM_Power, HM_EM_EnergyCounter : strategy = every5Minutes
     HM_EM_EnergyUsage_Today : strategy = every10Minutes
@@ -20,17 +20,19 @@ Items {
     gBatteries* : strategy = everyMinute, restoreOnStartup
     gCalTimes* : strategy = everyChange, restoreOnStartup
     gLatency* : strategy = every5Minutes, restoreOnStartup
-    //gOnline* : strategy = everyHour, everyChange, restoreOnStartup
     gTPLinkPlugs* : strategy = every5Minutes
+    
     TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = every5Minutes
 
     CPU_Load, CPU_Load1, CPU_Load5, CPU_Load15, Sensor_CPUTemp, CPU_Threads : strategy = every5Minutes
 	System_openHAB_Memory : strategy = every10Minutes
     Memory_Used : strategy = every10Minutes
+    System_openHAB_Version : strategy = everyChange, restoreOnStartup
 
 	TuyaSocket1, TuyaSocket2, TuyaSocket3, TuyaSocket4, TuyaSocket5, TuyaSocket6 : strategy = everyChange
 
 	AtHomeS, AtHomeJ : strategy = everyChange, every5Minutes, restoreOnStartup
+    SysStartup : strategy = everyChange, restoreOnStartup
 	
 	//Azimuth, Elevation, MoonPhase, Total_Radiation, Diffuse_Radiation : strategy = everyHour
 }

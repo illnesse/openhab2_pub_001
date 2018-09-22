@@ -55,7 +55,7 @@ JSRule({
     triggers: [
         //ItemCommandTrigger("TestBTN"),
         ItemCommandTrigger("WOL_NAS"),
-        ItemCommandTrigger("SysStartup","ON")
+        ItemCommandTrigger("SysStartup",2)
     ],
     execute: function( module, input)
     {

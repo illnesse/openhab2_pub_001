@@ -125,6 +125,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         if ($h5text.indexOf("fritz") >= 0 ) panelcss($panel,$h5,"fritzbox","avm");
         else if ($h5text.indexOf("kodi") >= 0 ) panelcss($panel,$h5,"kodi","kodi");
         else if ($h5text.indexOf("samsung") >= 0 ) panelcss($panel,$h5,"tv","samsung");
+        else if ($h5text.indexOf("hyperion") >= 0 ) panelcss($panel,$h5,"hyperion","hyperion2");
         else if ($h5text.indexOf("sat receiver") >= 0 ) panelcss($panel,$h5,"sat","humax");
         else if ($h5text.indexOf("sony av") >= 0 ) panelcss($panel,$h5,"sony","sony");
         else if ($h5text.indexOf("hdmi") >= 0 ) panelcss($panel,$h5,"hdmi","hdmi");

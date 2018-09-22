@@ -9,14 +9,33 @@ var gmail_array_temp = []
 
 var init = false;
 
-var mutedEmails = ["eclipse/smarthome", "codetheweb/tuyapi","OH2_System_Notification"];
+JSRule({
+    name: "Notifications Emails",
+    description: "Line: "+__LINE__,
+    triggers: [
+        TimerTrigger("0 0/5 * * * ?"),
+        ItemCommandTrigger("TestBTN")
+    ],
+    execute: function( module, input)
+    {
+        var itemNotifications = getItem("Notifications");
+        //logInfo("Notifications Emails: "+itemNotifications.state);
+        
+        if (itemNotifications.state == "") return;
+        else
+        {
+            sendMail("illnesse@gmail.com", "[OH2_System_Notification]", itemNotifications.state);
+            postUpdate(itemNotifications,"")
+        }
+    }
+});
 
 JSRule({
     name: "GetMail",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemCommandTrigger("SysStartup","ON"),
-        TimerTrigger("0 0/30 * * * ?"),
+        ItemCommandTrigger("SysStartup",2),
+        TimerTrigger("0 0/31 * * * ?"),
         ItemCommandTrigger("Mail_Account1_Update")
     ],
     execute: function( module, input)
@@ -27,7 +46,7 @@ JSRule({
         
         logInfo("GetMail: getting mails")
         var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/mailsync.sh", 1000 *60);
-        //logInfo("GetMail: " + results1)
+        logInfo("GetMail: " + results1)
 
         if (results1 == "") return;
 
@@ -57,13 +76,13 @@ JSRule({
         {
             var out = gmail_array[i].Subject //+" "+ gmail_array_temp[i].Date
 
-            if ((containsAny(out, mutedEmails) == null) && (items < 10))
+            if (items < 10)
             {
                 items++;
-                //logInfo("state: "+gmail_array[i].state);
+                logInfo("state: "+gmail_array[i].state);
                 if (gmail_array[i].state == MODE_DEFAULT)
                 {
-                    //logInfo("New Email: " + out);
+                    logInfo("New Email: " + out);
                     if (init)
                     {
                         sendCommand(itemTTSOut2,"Neue Email: "+ out)

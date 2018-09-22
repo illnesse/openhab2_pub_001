@@ -2,9 +2,9 @@ Group gTemp
 
 String Temperature_UI_Outdoor "Aussentemperatur [%s]" (gTemp)
 String Temperature_UI_Indoor "Innentemperatur [%s]" (gTemp)
-Number Temperature "Aussentemperatur [%.1f °C]" (gTemp) { channel="yahooweather:weather:XXXXX:temperature" }
-Number Humidity "Luftfeuchtigkeit [%.1f %%]" (gTemp) { channel="yahooweather:weather:XXXXX:humidity" }
-Number Pressure "Luftdruck [%.1f hPa]" (gTemp) { channel="yahooweather:weather:XXXXX:pressure" }
+Number Temperature "Aussentemperatur [%.1f -C]" (gTemp) { channel="openweathermap:weather:api:local:current#temperature" }
+Number Humidity "Luftfeuchtigkeit [%.1f %%]" (gTemp) { channel="openweathermap:weather:api:local:current#humidity" }
+Number Pressure "Luftdruck [%.1f hPa]" (gTemp) { channel="openweathermap:weather:api:local:current#pressure" }
 Number FeelsLikeOutdoor "Feels Like [%.1f °C]" (gTemp)
 Number FeelsLikeIndoor "Feels Like [%.1f °C]" (gTemp)
 

@@ -26,3 +26,10 @@ String OsramSensor_2_TriggeredUI "Sensor 2 triggered [%s]" (gSensors)
 
 Switch OsramSensor_3_Triggered "Sensor 3 triggered [%s]" (gSensors) { channel="osramlightify:motionsensor:XXX:triggered" }
 String OsramSensor_3_TriggeredUI "Sensor 3 triggered [%s]" (gSensors) 
+
+
+String MQTT_NodeMCU_MultiSensor_1  "Raw Data" { mqtt="<[local:sensors/node1:state:default]" }
+Number MQTT_NodeMCU_MultiSensor_1_Temp  (gSensors)
+Number MQTT_NodeMCU_MultiSensor_1_Hum (gSensors)
+Switch MQTT_NodeMCU_MultiSensor_1_Motion (gSensors)
+String MQTT_NodeMCU_MultiSensor_1_MotionUI (gSensors)

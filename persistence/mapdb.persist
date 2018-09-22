@@ -20,14 +20,16 @@ Items
     gTuya* : strategy = everyChange, restoreOnStartup
     gSysInfo* : strategy = everyChange, restoreOnStartup
     gTemp* : strategy = everyChange, restoreOnStartup
-
+    gHyperion* : strategy = everyChange, restoreOnStartup
+    gMQTT_Phone_Locations* : strategy = everyChange, restoreOnStartup
 
     Kodi_thumbnail, TuneInPlayDevice : strategy = everyChange, restoreOnStartup
 	FeelsLikeOutdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     Temperature_UI_Outdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     itemEnergyUsage_Today_UI, TPLinkPlug1_UI, TPLinkPlug2_UI : strategy = everyChange, restoreOnStartup   
     PollenUI : strategy = everyChange, restoreOnStartup
-    Washingmachine_OpState : strategy = everyChange, restoreOnStartup
+    Notifications, Washingmachine_OpState : strategy = everyChange, restoreOnStartup
+    System_openHAB_DBSize, System_openHAB_Version : strategy = everyChange, restoreOnStartup
 
     ALARM1_PERSON1_H, ALARM1_PERSON1_M, ALARM1_PERSON1_D : strategy = everyChange, restoreOnStartup
 }

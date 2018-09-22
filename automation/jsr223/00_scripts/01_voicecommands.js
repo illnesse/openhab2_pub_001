@@ -1,8 +1,7 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
-var TTS_OFF = 0;
-var TTS_DEFAULT = 1;
+var volTimer = null;
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
@@ -12,23 +11,44 @@ String.prototype.has = function(s) {
     return (this.indexOf(s) !== -1);
 };
 
+/*
+JSRule({
+    name: "AlexaCommands2",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ChannelTrigger("amazonechocontrol:echo:account1:echo1:lastVoiceCommand"),
+        ChannelTrigger("amazonechocontrol:echo:account1:echo2:lastVoiceCommand")
+    ],
+    execute: function( module, input)
+    {
+        logInfo(input);
+    }
+});
+*/
+
 JSRule({
     name: "AlexaCommands",
     description: "Line: "+__LINE__,
     triggers: [
         ItemStateChangeTrigger("Echo1_lastVoiceCommand"),
-        ItemStateChangeTrigger("Echo2_lastVoiceCommand"),
-        ItemCommandTrigger("TestBTN")
+        ItemStateChangeTrigger("Echo2_lastVoiceCommand")
     ],
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
+        var toUpdate = triggeringItem.name.split("_")[0]
+
         var cmd = triggeringItem.state.toString().toLowerCase().split(" ");
         var remove = ["alexa","der","die","das","den"];
 
         cmd = cmd.diff(remove)
         cmd = cmd.join(" ");
 
+        if (cmd.has("sprich mir nach")) 
+        {
+            logInfo("AlexaCommands 'sprich mir nach' filter");
+            return;
+        }
 
         logInfo("AlexaCommands : "+cmd);
         if ((cmd == "stop") || (cmd == "stopp")) return;
@@ -38,7 +58,8 @@ JSRule({
 
         var state;
         var stateonoff;
-        var action;
+        var action = null;
+        var handled = false;
 
         if (cmd.has("an")) state = true;
         else if (cmd.has("aus")) state = false;
@@ -49,21 +70,25 @@ JSRule({
         else if ((cmd.has("mach")) || (cmd.has("mache")) || (cmd.has("schalt")) || (cmd.has("schalte"))) action = "changestate";
         else if ((cmd.has("switch"))) action = "switch";
 
+        if (action == null) action = "changestate";
+
         if (action == "changestate")
         {
             if (cmd.has("glotze"))
             {
-                sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
+                sendMQTT("local","broadlink/audio/sony/power", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
+                sendMQTT("local","broadlink/sat/humax/power", "replay")
                 sleep(broadlink_delay);
-                sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
+                sendMQTT("local","broadlink/tv/samsung/power", "replay")
                 sendCommand("LED1Power",stateonoff);
+                handled = true;
             }
             if ((cmd.has("computer")) || (cmd.has("pc")))
             {
-                if (!state) sendMQTT("cloudmqtt","wt/system/commands/hibernate", "true")
+                if (!state) sendMQTT("local","wt/system/commands/hibernate", "true")
                 else sendCommand("WOL_PC",ON);
+                handled = true;
             }
             if ((cmd.has("fernseher")) || (cmd.has("t. v.")))
             {
@@ -78,106 +103,120 @@ JSRule({
                     var i = 0
                     while((i=i+1) <= amt) 
                     {
-                        sendMQTT("broadlink","broadlink/audio/sony/volumedown", "replay");
+                        sendMQTT("local","broadlink/audio/sony/volumedown", "replay");
                         sleep(200);
                     }
+                    handled = true;
                 }
                 else if ((cmd.has("laut")) || (cmd.has("lauter")) || (cmd.has("lautstärke")))
                 {
                     var i = 0
                     while((i=i+1) <= amt) 
                     {
-                        sendMQTT("broadlink","broadlink/audio/sony/volumeup", "replay");
+                        sendMQTT("local","broadlink/audio/sony/volumeup", "replay");
                         sleep(200);
                     }
+                    handled = true;
                 }
                 else
                 {
-                    sendMQTT("broadlink","broadlink/tv/samsung/power", "replay")
+                    sendMQTT("local","broadlink/tv/samsung/power", "replay")
+                    handled = true;
                 }
             }
             if ((cmd.has("anlage")) || (cmd.has("audio")) || (cmd.has("sonyaudio")))
             {
-                sendMQTT("broadlink","broadlink/audio/sony/power", "replay")
+                sendMQTT("local","broadlink/audio/sony/power", "replay")
+                handled = true;
             }
             if ((cmd.has("sat")))
             {
-                sendMQTT("broadlink","broadlink/sat/humax/power", "replay")
+                sendMQTT("local","broadlink/sat/humax/power", "replay")
+                handled = true;
             }
             if ((cmd.has("sound")) || (cmd.has("ton")) || (cmd.has("mute")))
             {
-                sendMQTT("broadlink","broadlink/audio/sony/mute", "replay")
+                sendMQTT("local","broadlink/audio/sony/mute", "replay")
+                handled = true;
             }
             if ((cmd.has("monitor")) || (cmd.has("bildschirm")) )
             {
-                sendMQTT("cloudmqtt","wt/desktop/commands/set_display_sleep", "true")
+                sendMQTT("local","wt/desktop/commands/set_display_sleep", "true")
+                handled = true;
             }
             if (cmd.has("ventilator"))
             {
-                if ((cmd.has("schnell")) || (cmd.has("schneller"))) sendMQTT("broadlink","broadlink/fan/obi/up", "replay")
-                else if ((cmd.has("langsam")) || (cmd.has("langsamer"))) sendMQTT("broadlink","broadlink/fan/obi/down", "replay")
-                else if ((cmd.has("drehung")) || (cmd.has("drehen"))) sendMQTT("broadlink","broadlink/fan/obi/swivel", "replay")
+                if ((cmd.has("schnell")) || (cmd.has("schneller"))) sendMQTT("local","broadlink/fan/obi/up", "replay")
+                else if ((cmd.has("langsam")) || (cmd.has("langsamer"))) sendMQTT("local","broadlink/fan/obi/down", "replay")
+                else if ((cmd.has("drehung")) || (cmd.has("drehen"))) sendMQTT("local","broadlink/fan/obi/swivel", "replay")
                 else
                 {
-                    sendMQTT("broadlink","broadlink/fan/obi/power", "replay")
-                }                
+                    sendMQTT("local","broadlink/fan/obi/power", "replay")
+                }
+                handled = true;
             }
         }
         else if (action == "switch")
         {
             if ((cmd.has("fernseher")) || (cmd.has("t. v.")))
             {
-                sendMQTT("broadlink","broadlink/hdmiswitch/" + 1, "replay")
+                sendMQTT("local","broadlink/hdmiswitch/" + 1, "replay")
+                handled = true;
             }
             else if ((cmd.has("p. s. vier")) || (cmd.has("playsi")))
             {
-                sendMQTT("broadlink","broadlink/hdmiswitch/" + 2, "replay")
+                sendMQTT("local","broadlink/hdmiswitch/" + 2, "replay")
+                handled = true;
             }
             else if ((cmd.has("computer")) || (cmd.has("pc")))
             {
-                sendMQTT("broadlink","broadlink/hdmiswitch/" + 3, "replay")
+                sendMQTT("local","broadlink/hdmiswitch/" + 3, "replay")
+                handled = true;
             }
             else if ((cmd.has("fire tv")) || (cmd.has("kodi")))
             {
-                sendMQTT("broadlink","broadlink/hdmiswitch/" + 4, "replay")
+                sendMQTT("local","broadlink/hdmiswitch/" + 4, "replay")
+                handled = true;
             }
         }
         else if (action == "channelchangestate")
         {
             var itemMQTT_SATChannel = getItem("MQTT_SATChannel");
 
-            if      (cmd.has("a. r. d.")) sendCommand(itemMQTT_SATChannel, 1)
-            else if (cmd.has("z. d. f.")) sendCommand(itemMQTT_SATChannel, 2)
-            else if (cmd.has("r. t. l.")) sendCommand(itemMQTT_SATChannel, 3)
-            else if (cmd.has("sat eins")) sendCommand(itemMQTT_SATChannel, 4)
-            else if (cmd.has("vox")) sendCommand(itemMQTT_SATChannel, 5)
-            else if (cmd.has("pro sieben")) sendCommand(itemMQTT_SATChannel, 6)
-            else if (cmd.has("kabel eins")) sendCommand(itemMQTT_SATChannel, 7)
-            else if (cmd.has("r. t.")) sendCommand(itemMQTT_SATChannel, 8)
-            else if (cmd.has("r. t. l. zwei")) sendCommand(itemMQTT_SATChannel, 9)
-            else if (cmd.has("super r. t. l.")) sendCommand(itemMQTT_SATChannel, 10)
-            else if (cmd.has("drei sat")) sendCommand(itemMQTT_SATChannel, 11)
-            else if (cmd.has("w. d. r.")) sendCommand(itemMQTT_SATChannel, 12)
-            else if (cmd.has("b. r.")) sendCommand(itemMQTT_SATChannel, 13)
-            else if (cmd.has("s. w. r.")) sendCommand(itemMQTT_SATChannel, 14)
-            else if (cmd.has("n. d. r.")) sendCommand(itemMQTT_SATChannel, 15)
-            else if (cmd.has("h. r.")) sendCommand(itemMQTT_SATChannel, 16)
-            else if (cmd.has(" m. d. r.")) sendCommand(itemMQTT_SATChannel, 17)
-            else if (cmd.has("r. b. b.")) sendCommand(itemMQTT_SATChannel, 2)
-            else if (cmd.has("one")) sendCommand(itemMQTT_SATChannel, 21)
-            else if (cmd.has("tagesschau vier und zwanzig")) sendCommand(itemMQTT_SATChannel, 23)
-            else if (cmd.has("z. d. f. neo")) sendCommand(itemMQTT_SATChannel, 24)
-            else if (cmd.has("servus t. v.")) sendCommand(itemMQTT_SATChannel, 28)
-            else if (cmd.has("nitro")) sendCommand(itemMQTT_SATChannel, 40)
-            else if (cmd.has("wunder")) sendCommand(itemMQTT_SATChannel, 41)
-            else if (cmd.has("deluxe music")) sendCommand(itemMQTT_SATChannel, 44)
-            else if ((cmd.has("viva")) || (cmd.has("comedy central"))) sendCommand(itemMQTT_SATChannel, 45)
-            else if (cmd.has("n. t. v.")) sendCommand(itemMQTT_SATChannel, 61)
-            else if (cmd.has("welt")) sendCommand(itemMQTT_SATChannel, 62)
-            else if (cmd.has("b. b. c.")) sendCommand(itemMQTT_SATChannel, 63)
-            else if (cmd.has("c. n. n.")) sendCommand(itemMQTT_SATChannel, 64)
-            else if (cmd.has("astro t. v.")) sendCommand(itemMQTT_SATChannel, 70)
+            if      (cmd.has("a. r. d.")) { sendCommand(itemMQTT_SATChannel, 1); handled = true; }
+            else if (cmd.has("z. d. f.")) { sendCommand(itemMQTT_SATChannel, 2); handled = true; }
+            else if (cmd.has("r. t. l.")) { sendCommand(itemMQTT_SATChannel, 3); handled = true; }
+            else if (cmd.has("sat eins")) { sendCommand(itemMQTT_SATChannel, 4); handled = true; }
+            else if (cmd.has("vox")) { sendCommand(itemMQTT_SATChannel, 5); handled = true; }
+            else if (cmd.has("pro sieben")) { sendCommand(itemMQTT_SATChannel, 6); handled = true; }
+            else if (cmd.has("kabel eins")) { sendCommand(itemMQTT_SATChannel, 7); handled = true; }
+            else if (cmd.has("r. t.")) { sendCommand(itemMQTT_SATChannel, 8); handled = true; }
+            else if (cmd.has("r. t. l. zwei")) { sendCommand(itemMQTT_SATChannel, 9); handled = true; }
+            else if (cmd.has("super r. t. l.")) { sendCommand(itemMQTT_SATChannel, 10); handled = true; }
+            else if (cmd.has("drei sat")) { sendCommand(itemMQTT_SATChannel, 11); handled = true; }
+            else if (cmd.has("w. d. r.")) { sendCommand(itemMQTT_SATChannel, 12); handled = true; }
+            else if (cmd.has("b. r.")) { sendCommand(itemMQTT_SATChannel, 13); handled = true; }
+            else if (cmd.has("s. w. r.")) { sendCommand(itemMQTT_SATChannel, 14); handled = true; }
+            else if (cmd.has("n. d. r.")) { sendCommand(itemMQTT_SATChannel, 15); handled = true; }
+            else if (cmd.has("h. r.")) { sendCommand(itemMQTT_SATChannel, 16); handled = true; }
+            else if (cmd.has(" m. d. r.")) { sendCommand(itemMQTT_SATChannel, 17); handled = true; }
+            else if (cmd.has("r. b. b.")) { sendCommand(itemMQTT_SATChannel, 2); handled = true; }
+            else if (cmd.has("one")) { sendCommand(itemMQTT_SATChannel, 21); handled = true; }
+            else if (cmd.has("tagesschau vier und zwanzig")) { sendCommand(itemMQTT_SATChannel, 23); handled = true; }
+            else if (cmd.has("z. d. f. neo")) { sendCommand(itemMQTT_SATChannel, 24); handled = true; }
+            else if (cmd.has("servus t. v.")) { sendCommand(itemMQTT_SATChannel, 28); handled = true; }
+            else if (cmd.has("nitro")) { sendCommand(itemMQTT_SATChannel, 40); handled = true; }
+            else if (cmd.has("wunder")) { sendCommand(itemMQTT_SATChannel, 41); handled = true; }
+            else if (cmd.has("deluxe music")) { sendCommand(itemMQTT_SATChannel, 44); handled = true; }
+            else if ((cmd.has("viva")) || (cmd.has("comedy central"))) { sendCommand(itemMQTT_SATChannel, 45); handled = true; }
+            else if (cmd.has("n. t. v.")) { sendCommand(itemMQTT_SATChannel, 61); handled = true; }
+            else if (cmd.has("welt")) { sendCommand(itemMQTT_SATChannel, 62); handled = true; }
+            else if (cmd.has("b. b. c.")) { sendCommand(itemMQTT_SATChannel, 63); handled = true; }
+            else if (cmd.has("c. n. n.")) { sendCommand(itemMQTT_SATChannel, 64); handled = true; }
+            else if (cmd.has("astro t. v.")) { sendCommand(itemMQTT_SATChannel, 70); handled = true; }
         }
+
+        if (handled) sendCommand(toUpdate+"_TTS","OK");
     }
 });
 
@@ -186,21 +225,42 @@ function TTSOut(id,quiet,out)
     var itemTTSMode = getItem("TTSMode");
     var mode = (itemTTSMode.state != null) ? itemTTSMode.state : TTS_DEFAULT;
 
-    logInfo("TTSOut"+id+" quiet:"+quiet+" mode: "+mode+" "+ out)
+    logInfo("TTSOut"+id+" quiet: "+quiet+" TTSMode: "+mode+" "+ out)
 
     if (mode == TTS_OFF) return;
 
+    var itemVolume = getItem("Echo"+id+"_Volume");
+    var VOL_BEFORE = itemVolume.state;
+
+    if (volTimer != null) volTimer.cancel();
     if (quiet)
     {
-        sendCommand("Echo"+id+"_Volume",30)
-        createTimer(now().plusSeconds(0.3), function() 
+        sendCommand(itemVolume,VOL_QUIET)
+        createTimer(now().plusSeconds(0.1), function() 
         {
             sendCommand("Echo"+id+"_TTS",out)
+
+            volTimer = createTimer(now().plusSeconds(10), function() 
+            { 
+                sendCommand(itemVolume,VOL_BEFORE)
+                volTimer = null;
+            });
+
         });
     }
     else
     {
-        sendCommand("Echo"+id+"_TTS",out)
+        sendCommand(itemVolume,VOL_NORMAL)
+        createTimer(now().plusSeconds(0.1), function() 
+        {
+            sendCommand("Echo"+id+"_TTS",out)
+
+            volTimer = createTimer(now().plusSeconds(10), function() 
+            {
+                sendCommand(itemVolume,VOL_BEFORE)
+                volTimer = null;
+            });
+        });
     }
 }
 
@@ -222,20 +282,3 @@ JSRule({
         else if (triggeringItem.name == "TTSOut2Quiet") TTSOut(2,true,input.command);
     }
 });
-
-
-/*
-
-JSRule({
-    name: "AlexaCommands2",
-    description: "Line: "+__LINE__,
-    triggers: [
-        ChannelTrigger("amazonechocontrol:echo:account1:echo1:lastVoiceCommand"),
-        ChannelTrigger("amazonechocontrol:echo:account1:echo2:lastVoiceCommand")
-    ],
-    execute: function( module, input)
-    {
-        logInfo(input);
-    }
-});
-*/
