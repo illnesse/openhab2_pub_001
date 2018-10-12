@@ -33,7 +33,7 @@ JSRule({
         if ((results1 == "") || (results2 == "") || (results3 == "")) return;
 
         gcal_array_temp = JSON.parse(results1).concat(JSON.parse(results2)).concat(JSON.parse(results3));
-        //logInfo("gcal_array_temp size: " + gcal_array_temp.length);
+        // logInfo("gcal_array_temp size: " + gcal_array_temp.length);
 
         for(var i = 0; i < gcal_array_temp.length; i++)
         {
@@ -200,52 +200,53 @@ JSRule({
         var hour_now = JsJodaNow.hour();
         var minute_now = JsJodaNow.minute();
 
+        postUpdate("HourNow",hour_now);
+
         ScheduleCalEvents();
 
         var Echo1_Volume = getItem("Echo1_Volume");
         var Echo2_Volume = getItem("Echo2_Volume");
-
-        //turn off tts
         var itemTTSMode = getItem("TTSMode");
-        if ((hour_now >= 23) || (hour_now <= 5))
+        var itemHMKeymatic1State = getItem("HMKeymatic1State");
+        var itemAtHomeS = getItem("AtHomeS");
+        var itemAtHomeJ = getItem("AtHomeJ");
+
+        var AtHome = ((itemAtHomeJ.state == ON) || (itemAtHomeS.state == ON));
+
+        // RESET VOL
+        if ((hour_now == 3) && (minute_now == 0) && AtHome)
+        {
+            logInfo("Resetting Echo Volume")
+            sendCommand(Echo1_Volume,VOL_QUIET)
+            sendCommand(Echo2_Volume,VOL_NORMAL)
+        }
+
+
+        // DOORS
+        if ((hour_now >= 22) || (hour_now <= 5) || (!AtHome))
+        {
+            if (itemHMKeymatic1State.state != OFF)
+            {
+                sendCommand(itemTTSOut2,"Türen verriegelt");
+                sendCommand(itemHMKeymatic1State,OFF); //lock
+            }
+        }
+
+        // TTS
+        if ((hour_now >= 23) || (hour_now <= 5) || (!AtHome))
         {
             if (itemTTSMode.state != TTS_OFF)
             {
-                logInfo("ttsmode off hour_now: "+hour_now);
                 sendCommand(itemTTSOut2,"TTS deaktiviert");
                 postUpdate(itemTTSMode,TTS_OFF);
-            }
-            
-            //reset shit late night
-            if ((hour_now == 3) && (minute_now == 0))
-            {
-                logInfo("Resetting Echo Volume")
-                sendCommand(Echo1_Volume,VOL_QUIET)
-                sendCommand(Echo2_Volume,VOL_NORMAL)
             }
         }
         else 
         {
-            var itemAtHomeS = getItem("AtHomeS");
-            var itemAtHomeJ = getItem("AtHomeJ");
-
-            if ((itemAtHomeJ.state == OFF) && (itemAtHomeS.state == OFF))
+            if (itemTTSMode.state != TTS_DEFAULT) 
             {
-                if (itemTTSMode.state != TTS_OFF)
-                {
-                    logInfo("ttsmode off hour_now: "+hour_now);
-                    sendCommand(itemTTSOut2,"TTS deaktiviert");
-                    postUpdate(itemTTSMode,TTS_OFF);
-                }
-            }
-            else
-            {
-                if (itemTTSMode.state != TTS_DEFAULT) 
-                {
-                    logInfo("ttsmode on hour_now: "+hour_now);
-                    postUpdate(itemTTSMode,TTS_DEFAULT);
-                    sendCommand(itemTTSOut2,"TTS aktiviert");
-                }
+                postUpdate(itemTTSMode,TTS_DEFAULT);
+                sendCommand(itemTTSOut2,"TTS aktiviert");
             }
         }
 
@@ -264,7 +265,7 @@ JSRule({
         {
             var bedtime_hours = 9;
             var hour = parseInt(ALARM1_PERSON1_H.state)
-            var TTSOut1Quiet = getItem("TTSOut1Quiet");
+            var TTSOut1Override = getItem("TTSOut1Override");
     
             var day_number = JsJodaNow.dayOfWeek().value()
             var day_number_tomorrow = JsJodaNow.plusDays(1).dayOfWeek().value()
@@ -303,7 +304,7 @@ JSRule({
                     AlarmTimer = createTimer(now().plusSeconds(60), function() 
                     {
                         var TuyaSocket2 = getItem("TuyaSocket2");
-                        sendCommand(TTSOut1Quiet,out)
+                        sendCommand(TTSOut1Override,out)
                         sendCommand(itemTTSOut2,out)
                         postUpdate(TuyaSocket2,ON);
     

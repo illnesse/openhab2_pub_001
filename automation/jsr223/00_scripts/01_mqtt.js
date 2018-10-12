@@ -188,7 +188,8 @@ JSRule({
         var itemInfo = getItem("MQTT_Phone_"+selector+"_Info");
         var itemTimeStamp = getItem("MQTT_Phone_"+selector+"_TimeStamp");
         var itemConn = getItem("MQTT_Phone_"+selector+"_Conn");
-        var itemBattery = getItem("MQTT_Phone_"+selector+"_Battery");
+        var itemAcc = getItem("MQTT_Phone_"+selector+"_Acc");
+        var itemBattery = getItem("MQTT_Phone_"+selector+"_Batt");
         var itemLocation = getItem("MQTT_Phone_"+selector+"_location");
 
         var json = JSON.parse(input.newState);
@@ -205,7 +206,7 @@ JSRule({
 			var lat  = json.lat;
             var lon  = json.lon;
             var acc  = json.acc;
-            var batt = json.batt;
+            var batt = parseInt(json.batt);
 
             var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&key=XXXXXXX"
             var geocodeJson = JSON.parse(HTTP.sendHttpGetRequest(geocodeURL));
@@ -246,9 +247,10 @@ JSRule({
             {
                 out += ", Trigger: " + action.transform("MAP", "mqtttrigger.map", trigger)
             }
-			postUpdate(itemConn,out)
+            postUpdate(itemConn,out)
+            postUpdate(itemAcc,acc)
             postUpdate(itemLocation,lat + "," + lon)
-            postUpdate(itemBattery,batt)
+            postUpdate(itemBattery,batt);
             
             geocodeJson = null;
             distancematrixJson = null;

@@ -26,5 +26,5 @@ mv /etc/openhab2/html/_12.png /etc/openhab2/html/12.png
 wget --output-document /etc/openhab2/html/_14.png "http://$IP:3000/render/d-solo/$ID/grafana_home?panelId=14&width=$WIDTH&height=200&theme=light"
 mv /etc/openhab2/html/_14.png /etc/openhab2/html/14.png
 
-# wget --output-document /etc/openhab2/html/_20.png "http://$IP:3000/render/d-solo/$ID/grafana_home?panelId=20&width=$WIDTH&height=200&theme=light"
-# mv /etc/openhab2/html/_20.png /etc/openhab2/html/20.png
+wget --output-document /etc/openhab2/html/_20.png "http://$IP:3000/render/d-solo/$ID/grafana_home?panelId=20&width=$WIDTH&height=120&theme=light"
+mv /etc/openhab2/html/_20.png /etc/openhab2/html/20.png

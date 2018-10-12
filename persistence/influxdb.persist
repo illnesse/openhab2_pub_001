@@ -17,7 +17,7 @@ Items {
     HM_EM_Power, HM_EM_EnergyCounter : strategy = every5Minutes
     HM_EM_EnergyUsage_Today : strategy = every10Minutes
 
-    gBatteries* : strategy = everyMinute, restoreOnStartup
+    gBatteries* : strategy = everyDay, restoreOnStartup
     gCalTimes* : strategy = everyChange, restoreOnStartup
     gLatency* : strategy = every5Minutes, restoreOnStartup
     gTPLinkPlugs* : strategy = every5Minutes

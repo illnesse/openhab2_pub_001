@@ -192,6 +192,7 @@
     <script>
         var outputdevice = "local";
         var searchstring = $.cookie('tunein_loadlist');
+        if (searchstring == "") searchstring = "bass";
         $("#tuneinsearchtext").val(searchstring);
 
         $("#tuneinsearch").submit(function( event ) 

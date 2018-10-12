@@ -416,10 +416,10 @@ a:hover
     /*right: 3px;*/
     /*text-align: center;*/
     color: rgba(255,255,255,0.2);
-    -moz-transition: all 0.4s ease;
-    -webkit-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
-    transition: all 0.4s ease;
+    /* -moz-transition: all 0.4s ease; */
+    /* -webkit-transition: all 0.4s ease; */
+    /* -o-transition: all 0.4s ease; */
+    /* transition: transform 0.4s ease; */
     transform-origin: center center;
     /*border: 1px solid;*/
     margin-top:-3px;
@@ -433,6 +433,11 @@ a:hover
     height: 10px;
     margin-top:-3px;
     margin-right:40px;
+    /* opacity:0.4; */
+}
+
+.panel_icon img
+{
     opacity:0.4;
 }
 

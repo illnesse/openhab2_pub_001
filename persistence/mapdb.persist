@@ -15,6 +15,7 @@ Items
     gMQTT_Phone_Strings* : strategy = everyChange, restoreOnStartup
     gFritzBox* : strategy = everyChange, restoreOnStartup
     gSensors* : strategy = everyChange, restoreOnStartup
+    gHomematic* : strategy = everyChange, restoreOnStartup
     gTPLinkAll* : strategy = everyChange, restoreOnStartup
     gSNMP* : strategy = everyChange, restoreOnStartup
     gTuya* : strategy = everyChange, restoreOnStartup
@@ -23,7 +24,7 @@ Items
     gHyperion* : strategy = everyChange, restoreOnStartup
     gMQTT_Phone_Locations* : strategy = everyChange, restoreOnStartup
 
-    Kodi_thumbnail, TuneInPlayDevice : strategy = everyChange, restoreOnStartup
+    TuneInPlayDevice : strategy = everyChange, restoreOnStartup
 	FeelsLikeOutdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     Temperature_UI_Outdoor, Temperature_UI_Indoor : strategy = everyChange, restoreOnStartup
     itemEnergyUsage_Today_UI, TPLinkPlug1_UI, TPLinkPlug2_UI : strategy = everyChange, restoreOnStartup   

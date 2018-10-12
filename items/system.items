@@ -26,9 +26,11 @@ Switch piReboot "Reboot RasPi"
 
 Number TTSMode "TTSMode"
 String TTSOut1 "TTSOut"
-String TTSOut1Quiet "TTSOut"
+String TTSOut1Override "TTSOut"
 String TTSOut2 "TTSOut"
-String TTSOut2Quiet "TTSOut"
+String TTSOut2Override "TTSOut"
+
+Number HourNow
 
 Number ALARM1_PERSON1_H    "Hour [%s]"
 Number ALARM1_PERSON1_M    "Minute [%s]"

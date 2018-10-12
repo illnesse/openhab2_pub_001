@@ -473,29 +473,57 @@
         }
         ];
 
+
+        var coords_s= ["12.123", "123.123"];
+        var coords_j = ["12.123", "123.123"];
+
+        var acc_s=100;
+        var acc_j=100;
+
+        var pos_s = {lat: parseFloat(coords_s[0]), lng: parseFloat(coords_s[1])};
+        var pos_j = {lat: parseFloat(coords_j[0]), lng: parseFloat(coords_j[1])};
+
+
         function initMap() 
         {
-            var coords_s= ["12.345", "12.345"];
-            var coords_j = ["12.345", "12.345"];
 
-            var pos_s = {lat: parseFloat(coords_s[0]), lng: parseFloat(coords_s[1])};
-            var pos_j = {lat: parseFloat(coords_j[0]), lng: parseFloat(coords_j[1])};
-
-            var map = new google.maps.Map(document.getElementById('map'), {zoom:14, maxZoom:16, center: pos_s, styles: style1, streetViewControl: false, mapTypeControl: false});
+            var map = new google.maps.Map(document.getElementById('map'), {zoom:14, maxZoom:17, center: pos_s, styles: style1, streetViewControl: false, mapTypeControl: false});
             
             var markers = new google.maps.Marker({position: pos_s, map: map, icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 3,
             strokeWeight: 1,
             strokeColor: 'white'
-            },});
+            }});
+
+            var circles = new google.maps.Circle({
+                center: pos_s,
+                radius: 100,
+                map: map,
+                fillColor: "#ffffff",
+                fillOpacity: 0.05,
+                strokeColor: "#ffffff",
+                strokeOpacity: 1.0,
+                strokeWeight: 0.3
+            });
             
             var markerj = new google.maps.Marker({position: pos_j, map: map,icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 3,
             strokeWeight: 1,
             strokeColor: 'white'
-            },});
+            }});
+
+            var circlej = new google.maps.Circle({
+                center: pos_j,
+                radius: 100,
+                map: map,
+                fillColor: "#ffffff",
+                fillOpacity: 0.05,
+                strokeColor: "#ffffff",
+                strokeOpacity: 1.0,
+                strokeWeight: 0.3
+            });
 
             function fitMap()
             {
@@ -527,9 +555,10 @@
                         if (data != coords_j)
                         {
                             coords_j = data.split(',');
-                            var pos_j = {lat: parseFloat(coords_j[0]), lng: parseFloat(coords_j[1])};
+                            pos_j = {lat: parseFloat(coords_j[0]), lng: parseFloat(coords_j[1])};
                             markerj.setPosition(pos_j);
-                            console.log("j",pos_j);
+                            circlej.setCenter(pos_j);
+                            console.log("pos j",pos_j);
                             fitMap();
                         }
                     }
@@ -544,11 +573,41 @@
                             coords_s = data.split(',');
                             var pos_s = {lat: parseFloat(coords_s[0]), lng: parseFloat(coords_s[1])};
                             markers.setPosition(pos_s);
-                            console.log("s",pos_s);
+                            circles.setCenter(pos_s);
+                            console.log("pos s",pos_s);
                             fitMap();
                         }
                     }
                 });
+                $.ajax({
+                    url     : "../rest/items/MQTT_Phone_J_Acc/state/",
+                    data    : {},
+                    success : function( data ) 
+                    {
+                        if (data != acc_j)
+                        {
+                            acc_j = parseFloat(data);
+                            circlej.setRadius(acc_j);
+                            console.log("acc j",acc_j);
+                        }
+                    }
+                });
+                $.ajax({
+                    url     : "../rest/items/MQTT_Phone_S_Acc/state/",
+                    data    : {},
+                    success : function( data ) 
+                    {
+                        if (data != acc_s)
+                        {
+                            acc_s = parseFloat(data);
+                            circles.setRadius(acc_s);
+                            console.log("acc s",acc_s);
+                        }
+                    }
+                });
+
+                // console.warn(circles.radius);
+                // console.warn(circlej.radius);
             }
 
             getCoords();

@@ -7,3 +7,12 @@ Number OSRAM_Sensor_3_Battery (gBatteries) {channel="osramlightify:motionsensor:
 Number  HM_EM_LowBattery (gBatteries)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#LOWBAT" }
 Number  HMTemp1LowBatt   (gBatteries)  { channel="homematic:HmIP-STH:PEQ0174170:000E5709B28DEE:0#LOW_BAT" }
 Number  HMDoor1LowBatt   (gBatteries)  { channel="homematic:HM-Sec-SCo:PEQ0174170:OEQ1199810:0#LOWBAT" }
+
+Number  HMKeymatic1LowBatt   (gBatteries)  { channel="homematic:HM-Sec-Key:PEQ0174170:OEQ0352052:0#LOWBAT" }
+Number  HMKey1LowBatt   (gBatteries)  { channel="homematic:HM-RC-Key4-3:PEQ0174170:OEQ0352746:0#LOWBAT" }
+Number  HMKey2LowBatt   (gBatteries)  { channel="homematic:HM-RC-Key4-3:PEQ0174170:OEQ0638391:0#LOWBAT" }
+
+Number  HMKlingelSensorBatt   (gBatteries)  { channel="homematic:HM-Sen-DB-PCB:PEQ0174170:OEQ2237807:0#LOWBAT" }
+
+Number   MQTT_Phone_S_Batt     "Battery [%s%%]" (gBatteries) 
+Number   MQTT_Phone_J_Batt     "Battery [%s%%]" (gBatteries) 

@@ -15,7 +15,10 @@ sitemap main label="Home"
 	}
     Frame label="Hyperion Ambilight WZ"
 	{
-        Slider item=HyperionBrightness icon="light_led_stripe"
+        Switch item=HyperionEnabled label="Enabled|Hyperion UI|http://192.168.178.50:8090 [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionEnabled!=OFF]
+        Switch item=HyperionEnabled label="Enabled|Hyperion UI|http://192.168.178.50:8090 [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionEnabled!=ON]
+
+        Colorpicker item=HyperionMyColor icon="light_led_stripe_rgb" visibility=[HyperionEnabled!=OFF]
         Selection item=HyperionEffect icon="light_led_stripe" mappings=[
             "Atomic swirl" = "Atomic swirl", 
             "Blue mood blobs" = "Blue mood blobs", 
@@ -52,23 +55,17 @@ sitemap main label="Home"
             "Trails color" = "Trails color", 
             "Warm mood blobs" = "Warm mood blobs", 
             "X-Mas" = "X-Mas"
-        ]
-        Switch item=HyperionClear icon="none" mappings=[ON="CLEAR"] 
-        Switch item=HyperionClear_all icon="none" mappings=[ON="CLEAR"] 
-        Colorpicker item=HyperionMyColor icon="light_led_stripe_rgb"
-        
-        Switch item=HyperionEnabled label="Enabled [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionEnabled!=OFF]
-        Switch item=HyperionEnabled label="Enabled [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionEnabled!=ON]
-        Switch item=HyperionBlackBorderEnabled label="Black Border Detection [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionBlackBorderEnabled!=OFF]
-        Switch item=HyperionBlackBorderEnabled label="Black Border Detection [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionBlackBorderEnabled!=ON]
-        Switch item=HyperionSmoothingEnabled label="Smoothing [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionSmoothingEnabled!=OFF]
-        Switch item=HyperionSmoothingEnabled label="Smoothing [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionSmoothingEnabled!=ON]
-        Switch item=HyperionGrabberEnabled label="Grabber [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionGrabberEnabled!=OFF]
-        Switch item=HyperionGrabberEnabled label="Grabber [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionGrabberEnabled!=ON]
-        //Switch item=HyperionV4lEnabled label="V4l [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionV4lEnabled!=OFF]
-        //Switch item=HyperionV4lEnabled label="V4l [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionV4lEnabled!=ON]
-        Switch item=HyperionLedDeviceEnabled label="LED Device [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionLedDeviceEnabled!=OFF]
-        Switch item=HyperionLedDeviceEnabled label="LED Device [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionLedDeviceEnabled!=ON]
+        ] visibility=[HyperionEnabled!=OFF]
+        //Switch item=HyperionClear icon="none" mappings=[ON="CLEAR"] 
+        Switch item=HyperionClear_all icon="none" mappings=[ON="CLEAR"] visibility=[HyperionEnabled!=OFF]
+        Slider item=HyperionBrightness icon="light_led_stripe" visibility=[HyperionEnabled!=OFF]
+
+        // Switch item=HyperionBlackBorderEnabled label="Black Border Detection [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionBlackBorderEnabled!=OFF]
+        // Switch item=HyperionBlackBorderEnabled label="Black Border Detection [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionBlackBorderEnabled!=ON]
+        // Switch item=HyperionSmoothingEnabled label="Smoothing [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionSmoothingEnabled!=OFF]
+        // Switch item=HyperionSmoothingEnabled label="Smoothing [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionSmoothingEnabled!=ON]
+        // Switch item=HyperionLedDeviceEnabled label="LED Device [%s]" icon="audio_playlist"  mappings=[OFF="OFF"] visibility=[HyperionLedDeviceEnabled!=OFF]
+        // Switch item=HyperionLedDeviceEnabled label="LED Device [%s]" icon="audio_playlist"  mappings=[ON="ON"] visibility=[HyperionLedDeviceEnabled!=ON]
     }
 	Frame label="SAT Receiver WZ"
 	{
@@ -107,9 +104,9 @@ sitemap main label="Home"
 			64="CNN",
 			70="Astro TV"
 		] //visibility=[SAT_ON==ON]
-		Switch item=MQTT_SAT label="Program" icon="audio_playlist" mappings=[list="LIST",guide="GUIDE",channeldown="â–¼",channelup="â–²"]
+		Switch item=MQTT_SAT label="Program" icon="audio_playlist" mappings=[list="LIST",guide="GUIDE",channeldown="▼",channelup="▲"]
         Text label="" icon="none"
-        Switch item=MQTT_SAT label="[]" icon="none" mappings=[exit="EXIT",ok="OK",down="â–¾",up="â–´"]
+        Switch item=MQTT_SAT label="[]" icon="none" mappings=[exit="EXIT",ok="OK",down="▾",up="▴"]
 	}
 	Frame label="Sony AV Receiver WZ"
 	{
@@ -129,22 +126,22 @@ sitemap main label="Home"
 	Frame label="A/C WZ"
 	{
 		Switch item=MQTT_AC label="Power" icon="control_on_off" mappings=[power="PWR"]
-		Switch item=MQTT_AC label="Stuff" icon="audio_playlist" mappings=[fan="FAN",fan2="FAN2",rotate="ROT",down="â–¼",up="â–²"]
+		Switch item=MQTT_AC label="Stuff" icon="audio_playlist" mappings=[fan="FAN",fan2="FAN2",rotate="ROT",down="▼",up="▲"]
 	}
 	Frame label="Fan WZ"
 	{
 		Switch item=MQTT_FAN label="Power" icon="control_on_off" mappings=[power="PWR"]
-		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="â–¼",up="â–²"]
+		Switch item=MQTT_FAN label="Stuff" icon="audio_playlist" mappings=[60m="60",120m="120",swivel="ROT",down="▼",up="▲"]
 	}
 	Frame label="Kodi/FireTV WZ"
 	{
         Switch item=FireTV_CMD label="Player" icon="none" mappings=[88='<<',85='||',85='>',87='>>']
         Switch item=FireTV_CMD label="Menu" icon="none" mappings=[66='OK',4='BACK',3='HOME',1='MENU',scanlibrary="SCAN"]
-        Switch item=FireTV_CMD label="Controls" icon="none" mappings=[startkodi="KODI",19='â–²',20='â–¼',21='â—€',22='â–¶']
 
+        Switch item=FireTV_CMD label="Controls" icon="none" mappings=[startkodi="KODI",19='▲',20='▼',21='◀',22='▶']
 		Text item=Kodi_title icon="audio_playlist"        
 
-        Image item=Kodi_thumbnail visibility=[Kodi_thumbnail!="http://localhost:8080/static/null.png"]
+        //Image item=Kodi_thumbnail visibility=[Kodi_thumbnail!="http://localhost:8080/static/null.png"]
 	}
 
 	Frame label="Echo SZ"
@@ -266,8 +263,8 @@ sitemap main label="Home"
 		Text item=MQTT_Phone_S_Conn icon="message_presence_geo_inactive"
 		Text item=MQTT_Phone_J_Conn icon="message_presence_geo_inactive"
 		
-		Text item=MQTT_Phone_S_Battery icon="measure_battery_75"
-        Text item=MQTT_Phone_J_Battery icon="measure_battery_75"
+		Text item=MQTT_Phone_S_Batt icon="measure_battery_75"
+        Text item=MQTT_Phone_J_Batt icon="measure_battery_75"
 
         Text item=AtHomeS icon="message_presence_geo_active"
         Text item=AtHomeJ icon="message_presence_geo_active"
@@ -329,6 +326,10 @@ sitemap main label="Home"
         Switch item=TuyaSocket6 label="Plug 6 [%s]" icon="message_socket" mappings=[ON="ON"] visibility=[TuyaSocket6!=ON]
 		Switch item=TuyaSocket6 label="Plug 6 [%s]" icon="message_socket" mappings=[OFF="OFF"] visibility=[TuyaSocket6==ON]
 
+        Text label="" icon="none"
+        Text label="" icon="none"
+        Text label="" icon="none"
+
         Switch item=LED1Power label="LED 1 (Backlight) [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED1Power!=ON]
 		Switch item=LED1Power label="LED 1 (Backlight) [%s]" icon="light_led_stripe" mappings=[OFF="OFF"] visibility=[LED1Power==ON]
         Switch item=LED2Power label="LED 2 (Sofa) [%s]" icon="light_led_stripe" mappings=[ON="ON"] visibility=[LED2Power!=ON]
@@ -337,7 +338,7 @@ sitemap main label="Home"
 
         Default item=LED1_color icon="light_led_stripe_rgb"
         Default item=LED2_color icon="light_led_stripe_rgb"
-        Switch item= WOL_Surface icon="it_smartphone" mappings=[ON="WOL"] 
+        Switch item= WOL_PC icon="it_media_player" mappings=[ON="WOL"] 
 
         Setpoint item=LED1Scene label="LED 1 Scene [MAP(tuyascenes.map):%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
         Setpoint item=LED2Scene label="LED 2 Scene [MAP(tuyascenes.map):%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
@@ -345,18 +346,12 @@ sitemap main label="Home"
 
         Setpoint item=LED1Flash label="LED 1 Flash [MAP(tuyascenes.map):%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
         Setpoint item=LED2Flash label="LED 2 Flash [MAP(tuyascenes.map):%s]" icon="light_led_stripe" minValue=1 maxValue=4 step=1
-        Switch item= WOL_PC icon="it_media_player" mappings=[ON="WOL"] 
+        Switch item=HMKeymatic1State label="Keymatic [MAP(lock.map):%s]" icon="it_smartphone" mappings=[OFF="LOCK",ON="UNLOCK"] 
 
         Slider  item=LED1FlashSpeed icon="none" 
         Slider  item=LED2FlashSpeed icon="none" 
-        Text label="" icon="none"
+        Switch item=HMKeymatic1Open label="Keymatic []" icon="it_smartphone" mappings=[ON="OPEN"] 
 
-        // Text label="" icon="none"
-        // Text label="" icon="none"
-        // Text label="" icon="none"
-
-        //Switch item=AtHomeS
-        //Switch item=AtHomeJ
 	}
 
 
@@ -475,11 +470,19 @@ sitemap main label="Home"
         Text item=OSRAM_Sensor_2_Battery label="OSRAM Sensor 2 (K) [%s %%]" icon="measure_battery_50"
         Text item=OSRAM_Sensor_3_Battery label="OSRAM Sensor 3 (WZ) [%s %%]" icon="measure_battery_50"
 
+        Text item=MQTT_Phone_S_Batt label="Handy S [%s %%]" icon="measure_battery_50"
+        Text item=MQTT_Phone_J_Batt label="Handy J (K) [%s %%]" icon="measure_battery_50"
+        Text label="[]" icon="none"
+
         Text item=HM_EM_LowBattery label="Homematic Energy Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
-        Text item=HMTemp1LowBatt label="Homematic Temperature Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+        Text item=HMTemp1LowBatt label="Homematic Temp Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
         Text item=HMDoor1LowBatt label="Homematic Door Sensor [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
-        
-        //Image label="20" url="http://localhost:8080/static/20.png"
+
+        Text item=HMKeymatic1LowBatt label="Homematic Keymatic [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+        Text item=HMKey1LowBatt label="Homematic Key [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+        Text item=HMKlingelSensorBatt label="Homematic Doorbell [MAP(hmbatteries.map):%s]" icon="measure_battery_50"
+
+        Image label="20" url="http://localhost:8080/static/20.png"
     }
 	Frame label="System Stats"
 	{
@@ -498,22 +501,22 @@ sitemap main label="Home"
 
         Image label="4" url="http://localhost:8080/static/4.png"
 
-		Text item=System_CPU_Uptime icon="player"
-		Text item=System_openHAB_Uptime icon="player"
+		Text item=System_CPU_Uptime icon="it_media_player"
+		Text item=System_openHAB_Uptime icon="it_media_player"
 
-		Text item=System_openHAB_Memory label="OH2 Mem [JS(kb_mb.js):%s]" icon="player"
-		Text item=System_openHAB_DBSize label="InfluxDB Size [%.0f MB]" icon="player"
+		Text item=System_openHAB_Memory label="OH2 Mem [JS(kb_mb.js):%s]" icon="it_media_player"
+		Text item=System_openHAB_DBSize label="InfluxDB Size [%.0f MB]" icon="it_media_player"
 
 		Text item=Sensor_CPUTemp label="CPU Temp" icon="none"
 		Text item=CPU_Threads label="CPU Threads" icon="none"
 
-        Text item=CPU_UI label="CPU [%s]" icon="player"
-        Text item=Memory_UI label="Memory [%s]" icon="player"
+        Text item=CPU_UI label="CPU [%s]" icon="it_media_player"
+        Text item=Memory_UI label="Memory [%s]" icon="it_media_player"
 
-        Text item=Storage_UI label="Storage [%s]" icon="player"
-        Text item=Network_UI label="Network [%s]" icon="player"
+        Text item=Storage_UI label="Storage [%s]" icon="it_media_player"
+        Text item=Network_UI label="Network [%s]" icon="it_media_player"
 
-        Text item=System_openHAB_Version icon="player"
+        Text item=System_openHAB_Version icon="it_media_player"
         Text label="" icon="none"
 
 		Image label="2" url="http://localhost:8080/static/2.png"
@@ -528,6 +531,7 @@ sitemap main label="Home"
 		Text item=HandyJLatency label="Handy J [JS(latencyUI.js):%s]" icon="it_smartphone"
 		Text item=SonyAudioLatency label="Sony Audio [JS(latencyUI.js):%s]" icon="it_media_player"
 		Text item=SurfaceLatency label="Surface [JS(latencyUI.js):%s]" icon="it_smartphone"
+        Text item=Nexus7Latency label="Nexus7 [JS(latencyUI.js):%s]" icon="it_smartphone"
 		Text item=Echo1Latency label="Echo 1 [JS(latencyUI.js):%s]" icon="message_empty"
 		Text item=Echo2Latency label="Echo 2 [JS(latencyUI.js):%s]" icon="message_empty"
 		Text item=RaspberryPiLatency label="Raspi OH2 [JS(latencyUI.js):%s]" icon="it_server"

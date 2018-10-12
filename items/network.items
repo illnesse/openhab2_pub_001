@@ -4,6 +4,7 @@ Number RouterLatency (gLatency) {channel="network:pingdevice:router:latency"}
 Number DesktopLatency (gLatency) {channel="network:pingdevice:desktop:latency"}
 Number NASLatency (gLatency) {channel="network:pingdevice:nas:latency"}
 Number SurfaceLatency (gLatency) {channel="network:pingdevice:surface:latency"}
+Number Nexus7Latency (gLatency) {channel="network:pingdevice:nexus7:latency"}
 Number SonyAudioLatency (gLatency) {channel="network:pingdevice:sonyaudio:latency"}
 Number Echo1Latency (gLatency) {channel="network:pingdevice:echo1:latency"}
 Number Echo2Latency (gLatency) {channel="network:pingdevice:echo2:latency"}

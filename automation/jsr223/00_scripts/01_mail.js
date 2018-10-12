@@ -13,7 +13,7 @@ JSRule({
     name: "Notifications Emails",
     description: "Line: "+__LINE__,
     triggers: [
-        TimerTrigger("0 0/5 * * * ?"),
+        TimerTrigger("0 0/15 * * * ?"),
         ItemCommandTrigger("TestBTN")
     ],
     execute: function( module, input)
@@ -35,7 +35,7 @@ JSRule({
     description: "Line: "+__LINE__,
     triggers: [
         ItemCommandTrigger("SysStartup",2),
-        TimerTrigger("0 0/31 * * * ?"),
+        TimerTrigger("0 0/1 * * * ?"),
         ItemCommandTrigger("Mail_Account1_Update")
     ],
     execute: function( module, input)
@@ -44,9 +44,9 @@ JSRule({
         var itemTTSOut2 = getItem("TTSOut2");
         postUpdate(itemMail_Update,"updating...");
         
-        logInfo("GetMail: getting mails")
+        //logInfo("GetMail: getting mails")
         var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/mailsync.sh", 1000 *60);
-        logInfo("GetMail: " + results1)
+        //logInfo("GetMail: " + results1)
 
         if (results1 == "") return;
 
@@ -79,7 +79,7 @@ JSRule({
             if (items < 10)
             {
                 items++;
-                logInfo("state: "+gmail_array[i].state);
+                //logInfo("state: "+gmail_array[i].state);
                 if (gmail_array[i].state == MODE_DEFAULT)
                 {
                     logInfo("New Email: " + out);

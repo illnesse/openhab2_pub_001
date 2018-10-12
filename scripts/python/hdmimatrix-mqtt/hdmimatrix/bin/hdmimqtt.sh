@@ -1,5 +1,6 @@
 # mosquitto_pub -t hdmi -m '{"state":{"selected_input":1}}'
-#/etc/openhab2/scripts/python/hdmimatrix-mqtt/hdmimatrix$ python3 -m hdmimatrix -b 127.0.0.1:1883 -t hdmi -s /dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0
+#/etc/openhab2/scripts/python/hdmimatrix-mqtt/hdmimatrix
+#python3 -m hdmimatrix -b 127.0.0.1:1883 -t hdmi -s /dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0
 
 
 #!/bin/sh
