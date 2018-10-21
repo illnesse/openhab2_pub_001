@@ -27,5 +27,7 @@ Thing network:pingdevice:led2 [ hostname="192.168.178.44", refreshInterval=30000
 Thing network:pingdevice:tplinkplug1 [ hostname="192.168.178.46", refreshInterval=300000 ]
 Thing network:pingdevice:tplinkplug2 [ hostname="192.168.178.47", refreshInterval=300000 ]
 
+Thing network:pingdevice:shelly1 [ hostname="192.168.178.55", refreshInterval=300000 ]
+
 Thing network:pingdevice:handys [ hostname="192.168.178.20", retry=2, timeout=5000, refreshInterval=20000 ]
 Thing network:pingdevice:handyj [ hostname="192.168.178.24", retry=2, timeout=5000, refreshInterval=20000 ]

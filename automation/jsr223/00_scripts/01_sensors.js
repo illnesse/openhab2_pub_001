@@ -104,16 +104,17 @@ JSRule({
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
         var state = input.state;
-        logInfo("HMKlingelSensorPress " + state)
         if (isUninitialized(state)) state = triggeringItem.state;
 
         if ((triggeringItem.name == "HMKlingelSensorPressShort") && (state == ON))
         {
+            logInfo("HMKlingelSensorPressShort " + state)
             sendCommand("TTSOut2Override","Es hat geklingelt");
             sendCommand("TTSOut1Override","Es hat geklingelt");
         }
         else if ((triggeringItem.name == "HMKlingelSensorPressLong") && (state == ON))
         {
+            logInfo("HMKlingelSensorPressLong " + state)
             sendCommand("TTSOut2Override","Es hat lange geklingelt");
             sendCommand("TTSOut1Override","Es hat lange geklingelt");
         }

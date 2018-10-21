@@ -1,0 +1,33 @@
+Group gHomematic
+
+Number  HM_EM_SignalStrength "Signal Strength [%s]"  (gHomematic)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:0#SIGNAL_STRENGTH" }
+Number  HM_EM_Power "power [%.0f W]"  (gHomematic)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#POWER" }
+Number  HM_EM_EnergyCounter "Energy Counter [%.2f Wh]" (gHomematic)  { channel="homematic:HM-ES-TX-WM:PEQ0174170:NEQ0861980:1#ENERGY_COUNTER" }
+Number  HM_EM_EnergyUsage_Today "[%.2f]" (gHomematic)
+Number  HM_EM_EnergyCounter_Total_UI "[%.2f]" (gHomematic)
+Number  HM_EM_EnergyUsage_Month_UI "[%.2f]" (gHomematic)
+String  HM_EM_EnergyUsage_Today_UI "[%s]" (gHomematic)
+
+Number  HMTemp1  "HMTemp1 [%.1f °C]" (gHomematic) { channel="homematic:HmIP-STH:PEQ0174170:000E5709B28DEE:1#ACTUAL_TEMPERATURE" }
+Number  HMTemp1HUM  "HMTemp1HUM [%s %%]" (gHomematic) { channel="homematic:HmIP-STH:PEQ0174170:000E5709B28DEE:1#HUMIDITY" }
+Contact  HMDoor1 "HMDoor1 [%s]" (gHomematic) { channel="homematic:HM-Sec-SCo:PEQ0174170:OEQ1199810:1#STATE" }
+String  HMDoor1UI "HMDoor1 [%s]" (gHomematic)
+
+//Number  HMTemp1Signal  "HMTemp1Signal" { channel="homematic:HmIP-STH:ccu:000E5709B28DEE:0#SIGNAL_STRENGTH" }
+//Number  HMTemp1TempSet  "HMTemp1TempSet [%.1f °C]" { channel="homematic:HmIP-STH:ccu:000E5709B28DEE:1#SET_POINT_TEMPERATURE" }
+//Number  HMDoor1Signal  "HMDoor1Signal [%s]" { channel="homematic:HM-Sec-SCo:ccu:OEQ1199810:0#SIGNAL_STRENGTH" }
+//String  HMDoor1Error  "HMDoor1Error [%s]" { channel="homematic:HM-Sec-SCo:ccu:OEQ1199810:1#ERROR" }
+ 
+
+Switch  HMKeymatic1State  (gHomematic) { channel="homematic:HM-Sec-Key:PEQ0174170:OEQ0352052:1#STATE" }
+Switch  HMKeymatic1Open  (gHomematic) { channel="homematic:HM-Sec-Key:PEQ0174170:OEQ0352052:1#OPEN" }
+
+/*
+Switch  HMKey1PressShort  "HMKey1PressShort [%s]" (gHomematic) { channel="homematic:HM-RC-Key4-3:PEQ0174170:OEQ0352746:1#PRESS_SHORT" }
+Switch  HMKey2PressShort  "HMKey2PressShort [%s]" (gHomematic) { channel="homematic:HM-RC-Key4-3:PEQ0174170:OEQ0352746:2#PRESS_SHORT" }
+Switch  HMKey3PressShort  "HMKey3PressShort [%s]" (gHomematic) { channel="homematic:HM-RC-Key4-3:PEQ0174170:OEQ0352746:3#PRESS_SHORT" }
+Switch  HMKey4PressShort  "HMKey4PressShort [%s]" (gHomematic) { channel="homematic:HM-RC-Key4-3:PEQ0174170:OEQ0352746:4#PRESS_SHORT" }
+*/
+
+Switch  HMKlingelSensorPressShort  (gHomematic) { channel="homematic:HM-Sen-DB-PCB:PEQ0174170:OEQ2237807:1#PRESS_SHORT" }
+Switch  HMKlingelSensorPressLong  (gHomematic) { channel="homematic:HM-Sen-DB-PCB:PEQ0174170:OEQ2237807:1#PRESS_CONT" }

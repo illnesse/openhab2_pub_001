@@ -413,7 +413,7 @@ sitemap main label="Home"
 
         Image label="14" url="http://localhost:8080/static/14.png"
         
-        Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1 |Homematic|http://192.168.178.45" icon="none"
+        Text label="|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1 |Homematic|http://192.168.178.45" icon="none"
         Text label="" icon="none"
     }
 
@@ -439,7 +439,10 @@ sitemap main label="Home"
         Text item=AtHomeJ icon="message_presence_geo_active"
        
         Text item=MQTT_NodeMCU_MultiSensor_1_MotionUI label="Motion Sensor 4 (SZ) [%s]" icon="message_presence_active"
-        Text label="" icon="none"
+        Switch item=MQTT_Shelly_1_State label="FB Heizung [MAP(shellies.map):%s]" icon="control_reset" mappings=[on="ON"] visibility=[MQTT_Shelly_1_State != "on"]
+        Switch item=MQTT_Shelly_1_State label="FB Heizung [MAP(shellies.map):%s]" icon="control_reset" mappings=[off="OFF"] visibility=[MQTT_Shelly_1_State == "on"]
+
+
 /*
 		Text label="Wetter Details" icon="weather_cloudy"
 		{
@@ -462,7 +465,7 @@ sitemap main label="Home"
 		}
 */
 		Image label="8" url="http://localhost:8080/static/8.png"
-		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
+		Text label="|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
 	}
 	Frame label="Batteries"
 	{
@@ -520,7 +523,7 @@ sitemap main label="Home"
         Text label="" icon="none"
 
 		Image label="2" url="http://localhost:8080/static/2.png"
-		Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1|PaperUI|http://192.168.178.31:8080/paperui/index.html|Rest API|http://192.168.178.31:8080/doc/index.html" icon="none"
+		Text label="|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1|PaperUI|http://192.168.178.31:8080/paperui/index.html" icon="none"
 	}	
 	Frame label="Network"
 	{
@@ -551,10 +554,11 @@ sitemap main label="Home"
         Text item=LED2Latency label="LED2 (Sofa) [JS(latencyUI.js):%s]" icon="message_socket"
         Text item=TPLinkPlug1Latency label="TPLinkPlug1 (WZ) [JS(latencyUI.js):%s]" icon="message_socket"
         Text item=TPLinkPlug2Latency label="TPLinkPlug2 (WM) [JS(latencyUI.js):%s]" icon="message_socket"
+        Text item=Shelly1Latency label="Shelly1 (FBHeizung) [JS(latencyUI.js):%s]" icon="message_socket"
 
 		Image label="6" url="http://localhost:8080/static/6.png"
 
-        Text label="Open Graph|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
+        Text label="|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1" icon="none"
         Text item=SpeedtestSummary icon="info_info"
         Switch item=SpeedtestRerun label="Start Speedtest [%s]" mappings=[ON="Start"] icon="info_info"
 

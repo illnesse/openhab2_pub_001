@@ -21,17 +21,19 @@ JSRule({
         else if (cmd == "scanlibrary")
         {
             var results1 = kodiCall('{ "jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "mybash"}');
-            logInfo(results1);
+            logInfo(JSON.stringify(results1));
         }
         else
         {
             var results0 = executeCommandLineAndWaitResponse("sudo /etc/openhab2/scripts/sh/firetv_keyevent.sh 192.168.178.26 "+cmd, 1000 *10);
             logInfo(results0);
+ 
+            logInfo("IsAlive(kodi) " + IsAlive("kodi"));
 
-            if (IsAlive("kodi"))
+            if (IsAlive("kodi"))  
             {
                 var results1 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
-                var nullimg = "http://localhost:8080/static/null.png";
+                // var nullimg = "http://localhost:8080/static/null.png";
             
                 if (results1.result[0] != undefined)
                 {
@@ -39,29 +41,27 @@ JSRule({
                     {
                         var results2 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "season", "episode", "duration", "showtitle", "tvshowid", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 1 }, "id": "VideoGetItem"}');
                         var label = results2.result.item.label;
-                        var thumbnail = decodeKodiThumbnailURL(results2.result.item.thumbnail);
+                        // var thumbnail = decodeKodiThumbnailURL(results2.result.item.thumbnail);
                         postUpdate("Kodi_title",label);
-                        if (thumbnail == "") thumbnail = nullimg;
-                        postUpdate("Kodi_thumbnail",thumbnail);
-            
-                        //logInfo(label +" "+ thumbnail );
+                        // if (thumbnail == "") thumbnail = nullimg;
+                        // postUpdate("Kodi_thumbnail",thumbnail);
                     }
                     else if (results1.result[0].type == "audio")
                     {
                         var results2 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title", "album", "artist", "duration", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 0 }, "id": "AudioGetItem"}');
                         var label = results2.result.item.label;
-                        var thumbnail = decodeKodiThumbnailURL(results2.result.item.fanart);
+                        // var thumbnail = decodeKodiThumbnailURL(results2.result.item.fanart);
                         postUpdate("Kodi_title",label);
-                        if (thumbnail == "") thumbnail = nullimg;
-                        postUpdate("Kodi_thumbnail",thumbnail);
-            
-                        //logInfo(label +" "+ thumbnail );
+                        // if (thumbnail == "") thumbnail = nullimg;
+                        // postUpdate("Kodi_thumbnail",thumbnail);
                     }
                 }
+/*
                 else
                 {
                     postUpdate("Kodi_thumbnail",nullimg);
                 }
+*/
             }
         }
     }

@@ -153,6 +153,7 @@ JSRule({
         postUpdate(itemStorage_UI,round((itemStorage_Used.state / 1000),2) +" GB used of "+round((itemStorage_Total.state / 1000),2) +" GB ("+round((itemStorage_Used.state / itemStorage_Total.state * 100),1) +"%) ");
         postUpdate(itemMemory_UI,itemMemory_Used.state +" MB used of "+itemMemory_Total.state+" MB ("+round((itemMemory_Used.state / itemMemory_Total.state * 100),1) +"%) ");
         postUpdate(itemNetwork_UI,round((itemNetwork_DataSent.state / 1000),2) +" GB sent / "+round((itemNetwork_DataRecevied.state / 1000),2) +" GB received");
+
         postUpdate(itemCPU_UI,itemCPU_Name.state +" / "+itemCPU_Load.state+"% / "+itemCPU_Load1.state+" / "+itemCPU_Load5.state+" / "+itemCPU_Load15.state);
     }
 });
@@ -291,16 +292,24 @@ JSRule({
     ],
     execute: function( module, input)
     {
+        var itemlogreaderError = getItem("logreaderError");
         var itemlogreaderErrors = getItem("logreaderErrors");
         var itemlogreaderLastError = getItem("logreaderLastError");
 
         var errorstring = "";
-        if (!itemlogreaderLastError.state != null)
+        if (itemlogreaderLastError.state != null)
         {
             errorstring = itemlogreaderLastError.state.toString().split("] - ")[1]
         }
+
+        postUpdate(itemlogreaderError,1);
+        createTimer(now().plusSeconds(5), function() 
+        {
+            postUpdate(itemlogreaderError,0);
+        });
+
         var msg = "ERROR " + itemlogreaderErrors.state.toString() + ": " + errorstring;
-        sendNotification(msg, msg);
+        sendNotification(null, msg);
     }
 });
 
@@ -312,15 +321,23 @@ JSRule({
     ],
     execute: function( module, input)
     {
+        var itemlogreaderWarning = getItem("logreaderWarning");
         var itemlogreaderWarnings = getItem("logreaderWarnings");
         var itemlogreaderLastWarning = getItem("logreaderLastWarning");
 
         var errorstring = "";
-        if (!itemlogreaderLastWarning.state != null)
+        if (itemlogreaderLastWarning.state != null)
         {
             errorstring = itemlogreaderLastWarning.state.toString().split("] - ")[1]
         }
+
+        postUpdate(itemlogreaderWarning,1);
+        createTimer(now().plusSeconds(5), function() 
+        {
+            postUpdate(itemlogreaderWarning,0);
+        });
+        
         var msg = "WARNING " + itemlogreaderWarnings.state.toString() + ": " + errorstring;
-        sendNotification(msg, msg);
+        sendNotification(null, msg);
     }
 });

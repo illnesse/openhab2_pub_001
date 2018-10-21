@@ -21,6 +21,9 @@ Items {
     gCalTimes* : strategy = everyChange, restoreOnStartup
     gLatency* : strategy = every5Minutes, restoreOnStartup
     gTPLinkPlugs* : strategy = every5Minutes
+
+    logreaderError, logreaderWarning : strategy = everyChange
+    logreaderErrors, logreaderWarnings : strategy = everyChange
     
     TPLinkPlug1_EnergyUsage, TPLinkPlug2_EnergyUsage, TPLinkPlug1_EnergyUsage_Today, TPLinkPlug2_EnergyUsage_Today : strategy = every5Minutes
 

@@ -1,5 +1,4 @@
 Switch WOL_SonyAudio   "SonyAudio"   (network, wohnzimmer)   { wol="192.168.178.255#XX:XX:XX:XX:XX:XX" }
-Switch WOL_Surface   "Surface"   (network, wohnzimmer)       { wol="192.168.178.255#XX:XX:XX:XX:XX:XX" }
 Switch WOL_NAS   "NAS"   (network, wohnzimmer)               { wol="192.168.178.255#XX:XX:XX:XX:XX:XX" }
 Switch WOL_FireTV  "FireTV"   (network, wohnzimmer)          { wol="192.168.178.255#XX:XX:XX:XX:XX:XX" }
 Switch WOL_PC  "PC WZ"   (network, wohnzimmer)   { wol="192.168.178.255#XX:XX:XX:XX:XX:XX" }

@@ -25,6 +25,7 @@ Number LED1Latency (gLatency) {channel="network:pingdevice:led1:latency"}
 Number LED2Latency (gLatency) {channel="network:pingdevice:led2:latency"}
 Number TPLinkPlug1Latency (gLatency) {channel="network:pingdevice:tplinkplug1:latency"}
 Number TPLinkPlug2Latency (gLatency) {channel="network:pingdevice:tplinkplug2:latency"}
+Number Shelly1Latency (gLatency) {channel="network:pingdevice:shelly1:latency"}
 
 Number HandySLatency (gLatency) {channel="network:pingdevice:handys:latency"}
 Number HandyJLatency (gLatency) {channel="network:pingdevice:handyj:latency"}

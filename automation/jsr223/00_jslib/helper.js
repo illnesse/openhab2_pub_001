@@ -27,11 +27,9 @@ function decodeKodiThumbnailURL(str)
 function IsAlive(target)
 {
     var state = false;
-    
     try 
     {
         if (target == "kodi") state = Ping.checkVitality(kodiip, 8080, 500);
-        
         logInfo("pinging "+target+": "+state);
         return state;
     }
@@ -47,7 +45,7 @@ function kodiCall(call)
     //logInfo("################ "+me+" Line: "+__LINE__+"  #################");	
     //print("Ping localhost: 	" + Ping.checkVitality(kodiip, 22, 500));
 
-    var kodireturn = HTTP.sendHttpGetRequest(kodiurl + encodeURI(call));
+    var kodireturn = HTTP.sendHttpPostRequest(kodiurl, "application/json", call); 
     //logInfo(kodireturn);
     return JSON.parse(kodireturn);
 }
@@ -61,7 +59,10 @@ function sendKodiNotification(title,msg)
 function sendNotification(title,msg)
 {
     var itemNotifications = getItem("Notifications");
-    postUpdate(itemNotifications,itemNotifications.state + title + ": " + msg + "\n");
+
+    if (title != null ) title += ": ";
+    else title = ""
+    postUpdate(itemNotifications,itemNotifications.state + title + msg + "\n");
 
     //sendKodiNotification("[OH2_System_Notification] "+title,msg);
     //sendMail("xxx@gmail.com", "[OH2_System_Notification] "+title, msg);

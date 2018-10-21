@@ -86,3 +86,6 @@ String  MQTT_Phone_S_CallsOut "Last Call Out [%s]" (gMQTT_Phone_Strings)
 String  MQTT_Phone_J_CallsRaw { mqtt="<[cloudmqtt:huaweip8/call:state:default]" }
 String  MQTT_Phone_J_CallsIn "Call In [%s]" (gMQTT_Phone_Strings)
 String  MQTT_Phone_J_CallsOut "Call Out [%s]" (gMQTT_Phone_Strings)
+
+
+String  MQTT_Shelly_1_State { autoupdate="false", mqtt="<[local:shellies/shelly1-xxxxx/relay/0:state:default]" }

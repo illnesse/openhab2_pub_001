@@ -257,3 +257,17 @@ JSRule({
         }
     }
 });
+
+JSRule({
+    name: "MQTT_Shelly_1_State Heizung",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemCommandTrigger("MQTT_Shelly_1_State")
+    ],
+    execute: function( module, input)
+    {
+        //var state = (input.command == "on") ? ON : OFF;
+        logInfo("MQTT_Shelly_1_State " + input.command)
+        sendMQTT("local", "shellies/shelly1-0592EC/relay/0/command", input.command, true)
+    }
+});

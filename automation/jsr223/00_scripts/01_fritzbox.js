@@ -12,7 +12,6 @@ JSRule({
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
 
-        var command;
         var execResult;
         var tempcallprefix;
         var tempcallbegin;
@@ -42,7 +41,7 @@ JSRule({
             sendCommand(itemTTSOut2,(Incoming ? "Anruf von " : "Anruf an ") + CallerName)
             //sendCommand(LastNumber,CallerNumber)
             sendCommand(LastNumberResolved,CallerNumber + " - " + CallerName)
-            tempcallprefix = (Incoming ? "Anruf von " : "Anruf an ") + LastNumberResolved.state;// + " ("+LastNumber.state+") ";
+            tempcallprefix = (Incoming ? "Anruf von " : "Anruf an ") + CallerNumber + " - " + CallerName;// + " ("+LastNumber.state+") ";
             postUpdate(CallPrefix, tempcallprefix);
         
             var time = formatUITimeStampfromJodaDate(now());
@@ -65,11 +64,15 @@ JSRule({
             tempcallend = formatTimeStampfromJodaDate(DateTime.now().minusHours(2));
             postUpdate(CallEnd, tempcallend);
 
-            sleep(2000);
-            execResult = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calpost.sh XXXXXXXXXXXXXXXXXXX@group.calendar.google.com post \"" + CallPrefix.state.toString() + "\" "+ CallBegin.state.toString() +" "+ CallEnd.state.toString() +"", 1000 * 60 *2)
-            //logInfo("PostCalEvents " + execResult);
+            var cmd = "/etc/openhab2/scripts/sh/calpost.sh xxxxxxxxxxxx@group.calendar.google.com post \"" + CallPrefix.state.toString() + "\" "+ CallBegin.state.toString() +" "+ tempcallend
+            execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 60 *2);
+            logInfo(cmd);
+            logInfo(execResult)
         }
+
+        logInfo("phone state "+triggeringItem.state + " CallPrefix.state.toString() "+CallPrefix.state.toString())
     }
+        
 });
 
 /*
