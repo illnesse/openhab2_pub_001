@@ -50,4 +50,7 @@ Number   logreaderWarnings          "Warning events matched [%d]"               
 String   logreaderUI                "Errors/Warnings [%s]"
 Switch   ResetLogErrorsbtn          "Reset Log Errors"
 
+Number   logreaderError
+Number   logreaderWarning
+
 String Notifications

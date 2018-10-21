@@ -9,7 +9,7 @@ String Echo2_lastVoiceCommand (gEcho2) {channel="amazonechocontrol:echo:account1
 
 String FireTV_CMD
 String Kodi_title                 "Title [%s]"
-String Kodi_thumbnail
+//String Kodi_thumbnail
 
 String TuneInPlayDevice
 

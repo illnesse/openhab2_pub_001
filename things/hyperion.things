@@ -1,1 +1,1 @@
-Thing hyperion:serverV1:myServer [ host="192.168.178.50", port=19444, priority=50, poll_frequency=15, origin="openHAB"]
+Thing hyperion:serverNG:myServer [ host="192.168.178.50", port=19444, priority=50, poll_frequency=15, origin="openHAB"]
