@@ -11,7 +11,7 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - InfluxDB + Grafana, (replace grafana.light.css with my modified version in html/ to render transparent pngs for the sitemap
   - mapdb for restoreonstartup values / UI
   - Amazon Echos for TTS
-  - Amazon Voice Command Interpreter
+  - Amazon Echo Voice Command Interpreter
   - Broadlink RM3 Mini via MQTT to control TV, SAT, Audio and other devices, switches eg TV channels via alexa commands
   - Lightify Sensors 
   - ESP Multisensors via MQTT
