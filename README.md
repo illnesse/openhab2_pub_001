@@ -11,11 +11,17 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - InfluxDB + Grafana, (replace grafana.light.css with my modified version in html/ to render transparent pngs for the sitemap
   - mapdb for restoreonstartup values / UI
   - Amazon Echos for TTS
+  - Amazon Voice Command Interpreter
   - Broadlink RM3 Mini via MQTT to control TV, SAT, Audio and other devices, switches eg TV channels via alexa commands
   - Lightify Sensors 
   - ESP Multisensors via MQTT
   - Homematic Sensors & Actors
+  - Homematic Keymatic access control
+  - Homematic Door Bell Logic
+  - Shelly 1 Actors via MQTT
+  - Stats and Reminders for all battery powered devices
   - Fritzbox TR064 Interface implementation for last caller display, mute audio etc during call etc
+  - Amazon Fire TV via ADB / KODI Remote Interface via RPC
   - Tuya Lights/LEDStrips and Sockets via modified Tuyapi / Node.js for color settings and scenes
   - Hyperion Ambilight Control
   - Google calendar and Mail via python scripts, with reminders etc
@@ -25,6 +31,7 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - Alarm Clock with reminders
   - SNMP data display and latency info of network devices
   - Speed test functionality
+  - Network Latency "heatmap"
   - Logtail/Multitail style Iframe to display current events.log and openhab.log with some basic syntax highlighting
   - RSS Reader Iframe, needs more work, maybe TTS notifications
   - Logreader to notify you of system issues (needs more work)
@@ -42,13 +49,14 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - binding-astro - 2.4.0.SNAPSHOT
   - binding-fritzboxtr0641 - 1.13.0.SNAPSHOT
   - binding-homematic - 2.4.0.SNAPSHOT
-  - binding-logreader - 2.4.0.SNAPSHOT (to be replaced by js rules/http)
+  - binding-logreader - 2.4.0.SNAPSHOT
   - binding-mqtt1 - 1.13.0.SNAPSHOT
   - binding-network - 2.4.0.SNAPSHOT
   - market:binding-3560149 - 1.0 (OSRAM/Sylvania Lightify/SMART+ Binding, might replace that too)
   - binding-systeminfo - 2.4.0.SNAPSHOT
   - binding-tplinksmarthome - 2.4.0.SNAPSHOT
-  - binding-wol1 - 1.13.0.SNAPSHOT (to be replaced by js rules/exec)
+  - binding-wol1 - 1.13.0.SNAPSHOT
+  - binding-openweathermap
 
   - Misc
     - ui-basic - 2.4.0.SNAPSHOT
