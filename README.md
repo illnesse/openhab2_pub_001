@@ -13,9 +13,11 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - Amazon Echos for TTS
   - Broadlink RM3 Mini via MQTT to control TV, SAT, Audio and other devices, switches eg TV channels via alexa commands
   - Lightify Sensors 
-  - Homematic Sensors
-  - Fritzbox last caller display, mute audio etc during call
+  - ESP Multisensors via MQTT
+  - Homematic Sensors & Actors
+  - Fritzbox TR064 Interface implementation for last caller display, mute audio etc during call etc
   - Tuya Lights/LEDStrips and Sockets via modified Tuyapi / Node.js for color settings and scenes
+  - Hyperion Ambilight Control
   - Google calendar and Mail via python scripts, with reminders etc
   - Owntracks implementation with Address/Location/Traffic info from Google, Connection/Battery Info etc
   - GoogleMap Iframe with Owntracks GPS beacons / implemented via MQTT
@@ -31,17 +33,15 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - Presence detection via DHCP packets which works reliably (but needs more work)
   - Commits to bitbucket repo as backup method
   - Scripts to restart OH2 service, Reboot Raspberry, Reboot Fritzbox, Clear Cache and restart, Openhab Memory Usage, Uptimes, InfluxDB size etc. etc.
-  - Wake on LAN (needs more love)
+  - Wake on LAN
    
   
   
 **used extensions:**
-  - action-mqtt - 1.13.0.SNAPSHOT
   - binding-amazonechocontrol - 2.4.0.SNAPSHOT
   - binding-astro - 2.4.0.SNAPSHOT
   - binding-fritzboxtr0641 - 1.13.0.SNAPSHOT
   - binding-homematic - 2.4.0.SNAPSHOT
-  - binding-kodi - 2.4.0.SNAPSHOT (to be replaced by js rules/http)
   - binding-logreader - 2.4.0.SNAPSHOT (to be replaced by js rules/http)
   - binding-mqtt1 - 1.13.0.SNAPSHOT
   - binding-network - 2.4.0.SNAPSHOT
@@ -49,7 +49,6 @@ Due to popular demand i just put up my current config as is, there may be a few 
   - binding-systeminfo - 2.4.0.SNAPSHOT
   - binding-tplinksmarthome - 2.4.0.SNAPSHOT
   - binding-wol1 - 1.13.0.SNAPSHOT (to be replaced by js rules/exec)
-  - binding-yahooweather - 2.4.0.SNAPSHOT (to be replaced by js rules/http)
 
   - Misc
     - ui-basic - 2.4.0.SNAPSHOT
@@ -57,17 +56,11 @@ Due to popular demand i just put up my current config as is, there may be a few 
 
     - misc-market - 2.4.0.SNAPSHOT
     - misc-openhabcloud - 2.4.0.SNAPSHOT
-    - misc-restdocs - 2.4.0.SNAPSHOT
     - misc-ruleengine - 2.4.0.SNAPSHOT
 
     - persistence-influxdb - 1.13.0.SNAPSHOT
     - persistence-mapdb - 1.13.0.SNAPSHOT
 
-    - transformation-exec - 2.4.0.SNAPSHOT
     - transformation-javascript - 2.4.0.SNAPSHOT
-    - transformation-jsonpath - 2.4.0.SNAPSHOT
     - transformation-map - 2.4.0.SNAPSHOT
-    - transformation-regex - 2.4.0.SNAPSHOT
-    - transformation-scale - 2.4.0.SNAPSHOT
-    - transformation-xpath - 2.4.0.SNAPSHOT
     - transformation-xslt - 2.4.0.SNAPSHOT
