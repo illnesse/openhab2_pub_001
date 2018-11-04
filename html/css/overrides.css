@@ -594,10 +594,6 @@ a:hover
     background: -webkit-linear-gradient(to bottom, #16282ae6, #264041cb);
     background: linear-gradient(to bottom, #16282ae6, #264041cb);
 }
-.bg_alarm
-{
-    background: linear-gradient(to top, #1d152863, #7e77a040, #1e3a3f9c);
-}
 .bg_devices
 {
     background: linear-gradient(to top, #172333b5, #101010b0);

@@ -8,9 +8,16 @@ function post_startup()
 
     postUpdate("SpeedtestRerun",OFF);
     postUpdate("SpeedtestSummary","-");
-    sendCommand("SysStartupForce",OFF);
 
+    var execResultVersion = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/version.sh",1000*3);
+    if (execResultVersion != "") postUpdate( "System_openHAB_Version", execResultVersion );
+
+
+    sendCommand("SysStartupForce",OFF);
     sendCommand("SysStartup",0);
+
+    postUpdate("Echo1_TTSVolume",60);
+    postUpdate("Echo2_TTSVolume",60);    
 }
 
-post_startup();
+post_startup(); 

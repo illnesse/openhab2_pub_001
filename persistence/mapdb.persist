@@ -31,6 +31,4 @@ Items
     PollenUI : strategy = everyChange, restoreOnStartup
     Notifications, Washingmachine_OpState : strategy = everyChange, restoreOnStartup
     System_openHAB_DBSize, System_openHAB_Version : strategy = everyChange, restoreOnStartup
-
-    ALARM1_PERSON1_H, ALARM1_PERSON1_M, ALARM1_PERSON1_D : strategy = everyChange, restoreOnStartup
 }

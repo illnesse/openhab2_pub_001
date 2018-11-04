@@ -1,8 +1,10 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/js-joda.js');
 
-var kodiip = "192.168.178.26";
-var kodiurl = "http://"+kodiip+":8080/jsonrpc?request=";
+var IP_kodi = "192.168.178.26";
+var IP_sonyaudio = "192.168.178.36";
+
+var kodiurl = "http://"+IP_kodi+":8080/jsonrpc?request=";
 var broadlink_delay = 400;
 
 var TTS_OFF = 0;
@@ -24,17 +26,17 @@ function decodeKodiThumbnailURL(str)
     return r;
 }
 
-function IsAlive(target)
+function IsAlive(target,port,timeout)
 {
-    var state = false;
     try 
     {
-        if (target == "kodi") state = Ping.checkVitality(kodiip, 8080, 500);
-        logInfo("pinging "+target+": "+state);
+        var state = false;
+        state = Ping.checkVitality(target, port, timeout);
         return state;
     }
     catch(err) 
     {
+        logInfo("IsAlive err: " + err.message);
         return false;
     } 
     return false;
@@ -43,7 +45,7 @@ function IsAlive(target)
 function kodiCall(call)
 {
     //logInfo("################ "+me+" Line: "+__LINE__+"  #################");	
-    //print("Ping localhost: 	" + Ping.checkVitality(kodiip, 22, 500));
+    //print("Ping localhost: 	" + Ping.checkVitality(IP_kodi, 22, 500));
 
     var kodireturn = HTTP.sendHttpPostRequest(kodiurl, "application/json", call); 
     //logInfo(kodireturn);

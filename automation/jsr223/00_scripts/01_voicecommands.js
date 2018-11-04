@@ -57,7 +57,7 @@ JSRule({
             return;
         }
 
-        logInfo("AlexaCommands : "+cmd);
+        logInfo(toUpdate+" AlexaCommands : "+cmd);
         if ((cmd == "stop") || (cmd == "stopp")) return;
         if ((cmd == "lauter") || (cmd == "leiser")) return;
 
@@ -67,8 +67,8 @@ JSRule({
         var stateonoff;
         var action = null;
 
-        if (cmd.has("an")) state = true;
-        else if (cmd.has("aus")) state = false;
+        if (cmd.has(" an")) state = true;
+        else if (cmd.has(" aus")) state = false;
 
         stateonoff = (state) ? ON : OFF;
 
@@ -81,6 +81,8 @@ JSRule({
         else if ((cmd.has("vorspulen"))) action = "vorspulen";
 
         if (action == null) action = "changestate";
+
+        //logInfo("stateonoff" + stateonoff);
 
         if (action == "play")
         {
@@ -124,7 +126,17 @@ JSRule({
             {
                 sendCommand("HyperionEnabled",stateonoff);
                 sendCommand("LED1Power",stateonoff);
-                sendMQTT("local","broadlink/audio/sony/power", "replay")
+
+                var isalive = IsAlive(IP_sonyaudio, 50002, 500);
+                if (stateonoff == ON)
+                {
+                    if (!isalive) sendMQTT("local","broadlink/audio/sony/power", "replay")
+                }
+                else
+                {
+                    if (isalive) sendMQTT("local","broadlink/audio/sony/power", "replay")
+                }
+                
                 sleep(broadlink_delay);
                 sendMQTT("local","broadlink/sat/humax/power", "replay")
                 sleep(broadlink_delay);
@@ -136,6 +148,24 @@ JSRule({
             if (cmd.has("hyperion"))
             {
                 sendCommand("HyperionEnabled",stateonoff);
+                handled(toUpdate,true);
+                return;
+            }
+            if (cmd.has("gang licht"))
+            {
+                sendCommand("MQTT_Shelly_Gang",stateonoff);
+                handled(toUpdate,true);
+                return;
+            }
+            if (cmd.has("küchen licht"))
+            {
+                sendCommand("MQTT_Shelly_KWand",stateonoff);
+                handled(toUpdate,true);
+                return;
+            }
+            if (cmd.has("fußbodenheizung"))
+            {
+                sendCommand("MQTT_Shelly_Heizung",stateonoff);
                 handled(toUpdate,true);
                 return;
             }
@@ -189,7 +219,17 @@ JSRule({
             }
             if ((cmd.has("anlage")) || (cmd.has("audio")) || (cmd.has("sonyaudio")))
             {
-                sendMQTT("local","broadlink/audio/sony/power", "replay")
+                var isalive = IsAlive(IP_sonyaudio, 50002, 500);
+                //logInfo("isalive " + isalive + " stateonoff " + stateonoff);
+
+                if (stateonoff == ON)
+                {
+                    if (!isalive) sendMQTT("local","broadlink/audio/sony/power", "replay")
+                }
+                else
+                {
+                    if (isalive) sendMQTT("local","broadlink/audio/sony/power", "replay")
+                }
 
                 handled(toUpdate,true);
                 return;
@@ -317,82 +357,35 @@ function TTSOut(id,override,out)
 {
     var itemTTSMode = getItem("TTSMode");
     var mode = (itemTTSMode.state != null) ? itemTTSMode.state : TTS_DEFAULT;
-    var volTimer = (id == 1) ? echoTimer1 : echoTimer2;
-
-    logInfo("TTSOut"+id+" override: "+override+" TTSMode:"+mode+" \""+ out +"\"")
-
+    //var volTimer = (id == 1) ? echoTimer1 : echoTimer2;
     if (override) 
     {
-        var itemVolume = getItem("Echo"+id+"_Volume");
-        var VOL_BEFORE = itemVolume.state;
-        sendCommand(itemVolume,VOL_NORMAL)
+        //var itemVolume = getItem("Echo"+id+"_Volume");
+        //var VOL_BEFORE = itemVolume.state;
+        //sendCommand(itemVolume,VOL_NORMAL)
         sendCommand("Echo"+id+"_TTS",out);
-        volTimer = createTimer(now().plusSeconds(1), function() 
-        {
-            sendCommand(itemVolume,VOL_BEFORE)
-            volTimer = null;
-        });
+        // volTimer = createTimer(now().plusSeconds(1), function() 
+        // {
+        //     sendCommand(itemVolume,VOL_BEFORE)
+        //     volTimer = null;
+        // });
     }
     else
     {
         if (mode == TTS_OFF) return;
-        if (volTimer == null) 
-        {
-            sendCommand("Echo"+id+"_TTS",out);
-            volTimer = createTimer(now().plusSeconds(1), function() 
-            {
-                volTimer = null;
-            });
-        }
+        sendCommand("Echo"+id+"_TTS",out);
+
+        // if (volTimer == null) 
+        // {
+        //     sendCommand("Echo"+id+"_TTS",out);
+        //     volTimer = createTimer(now().plusSeconds(1), function() 
+        //     {
+        //         volTimer = null;
+        //     });
+        // }
     }
+    logInfo("TTSOut" + id + (override?" override":" ") + (mode==0?"mode off":"mode default")+": \""+ out +"\"")
 }
-
-/*
-function TTSOut(id,quiet,out)
-{
-    var itemTTSMode = getItem("TTSMode");
-    var mode = (itemTTSMode.state != null) ? itemTTSMode.state : TTS_DEFAULT;
-
-    logInfo("TTSOut"+id+" quiet: "+quiet+" TTSMode: "+mode+" "+ out)
-
-    if (mode == TTS_OFF) return;
-
-    var itemVolume = getItem("Echo"+id+"_Volume");
-    var VOL_BEFORE = itemVolume.state;
-
-    if (volTimer != null) volTimer.cancel();
-    if (quiet)
-    {
-        sendCommand(itemVolume,VOL_QUIET)
-        createTimer(now().plusSeconds(0.1), function() 
-        {
-            sendCommand("Echo"+id+"_TTS",out)
-
-            volTimer = createTimer(now().plusSeconds(10), function() 
-            { 
-                sendCommand(itemVolume,VOL_BEFORE)
-                volTimer = null;
-            });
-
-        });
-    }
-    else
-    {
-        sendCommand(itemVolume,VOL_NORMAL)
-        createTimer(now().plusSeconds(0.1), function() 
-        {
-            sendCommand("Echo"+id+"_TTS",out)
-
-            volTimer = createTimer(now().plusSeconds(10), function() 
-            {
-                sendCommand(itemVolume,VOL_BEFORE)
-                volTimer = null;
-            });
-        });
-    }
-}
-
-*/
 
 JSRule({
     name: "TTSOut",

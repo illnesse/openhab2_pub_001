@@ -222,13 +222,6 @@ sitemap main label="Home"
         Text item=GMail_Acc1_Mail10__UI icon="message_mail" 
     }
 
-    Frame label="Alarms" 
-	{
-        Selection item=ALARM1_PERSON1_D icon="time_alarm_clock" mappings=[90="OFF", 15="MO-FR", 67="SAT-SUN", 17="MO-SUN"]
-        Setpoint item=ALARM1_PERSON1_H  icon="time_alarm_clock" minValue=0 maxValue=23 step=1
-        Setpoint item=ALARM1_PERSON1_M  icon="time_alarm_clock" minValue=0 maxValue=59 step=1
-	}
-
     Frame label="Calendar Events"
     {
         Switch item=Cal_Update label="Update |Google Calendar|https://calendar.google.com [%s]" icon="time_calendar" mappings=[ON="UPDATE"]
@@ -244,6 +237,8 @@ sitemap main label="Home"
 
         Text item=Cal_Event4__UI icon="time_calendar" 
         Text item=Cal_Event8__UI icon="time_calendar" 
+
+        Webview url="https://calendar.google.com/calendar/embed?showTitle=0&amp;showDate=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23000000&amp;src=XXXXX%40group.calendar.google.com&amp;color=%23875509&amp;ctz=Europe%2FBerlin" height=5 icon="none"
 	}
 
     Frame label="Mobiles / GPS" 
@@ -352,6 +347,20 @@ sitemap main label="Home"
         Slider  item=LED2FlashSpeed icon="none" 
         Switch item=HMKeymatic1Open label="Keymatic []" icon="it_smartphone" mappings=[ON="OPEN"] 
 
+        Text label="" icon="none"
+        Text label="" icon="none"
+        Text label="" icon="none"
+
+        Switch item=MQTT_Shelly_Heizung label="FB Heizung [MAP(shellies.map):%s]" icon="control_reset" mappings=[on="ON"] visibility=[MQTT_Shelly_Heizung != "on"]
+        Switch item=MQTT_Shelly_Heizung label="FB Heizung [MAP(shellies.map):%s]" icon="control_reset" mappings=[off="OFF"] visibility=[MQTT_Shelly_Heizung == "on"]
+
+        Switch item=MQTT_Shelly_KWand label="Licht KWand [MAP(shellies.map):%s]" icon="control_reset" mappings=[on="ON"] visibility=[MQTT_Shelly_KWand != "on"]
+        Switch item=MQTT_Shelly_KWand label="Licht KWand [MAP(shellies.map):%s]" icon="control_reset" mappings=[off="OFF"] visibility=[MQTT_Shelly_KWand == "on"]
+
+        Switch item=MQTT_Shelly_Gang label="Licht Gang [MAP(shellies.map):%s]" icon="control_reset" mappings=[on="ON"] visibility=[MQTT_Shelly_Gang != "on"]
+        Switch item=MQTT_Shelly_Gang label="Licht Gang [MAP(shellies.map):%s]" icon="control_reset" mappings=[off="OFF"] visibility=[MQTT_Shelly_Gang == "on"]
+
+
 	}
 
 
@@ -383,6 +392,11 @@ sitemap main label="Home"
 
     Frame label="Energy"
 	{
+        Switch item=TPLinkPlug1_Switch label="WZ Switch [%s]" icon="it_television"  mappings=[ON="ON"] visibility=[TPLinkPlug1_Switch != ON]
+        Switch item=TPLinkPlug1_Switch label="WZ Switch [%s]" icon="it_television"  mappings=[OFF="OFF"] visibility=[TPLinkPlug1_Switch != OFF]
+        Switch item=TPLinkPlug2_Switch label="WM Switch [%s]" icon="scene_washing_machine"  mappings=[ON="ON"] visibility=[TPLinkPlug2_Switch != ON]
+        Switch item=TPLinkPlug2_Switch label="WM Switch [%s]" icon="scene_washing_machine"  mappings=[OFF="OFF"] visibility=[TPLinkPlug2_Switch != OFF]
+
         Text item=TPLinkPlug1_UI label="WZ Current [%s]" icon="it_television"
         Text item=TPLinkPlug2_UI label="WM Current [%s]" icon="scene_washing_machine"
 
@@ -439,9 +453,6 @@ sitemap main label="Home"
         Text item=AtHomeJ icon="message_presence_geo_active"
        
         Text item=MQTT_NodeMCU_MultiSensor_1_MotionUI label="Motion Sensor 4 (SZ) [%s]" icon="message_presence_active"
-        Switch item=MQTT_Shelly_1_State label="FB Heizung [MAP(shellies.map):%s]" icon="control_reset" mappings=[on="ON"] visibility=[MQTT_Shelly_1_State != "on"]
-        Switch item=MQTT_Shelly_1_State label="FB Heizung [MAP(shellies.map):%s]" icon="control_reset" mappings=[off="OFF"] visibility=[MQTT_Shelly_1_State == "on"]
-
 
 /*
 		Text label="Wetter Details" icon="weather_cloudy"
@@ -528,6 +539,7 @@ sitemap main label="Home"
 	Frame label="Network"
 	{
 		Text item=RouterLatency label="Router [JS(latencyUI.js):%s]" icon="it_router"
+        Text item=Router2Latency label="Router2 [JS(latencyUI.js):%s]" icon="it_router"
 		Text item=DesktopLatency label="Desktop [JS(latencyUI.js):%s]" icon="it_pc"
 		Text item=NASLatency label="NAS [JS(latencyUI.js):%s]" icon="it_nas"
 		Text item=HandySLatency label="Handy S [JS(latencyUI.js):%s]" icon="it_smartphone"
@@ -537,8 +549,9 @@ sitemap main label="Home"
         Text item=Nexus7Latency label="Nexus7 [JS(latencyUI.js):%s]" icon="it_smartphone"
 		Text item=Echo1Latency label="Echo 1 [JS(latencyUI.js):%s]" icon="message_empty"
 		Text item=Echo2Latency label="Echo 2 [JS(latencyUI.js):%s]" icon="message_empty"
-		Text item=RaspberryPiLatency label="Raspi OH2 [JS(latencyUI.js):%s]" icon="it_server"
-		Text item=RaspberryMaticLatency label="Raspi CCU3 [JS(latencyUI.js):%s]" icon="it_server"
+		Text item=RaspberryPiLatency label="RasPi OH2 [JS(latencyUI.js):%s]" icon="it_server"
+		Text item=RaspberryMaticLatency label="RasPi Homematic CCU3 [JS(latencyUI.js):%s]" icon="it_server"
+        Text item=HyperionRaspiLatency label="RasPi Hyperion [JS(latencyUI.js):%s]" icon="it_server"
 		Text item=PS4Latency label="PS4 [JS(latencyUI.js):%s]" icon="scene_gaming_3"
 		Text item=OSRAMGatewayLatency label="OSRAM Gateway [JS(latencyUI.js):%s]" icon="it_media_player"
 		Text item=FireTVLatency label="FireTV [JS(latencyUI.js):%s]" icon="it_media_player"
@@ -554,7 +567,9 @@ sitemap main label="Home"
         Text item=LED2Latency label="LED2 (Sofa) [JS(latencyUI.js):%s]" icon="message_socket"
         Text item=TPLinkPlug1Latency label="TPLinkPlug1 (WZ) [JS(latencyUI.js):%s]" icon="message_socket"
         Text item=TPLinkPlug2Latency label="TPLinkPlug2 (WM) [JS(latencyUI.js):%s]" icon="message_socket"
-        Text item=Shelly1Latency label="Shelly1 (FBHeizung) [JS(latencyUI.js):%s]" icon="message_socket"
+        Text item=Shelly_Heizung_Latency label="Shelly1 (FBHeizung) [JS(latencyUI.js):%s]" icon="message_socket"
+        Text item=Shelly_KWand_Latency label="Shelly1 (KWand) [JS(latencyUI.js):%s]" icon="message_socket"
+        Text item=Shelly_Gang_Latency label="Shelly1 (Gang) [JS(latencyUI.js):%s]" icon="message_socket"
 
 		Image label="6" url="http://localhost:8080/static/6.png"
 

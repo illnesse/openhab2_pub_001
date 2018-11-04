@@ -3,6 +3,7 @@ load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
 var gcal_array = [];
 var gcal_array_temp = [];
+var gcal_array_cmd = [];
 
 var MODE_DEFAULT = 0;
 var MODE_TODAY = 1;
@@ -23,14 +24,22 @@ JSRule({
         var itemCal_Update = getItem("Cal_Update");
         postUpdate(itemCal_Update,"updating...");
         
-        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX1@gmail.com list", 1000 *5);
-        // logInfo("GetCalEvents: " + results1)
-        var results2 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXX2@googlemail.com list", 1000 *5);
-        // logInfo("GetCalEvents: " + results2)
-        var results3 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXXXXXXX@group.calendar.google.com list", 1000 *5);
-        // logInfo("GetCalEvents: " + results2)
+        var results1 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXX@gmail.com list", 1000 *5);
+        var results2 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXX@googlemail.com list", 1000 *5);
+        var results3 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXX@group.calendar.google.com list", 1000 *5); //müll
+        var results4 = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/calsync.sh XXX@group.calendar.google.com list", 1000 *5); //cmd
 
-        if ((results1 == "") || (results2 == "") || (results3 == "")) return;
+        if ((results1 == "") || (results2 == "") || (results3 == "") || (results4 == "")) return;
+
+        gcal_array_cmd = JSON.parse(results4)
+        for(var i = 0; i < gcal_array_cmd.length; i++)
+        {
+            if (gcal_array_cmd[i].start.dateTime == null) gcal_array_cmd[i].start.dateTime = gcal_array_cmd[i].start.date + "T00:00:00"; // all day event
+            else gcal_array_cmd[i].start.dateTime = gcal_array_cmd[i].start.dateTime.split("+")[0];
+            if (gcal_array_cmd[i].end.dateTime == null) gcal_array_cmd[i].end.dateTime = gcal_array_cmd[i].end.date + "T00:00:00"; // all day event
+            else gcal_array_cmd[i].end.dateTime = gcal_array_cmd[i].end.dateTime.split("+")[0];
+        }
+
 
         gcal_array_temp = JSON.parse(results1).concat(JSON.parse(results2)).concat(JSON.parse(results3));
         // logInfo("gcal_array_temp size: " + gcal_array_temp.length);
@@ -193,125 +202,130 @@ JSRule({
     ],
     execute: function( module, input)
     {
-
-        //calendar shit
+        var itemTTSMode = getItem("TTSMode");
         var itemTTSOut2 = getItem("TTSOut2");
+        var Echo1_Volume = getItem("Echo1_Volume");
+        var Echo2_Volume = getItem("Echo2_Volume");
+
         var JsJodaNow = JSJoda.LocalDateTime.now();
+        var month_now = JsJodaNow.monthValue()
+        var day_now = JsJodaNow.dayOfMonth()
         var hour_now = JsJodaNow.hour();
         var minute_now = JsJodaNow.minute();
 
         postUpdate("HourNow",hour_now);
-
         ScheduleCalEvents();
 
-        var Echo1_Volume = getItem("Echo1_Volume");
-        var Echo2_Volume = getItem("Echo2_Volume");
-        var itemTTSMode = getItem("TTSMode");
         var itemHMKeymatic1State = getItem("HMKeymatic1State");
         var itemAtHomeS = getItem("AtHomeS");
         var itemAtHomeJ = getItem("AtHomeJ");
 
         var AtHome = ((itemAtHomeJ.state == ON) || (itemAtHomeS.state == ON));
+        if (AtHome && (itemTTSMode.state != TTS_DEFAULT)) exec_events("tts_mute",false);
+        else if (!AtHome && (itemTTSMode.state != TTS_OFF)) exec_events("tts_mute",true);
 
-        // RESET VOL
-        if ((hour_now == 3) && (minute_now == 0) && AtHome)
+        /////////////////////////////////////////////////////
+        
+        for(var i = 0; i < gcal_array_cmd.length; i++) 
         {
-            logInfo("Resetting Echo Volume")
-            sendCommand(Echo1_Volume,VOL_QUIET)
-            sendCommand(Echo2_Volume,VOL_NORMAL)
-        }
+            var obj = gcal_array_cmd[i];
+            var startdate = jodaDate(obj.start.dateTime)
+            var enddate = jodaDate(obj.end.dateTime)
+            var cmd = obj.summary.toLowerCase();
 
-
-        // DOORS
-        if ((hour_now >= 22) || (hour_now <= 5) || (!AtHome))
-        {
-            if (itemHMKeymatic1State.state != OFF)
+            if ((startdate.monthValue() == month_now) && (startdate.dayOfMonth() == day_now)) // it's today
             {
-                sendCommand(itemTTSOut2,"TÃ¼ren verriegelt");
-                sendCommand(itemHMKeymatic1State,OFF); //lock
-            }
-        }
-
-        // TTS
-        if ((hour_now >= 23) || (hour_now <= 5) || (!AtHome))
-        {
-            if (itemTTSMode.state != TTS_OFF)
-            {
-                sendCommand(itemTTSOut2,"TTS deaktiviert");
-                postUpdate(itemTTSMode,TTS_OFF);
-            }
-        }
-        else 
-        {
-            if (itemTTSMode.state != TTS_DEFAULT) 
-            {
-                postUpdate(itemTTSMode,TTS_DEFAULT);
-                sendCommand(itemTTSOut2,"TTS aktiviert");
-            }
-        }
-
-        //alarm
-        var ALARM1_PERSON1_H = getItem("ALARM1_PERSON1_H");
-        var ALARM1_PERSON1_M = getItem("ALARM1_PERSON1_M");
-        var ALARM1_PERSON1_D = getItem("ALARM1_PERSON1_D");
-
-        //logInfo("ALARM1_PERSON1_H.state " + ALARM1_PERSON1_H.state +" ALARM1_PERSON1_M.state " + ALARM1_PERSON1_M.state + " ALARM1_PERSON1_D.state " + ALARM1_PERSON1_D.state);
-        if ((ALARM1_PERSON1_H.state == null) || (ALARM1_PERSON1_M.state == null) || (ALARM1_PERSON1_D.state == null)) return;
-        //logInfo("im here");
-
-        var minute = parseInt(ALARM1_PERSON1_M.state)
-        var m_match = (minute == minute_now)
-        if (m_match)
-        {
-            var bedtime_hours = 9;
-            var hour = parseInt(ALARM1_PERSON1_H.state)
-            var TTSOut1Override = getItem("TTSOut1Override");
-    
-            var day_number = JsJodaNow.dayOfWeek().value()
-            var day_number_tomorrow = JsJodaNow.plusDays(1).dayOfWeek().value()
-            var d_begin = parseInt(ALARM1_PERSON1_D.state.toString().substr(0,1));
-            var d_end = parseInt(ALARM1_PERSON1_D.state.toString().substr(1,2));
-            var d_match = ((day_number >= d_begin) && (day_number <= d_end));
-            var d_match_tomorrow = ((day_number_tomorrow >= d_begin) && (day_number_tomorrow <= d_end));
-            var h_match = (hour == hour_now)
-
-            //logInfo(" d_begin "+d_begin+" d_end "+d_end+" d_match "+d_match+" d_match_tomorrow "+d_match_tomorrow+" h_match "+h_match+" m_match "+m_match);
-
-            if (d_match && m_match)
-            {
-                var magic = (hour < bedtime_hours) ? 24 : 0
-                if (((hour - bedtime_hours + magic) == hour_now) && d_match_tomorrow)
+                if ((startdate.hour() == hour_now) && (startdate.minute() == minute_now))
                 {
-                    sendCommand(itemTTSOut2,"In "+bedtime_hours+" Stunden klingelt der Wecker. Zeit ins Bett zu gehen!")
-                    logInfo("Alarm: go to bed reminder")
-                }
-                if(h_match)
-                {
-                    var currentTime = "Es ist " + hour_now +" Uhr " + ((minute_now != 0) ? minute_now : "");
-                    //var String pollen = "Die heutige Pollenbelastung ist " + transform("MAP", "pollen.map", Pollen_1.state.toString) + "."
-                    var todaysEvents = getTodaysEvents();
-                    var out = "Guten Morgen. " + currentTime + ", Zeit zum Aufstehen. " + todaysEvents;
-                    logInfo("Alarm: " + out );
-                    var AlarmTimer = null
-
-                    var Echo1_RadioStationId = getItem("Echo1_RadioStationId");
-                    var Echo2_RadioStationId = getItem("Echo2_RadioStationId");
-                    sendCommand(Echo1_Volume,30)
-                    sendCommand(Echo2_Volume,30)
-                    sendCommand(Echo1_RadioStationId,"s2585")
-                    sendCommand(Echo2_RadioStationId,"s2585")
-                        
-                    AlarmTimer = createTimer(now().plusSeconds(60), function() 
+                    logInfo("exec event: " + cmd);
+                    if (cmd == "alarm")
                     {
-                        var TuyaSocket2 = getItem("TuyaSocket2");
-                        sendCommand(TTSOut1Override,out)
-                        sendCommand(itemTTSOut2,out)
-                        postUpdate(TuyaSocket2,ON);
+                        var TTSOut1Override = getItem("TTSOut1Override");
+                        var currentTime = "Es ist " + hour_now +" Uhr " + ((minute_now != 0) ? minute_now : "");
+                        //var String pollen = "Die heutige Pollenbelastung ist " + transform("MAP", "pollen.map", Pollen_1.state.toString) + "."
+                        var todaysEvents = getTodaysEvents();
+                        var out = "Guten Morgen. " + currentTime + ", Zeit zum Aufstehen. " + todaysEvents;
+                        logInfo("Alarm: " + out );
     
-                        AlarmTimer = null;
-                    });
+                        var Echo1_RadioStationId = getItem("Echo1_RadioStationId");
+                        var Echo2_RadioStationId = getItem("Echo2_RadioStationId");
+                        sendCommand(Echo1_Volume,30)
+                        sendCommand(Echo2_Volume,30)
+                        sendCommand(Echo1_RadioStationId,"s2585")
+                        sendCommand(Echo2_RadioStationId,"s2585")
+                            
+                        var AlarmTimer = createTimer(now().plusSeconds(60), function() 
+                        {
+                            var TuyaSocket2 = getItem("TuyaSocket2");
+                            sendCommand(TTSOut1Override,out)
+                            sendCommand(itemTTSOut2,out)
+                            postUpdate(TuyaSocket2,ON);
+        
+                            AlarmTimer = null;
+                        });
+                    }
+                    else
+                    {
+                        exec_events(cmd,true)
+                    }
                 }
+                else if ((enddate.hour() == hour_now) && (enddate.minute() == minute_now))
+                {
+                    exec_events(cmd,false)
+                }
+                // logInfo("sched event: " + cmd);
             }
         }
     }
 });
+
+
+function exec_events(id,on) 
+{
+    if (id == "tts_mute")
+    {
+        if (on)
+        {
+            sendCommand("TTSOut2","TTS deaktiviert");
+            postUpdate("TTSMode",TTS_OFF);
+        }
+        else
+        {
+            postUpdate("TTSMode",TTS_DEFAULT);
+            sendCommand("TTSOut2","TTS aktiviert");
+        }
+    }
+    else if (id == "lock_doors")
+    {
+        if (on)
+        {
+            if (AtHome)
+            {
+                sendCommand("TTSOut2","Türen verriegelt");
+                sendCommand("HMKeymatic1State",OFF); //lock
+            }
+        }
+    }
+    else if (id == "reset_echo_vol")
+    {
+        if (on)
+        {
+            logInfo("Resetting Echo Volume")
+            sendCommand("Echo1_Volume",VOL_QUIET)
+            sendCommand("Echo2_Volume",VOL_NORMAL)
+        }
+    }
+    else if (id == "fb_heizung")
+    {
+        if (on)
+        {
+            postUpdate("MQTT_Shelly_Heizung",ON);
+            sendCommand("TTSOut2","Fussbodenheizung an");
+        }
+        else
+        {
+            postUpdate("MQTT_Shelly_Heizung",OFF);
+            sendCommand("TTSOut2","Fussbodenheizung aus");
+        }
+    }
+}

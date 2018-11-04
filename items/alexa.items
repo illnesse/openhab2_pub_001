@@ -24,7 +24,8 @@ String Echo1_Subtitle1            "Subtitle 1"                        (gEcho1, g
 String Echo1_Subtitle2            "Subtitle 2"                        (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:subtitle2"}
 String Echo1_ProviderDisplayName  "Provider"                          (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:providerDisplayName"}
 String Echo1_RadioStationId       "TuneIn Radio Station Id"           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:radioStationId"}
-String Echo1_TTS                "Text to Speech"                      (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:textToSpeech"}
+String Echo1_TTS                  "TTS"                               (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:textToSpeech"}
+String Echo1_TTSVolume            "TTS Volume"                        (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:textToSpeechVolume"}
 String Echo1_StartCommand       "Start Command"                       (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:startCommand"}
 
 Player Echo2_Player               "Player"                            (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:player"}
@@ -34,8 +35,9 @@ String Echo2_Subtitle1            "Subtitle 1"                        (gEcho2, g
 String Echo2_Subtitle2            "Subtitle 2"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:subtitle2"}
 String Echo2_ProviderDisplayName  "Provider"                          (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:providerDisplayName"}
 String Echo2_RadioStationId       "TuneIn Radio Station Id"           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:radioStationId"}
-String Echo2_TTS                "Text to Speech"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:textToSpeech"}
-String Echo2_StartCommand       "Start Command"                           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:startCommand"}
+String Echo2_TTS                "Text to Speech"                      (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:textToSpeech"}
+String Echo2_TTSVolume            "TTS Volume"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:textToSpeechVolume"}
+String Echo2_StartCommand       "Start Command"                       (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:startCommand"}
 
 Player EchoGroup1_Player               "Player"                            (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:player"}
 // String EchoGroup1_Title                "Title"                             (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:title"}

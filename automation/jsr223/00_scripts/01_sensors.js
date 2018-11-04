@@ -44,20 +44,17 @@ JSRule({
         var state = input.state;
         if (isUninitialized(state)) state = triggeringItem.state;
 
-        if ((getItem("HourNow").state >= 23) || (getItem("HourNow").state <= 7))
-        {
+        // if ((getItem("HourNow").state >= 23) || (getItem("HourNow").state <= 7))
+        // {
             if (triggeringItem.name == "OsramSensorTriggered")
             {
-                if (state == ON)
-                {
-                    sendCommand("TuyaSocket5",ON);
-                }
-                else
-                {
-                    sendCommand("TuyaSocket5",OFF);
-                }
+                sendCommand("MQTT_Shelly_Gang",state);
             }
-        }
+            else if (triggeringItem.name == "OsramSensor_2_Triggered")
+            {
+                sendCommand("MQTT_Shelly_KWand",state);
+            }
+        // }
         var itemSensorTriggeredUI = getItem(triggeringItem.name+"UI");
         postUpdate(itemSensorTriggeredUI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)
     }
@@ -93,30 +90,33 @@ JSRule({
 });
 
 
+var ringTimer = null;
+var klingelmsg = "Es hat geklingelt";
+
 JSRule({
     name: "HMKlingelSensorPress",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemStateChangeTrigger("HMKlingelSensorPressShort"),
-        ItemStateChangeTrigger("HMKlingelSensorPressLong")
+        ItemStateChangeTrigger("HMKlingelSensorPressShort")
     ],
     execute: function( module, input)
     {
-        var triggeringItem = getItem(getTriggeringItemStr(input));
-        var state = input.state;
-        if (isUninitialized(state)) state = triggeringItem.state;
-
-        if ((triggeringItem.name == "HMKlingelSensorPressShort") && (state == ON))
+        if (ringTimer == null)
         {
-            logInfo("HMKlingelSensorPressShort " + state)
-            sendCommand("TTSOut2Override","Es hat geklingelt");
-            sendCommand("TTSOut1Override","Es hat geklingelt");
-        }
-        else if ((triggeringItem.name == "HMKlingelSensorPressLong") && (state == ON))
-        {
-            logInfo("HMKlingelSensorPressLong " + state)
-            sendCommand("TTSOut2Override","Es hat lange geklingelt");
-            sendCommand("TTSOut1Override","Es hat lange geklingelt");
+            var triggeringItem = getItem(getTriggeringItemStr(input));
+            var state = input.state;
+            if (isUninitialized(state)) state = triggeringItem.state;
+    
+            if ((triggeringItem.name == "HMKlingelSensorPressShort") && (state == ON))
+            {
+                logInfo("HMKlingelSensorPressShort " + state)
+                sendCommand("TTSOut2Override",klingelmsg);
+                ringTimer = createTimer(now().plusSeconds(2), function() 
+                {
+                    sendCommand("TTSOut1Override",klingelmsg);
+                    ringTimer = null;
+                });
+            }
         }
     }
 });

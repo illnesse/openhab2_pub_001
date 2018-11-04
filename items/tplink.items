@@ -28,3 +28,6 @@ Number TPLinkPlug2_EnergyUsage_Today "[%.2f]" (gTPLinkAll)
 
 String TPLinkPlug1_EnergyUsage_Today_UI "[%s]" (gTPLinkAll)
 String TPLinkPlug2_EnergyUsage_Today_UI "[%s]" (gTPLinkAll)
+
+Switch TPLinkPlug1_Switch "[%s]" (gTPLinkAll) { channel="tplinksmarthome:hs110:plug1:switch" }
+Switch TPLinkPlug2_Switch "[%s]" (gTPLinkAll) { channel="tplinksmarthome:hs110:plug2:switch" }

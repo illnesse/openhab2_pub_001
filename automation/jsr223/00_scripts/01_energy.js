@@ -33,7 +33,7 @@ JSRule({
 
         if ((itemTPLinkPlug2_Power.state < 0.2))
         {
-            logInfo("washing machine debug < 0.2 " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+            // logInfo("washing machine debug < 0.2 " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
             postUpdate(itemWashingmachine_OpState,MODE_OFF)
             return;
         }
@@ -43,11 +43,11 @@ JSRule({
             {
                 if (WashingMachineTimer != null) 
                 {
-                    logInfo("washing machine debug kill timer cause > 10 " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+                    // logInfo("washing machine debug kill timer cause > 10 " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
                     WashingMachineTimer.cancel();
                     WashingMachineTimer = null;
                 }
-                logInfo("washing machine debug set to active " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+                // logInfo("washing machine debug set to active " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
                 postUpdate(itemWashingmachine_OpState,MODE_ACTIVE)
             }
             else if (itemTPLinkPlug2_Power.state < 3.0) 
@@ -55,16 +55,16 @@ JSRule({
                 if (itemWashingmachine_OpState.state == MODE_OFF) postUpdate(itemWashingmachine_OpState,MODE_STANDBY)
                 else if (itemWashingmachine_OpState.state == MODE_ACTIVE)
                 {
-                    logInfo("washing machine debug before timer check" + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+                    // logInfo("washing machine debug before timer check" + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
                     if (WashingMachineTimer == null)
                     {
                         var period = 10*60; //10 min?,  there have been periods over 10+ min < 4.5 W
 
-                        logInfo("washing machine debug create timer " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+                        // logInfo("washing machine debug create timer " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
 
                         WashingMachineTimer = createTimer(now().plusSeconds(period), function() 
                         {
-                            logInfo("washing machine debug timer created " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+                            // logInfo("washing machine debug timer created " + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
                             if (maximumSince(itemTPLinkPlug2_Power,now().minusSeconds(period)) < 2.5)
                             //if (itemTPLinkPlug2_Power.state < 2.5)
                             {
@@ -75,7 +75,7 @@ JSRule({
                             WashingMachineTimer = null;
                         });
                     }
-                    logInfo("washing machine debug after timer check" + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
+                    // logInfo("washing machine debug after timer check" + itemWashingmachine_OpState.state + " " + itemTPLinkPlug2_Power.state + " " + WashingMachineTimer)
                 }
             }
         }

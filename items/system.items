@@ -32,10 +32,6 @@ String TTSOut2Override "TTSOut"
 
 Number HourNow
 
-Number ALARM1_PERSON1_H    "Hour [%s]"
-Number ALARM1_PERSON1_M    "Minute [%s]"
-String ALARM1_PERSON1_D    "Day"
-
 Number System_openHAB_Uptime "Uptime openHAB [JS(duration.js):%s]"
 Number System_openHAB_Memory "openHAB Memory Usage [%s kB]"
 Number System_openHAB_DBSize "influxDB Database Size [%s MB]"

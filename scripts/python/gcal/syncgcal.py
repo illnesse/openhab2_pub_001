@@ -62,11 +62,12 @@ def main():
         events = events_result.get('items', [])
         jsonout = []
 
-        if not events:
-            print('No upcoming events found.')
+        #if not events:
+            #print('No upcoming events found.')
         for event in events:
             jsontemp = {}
             jsontemp["start"] = event['start']
+            jsontemp["end"] = event['end']
             jsontemp["id"] = event['id']
             jsontemp["summary"] = event['summary']
             jsonout.append(jsontemp)

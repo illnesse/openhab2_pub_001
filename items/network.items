@@ -1,6 +1,7 @@
 Group:Number gLatency
 
 Number RouterLatency (gLatency) {channel="network:pingdevice:router:latency"}
+Number Router2Latency (gLatency) {channel="network:pingdevice:router2:latency"}
 Number DesktopLatency (gLatency) {channel="network:pingdevice:desktop:latency"}
 Number NASLatency (gLatency) {channel="network:pingdevice:nas:latency"}
 Number SurfaceLatency (gLatency) {channel="network:pingdevice:surface:latency"}
@@ -10,6 +11,7 @@ Number Echo1Latency (gLatency) {channel="network:pingdevice:echo1:latency"}
 Number Echo2Latency (gLatency) {channel="network:pingdevice:echo2:latency"}
 Number RaspberryPiLatency (gLatency) {channel="network:pingdevice:raspberrypi:latency"}
 Number RaspberryMaticLatency (gLatency) {channel="network:pingdevice:raspberrymatic:latency"}
+Number HyperionRaspiLatency (gLatency) {channel="network:pingdevice:hyperionraspi:latency"}
 Number PS4Latency (gLatency) {channel="network:pingdevice:ps4:latency"}
 Number OSRAMGatewayLatency (gLatency) {channel="network:pingdevice:osramgateway:latency"}
 Number FireTVLatency (gLatency) {channel="network:pingdevice:firetv:latency"}
@@ -25,7 +27,9 @@ Number LED1Latency (gLatency) {channel="network:pingdevice:led1:latency"}
 Number LED2Latency (gLatency) {channel="network:pingdevice:led2:latency"}
 Number TPLinkPlug1Latency (gLatency) {channel="network:pingdevice:tplinkplug1:latency"}
 Number TPLinkPlug2Latency (gLatency) {channel="network:pingdevice:tplinkplug2:latency"}
-Number Shelly1Latency (gLatency) {channel="network:pingdevice:shelly1:latency"}
+Number Shelly_Heizung_Latency (gLatency) {channel="network:pingdevice:shelly_heizung:latency"}
+Number Shelly_KWand_Latency (gLatency) {channel="network:pingdevice:shelly_kwand:latency"}
+Number Shelly_Gang_Latency (gLatency) {channel="network:pingdevice:shelly_gang:latency"}
 
 Number HandySLatency (gLatency) {channel="network:pingdevice:handys:latency"}
 Number HandyJLatency (gLatency) {channel="network:pingdevice:handyj:latency"}

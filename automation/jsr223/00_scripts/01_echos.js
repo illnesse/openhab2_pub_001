@@ -28,9 +28,9 @@ JSRule({
             var results0 = executeCommandLineAndWaitResponse("sudo /etc/openhab2/scripts/sh/firetv_keyevent.sh 192.168.178.26 "+cmd, 1000 *10);
             logInfo(results0);
  
-            logInfo("IsAlive(kodi) " + IsAlive("kodi"));
+            logInfo("IsAlive(IP_kodi,8080,500) " + IsAlive(IP_kodi,8080,500));
 
-            if (IsAlive("kodi"))  
+            if (IsAlive(IP_kodi,8080,500))  
             {
                 var results1 = kodiCall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
                 // var nullimg = "http://localhost:8080/static/null.png";

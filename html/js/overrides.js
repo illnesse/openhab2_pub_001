@@ -140,7 +140,6 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("system") >= 0 ) panelcss($panel,$h5,"sys","raspberrypi");
         else if ($h5text.indexOf("gps") >= 0 ) $panel.addClass("panel_custom bg_gps");
         else if ($h5text.indexOf("logreader") >= 0 ) $panel.addClass("panel_custom bg_logreader");
-        else if ($h5text.indexOf("alarm") >= 0 ) $panel.addClass("panel_custom bg_alarm");
         else if ($h5text.indexOf("energy") >= 0 ) panelcss($panel,$h5,"energy","tplink");
         else if ($h5text.indexOf("batteries") >= 0 ) $panel.addClass("panel_custom bg_batteries");
         else if ($h5text.indexOf("nas snmp") >= 0 ) panelcss($panel,$h5,"asustor","asustor");

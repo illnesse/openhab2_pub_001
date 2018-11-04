@@ -88,4 +88,6 @@ String  MQTT_Phone_J_CallsIn "Call In [%s]" (gMQTT_Phone_Strings)
 String  MQTT_Phone_J_CallsOut "Call Out [%s]" (gMQTT_Phone_Strings)
 
 
-String  MQTT_Shelly_1_State { autoupdate="false", mqtt="<[local:shellies/shelly1-0592EC/relay/0:state:default]" }
+String  MQTT_Shelly_Heizung { autoupdate="false", mqtt="<[local:shellies/shelly1-0592EC/relay/0:state:default]" }
+String  MQTT_Shelly_KWand { autoupdate="false", mqtt="<[local:shellies/shelly1-5BABCD/relay/0:state:default]" }
+String  MQTT_Shelly_Gang { autoupdate="false", mqtt="<[local:shellies/shelly1-4A59EF/relay/0:state:default]" }
