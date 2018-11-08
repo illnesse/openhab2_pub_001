@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/css/fullcalendar.css">
+        <link rel="stylesheet" href="../static/css/overrides.css">
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/moment.min.js"></script>
+        <script src="../static/js/fullcalendar.min.js"></script>
+        <script src="../static/js/gcal.min.js"></script>
+        <style>
+            body
+            {
+                font-family: 'Roboto Condensed', sans-serif !important;
+                font-size: 11px;
+                margin: 0;
+                overflow: hidden;
+                background-color: transparent !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="calendar"></div>
+        <script>
+            $('#calendar').fullCalendar({
+                defaultView: 'agendaWeek',
+                nowIndicator: true,
+                agendaEventMinHeight: 10,
+                slotDuration: '00:60:00',
+                googleCalendarApiKey: 'xxxxxxx',
+                events: {
+                    googleCalendarId: 'xxxxx@group.calendar.google.com',
+                    eventClick: function(event) {
+                        var w = window.open(event.url, 'gcalevent', 'width=700, height=600, scrollbars=yes');
+                        return false;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

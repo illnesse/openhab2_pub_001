@@ -238,7 +238,7 @@ sitemap main label="Home"
         Text item=Cal_Event4__UI icon="time_calendar" 
         Text item=Cal_Event8__UI icon="time_calendar" 
 
-        Webview url="https://calendar.google.com/calendar/embed?showTitle=0&amp;showDate=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23000000&amp;src=XXXXX%40group.calendar.google.com&amp;color=%23875509&amp;ctz=Europe%2FBerlin" height=5 icon="none"
+        Webview url="/static/gcal.html" height=15 icon="none"
 	}
 
     Frame label="Mobiles / GPS" 
@@ -368,7 +368,7 @@ sitemap main label="Home"
 	{
 	    Text label="NAS ONLINE |asustor|http://192.168.178.25:8000/portal/?5AB145E1" icon="info_info" visibility=[NASLatency != UNDEF]
         Text label="NAS OFFLINE |asustor|http://192.168.178.25:8000/portal/?5AB145E1" icon="info_info" visibility=[NASLatency == UNDEF]
-	    Switch item=WOL_NAS icon="it_nas" mappings=[ON="WOL"]
+	    Switch item=NAS_Power icon="it_nas" mappings=[ON="WOL", OFF="STANDBY"]
 
         Text item=SNMP_NAS_hwModelName icon="info_info" visibility=[NASLatency != UNDEF]
         Text item=SNMP_NAS_sysSerialNumber icon="info_info" visibility=[NASLatency != UNDEF]

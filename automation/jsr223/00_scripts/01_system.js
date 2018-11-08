@@ -186,8 +186,7 @@ JSRule({
     description: "Line: "+__LINE__,
     triggers: [
         //TimerTrigger("0/2 * * ? * * *")
-        TimerTrigger("0/5 * * * * ?"),
-        ItemCommandTrigger("TestBTN")
+        TimerTrigger("0/5 * * * * ?")
     ],
     execute: function( module, input)
     {
@@ -234,8 +233,7 @@ JSRule({
     name: "SystemStats low",
     description: "Line: "+__LINE__,
     triggers: [
-        TimerTrigger("0 0/30 * * * ?"),
-        ItemCommandTrigger("TestBTN")
+        TimerTrigger("0 0/30 * * * ?")
     ],
     execute: function( module, input)
     {
@@ -339,5 +337,27 @@ JSRule({
         
         var msg = "WARNING " + itemlogreaderWarnings.state.toString() + ": " + errorstring;
         sendNotification(null, msg);
+    }
+});
+
+
+JSRule({
+    name: "NAS Power",
+    description: "Line: "+__LINE__,
+    triggers: [
+        ItemCommandTrigger("NAS_Power")
+    ],
+    execute: function( module, input)
+    {
+        if (input.command == ON)
+        {
+            sendCommand("WOL_NAS",ON);
+        }
+        else
+        {
+            var execResultUptime = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/poweroffnas.sh",1000*3);
+            logInfo("NAS Power Result: " + execResultUptime);
+        }
+        logInfo("NAS Power: " + input.command);
     }
 });

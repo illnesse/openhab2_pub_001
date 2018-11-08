@@ -11,6 +11,8 @@ var MODE_WITHIN_NEXT_HOUR = 2;
 var MODE_NOW = 3;
 var MODE_OVER = 4;
 
+var AtHome;
+
 JSRule({
     name: "GetCalEvents",
     description: "Line: "+__LINE__,
@@ -213,14 +215,14 @@ JSRule({
         var hour_now = JsJodaNow.hour();
         var minute_now = JsJodaNow.minute();
 
-        postUpdate("HourNow",hour_now);
+        if (getItem("HourNow").state != hour_now) postUpdate("HourNow",hour_now);
         ScheduleCalEvents();
 
         var itemHMKeymatic1State = getItem("HMKeymatic1State");
         var itemAtHomeS = getItem("AtHomeS");
         var itemAtHomeJ = getItem("AtHomeJ");
 
-        var AtHome = ((itemAtHomeJ.state == ON) || (itemAtHomeS.state == ON));
+        AtHome = ((itemAtHomeJ.state == ON) || (itemAtHomeS.state == ON));
         if (AtHome && (itemTTSMode.state != TTS_DEFAULT)) exec_events("tts_mute",false);
         else if (!AtHome && (itemTTSMode.state != TTS_OFF)) exec_events("tts_mute",true);
 
@@ -291,8 +293,11 @@ function exec_events(id,on)
         }
         else
         {
-            postUpdate("TTSMode",TTS_DEFAULT);
-            sendCommand("TTSOut2","TTS aktiviert");
+            if (AtHome)
+            {
+                postUpdate("TTSMode",TTS_DEFAULT);
+                sendCommand("TTSOut2","TTS aktiviert");
+            }
         }
     }
     else if (id == "lock_doors")
@@ -313,6 +318,9 @@ function exec_events(id,on)
             logInfo("Resetting Echo Volume")
             sendCommand("Echo1_Volume",VOL_QUIET)
             sendCommand("Echo2_Volume",VOL_NORMAL)
+
+            //sendCommand("Echo1_TTSVolume",VOL_QUIET)
+            //sendCommand("Echo2_TTSVolume",VOL_NORMAL)
         }
     }
     else if (id == "fb_heizung")

@@ -61,7 +61,6 @@ JSRule({
     name: "PollenString",
     description: "Line: "+__LINE__,
     triggers: [
-        ItemCommandTrigger("TestBTN"),
         TimerTrigger("0 0 */3 ? * *")
     ],
     execute: function( module, input)

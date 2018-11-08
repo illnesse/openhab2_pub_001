@@ -340,13 +340,14 @@ JSRule({
 });
 
 JSRule({
-    name: "TestAlexaDelay",
+    name: "TestBtn",
     description: "Line: "+__LINE__,
     triggers: [
         ItemCommandTrigger("TestBTN")
     ],
     execute: function( module, input)
     {
+        logInfo("HourNow " + getItem("HourNow").state);
         logInfo("TestAlexaDelay 1")
         sendCommand("TTSOut2","TestAlexaDelay");
     }

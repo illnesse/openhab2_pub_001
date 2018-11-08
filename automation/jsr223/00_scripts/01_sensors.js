@@ -44,8 +44,8 @@ JSRule({
         var state = input.state;
         if (isUninitialized(state)) state = triggeringItem.state;
 
-        // if ((getItem("HourNow").state >= 23) || (getItem("HourNow").state <= 7))
-        // {
+        if ((getItem("HourNow").state >= 7) || (getItem("HourNow").state <= 23))
+        {
             if (triggeringItem.name == "OsramSensorTriggered")
             {
                 sendCommand("MQTT_Shelly_Gang",state);
@@ -54,7 +54,14 @@ JSRule({
             {
                 sendCommand("MQTT_Shelly_KWand",state);
             }
-        // }
+        }
+        else
+        {
+            if (triggeringItem.name == "OsramSensorTriggered")
+            {
+                sendCommand("MQTT_Shelly_KWand",state);
+            }
+        }
         var itemSensorTriggeredUI = getItem(triggeringItem.name+"UI");
         postUpdate(itemSensorTriggeredUI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)
     }
