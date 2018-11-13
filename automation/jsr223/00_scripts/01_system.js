@@ -13,7 +13,7 @@ JSRule({
         var itemTTSOut2 = getItem("TTSOut2");
 
         sendCommand(itemTTSOut2,"Backup Prozess gestartet");
-        postUpdate(itemBackupbtn,"committing files..");
+        postUpdate(itemBackupbtn,"creating backup...");
         logInfo("starting backup...");
         var execResult = executeCommandLineAndWaitResponse("sudo /etc/openhab2/scripts/sh/oh2backup.sh", 60*1000 * 10);
         logInfo(execResult);
@@ -219,12 +219,13 @@ JSRule({
     execute: function( module, input)
     {
         var execResultUptime = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/uptime.sh",1000*3);
-        //logInfo("stats 1 "+execResultUptime)
-        if (execResultUptime != "") postUpdate( "System_openHAB_Uptime", execResultUptime);
+        //logInfo("stats uptime '"+execResultUptime + "'")
+        //logInfo ("isNaN " + isNumber("123") +" - "+ isNumber(123) +" - "+ isNumber("") +" - "+ isNumber(null) );
+        if (isNumber(parseFloat(execResultUptime))) postUpdate( "System_openHAB_Uptime", execResultUptime);
 
         var execResultMemory = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/memory.sh",1000*3);
-        //logInfo("stats 2 "+execResultMemory)
-        if (execResultMemory != "") postUpdate( "System_openHAB_Memory", execResultMemory );
+        //logInfo("stats mem '"+execResultMemory + "'")
+        if (isNumber(parseFloat(execResultMemory))) postUpdate( "System_openHAB_Memory", execResultMemory );
     }
 });
 
@@ -238,11 +239,11 @@ JSRule({
     execute: function( module, input)
     {
         var execResultDBSize = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/dbsize.sh",1000*3);
-        //logInfo("stats 3 "+execResultDBSize)
-        if (execResultDBSize != "") postUpdate( "System_openHAB_DBSize", execResultDBSize );
+        //logInfo("stats dbsize '"+execResultDBSize + "'")
+        if (isNumber(parseFloat(execResultDBSize))) postUpdate( "System_openHAB_DBSize", execResultDBSize );
 
         var execResultVersion = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/version.sh",1000*3);
-        //logInfo("stats 3 "+execResultDBSize)
+        //logInfo("stats version '"+execResultVersion + "'")
         if (execResultVersion != "") postUpdate( "System_openHAB_Version", execResultVersion );
 
     }

@@ -6,6 +6,7 @@
         <script src="../static/js/jquery.min.js"></script>
         <script src="../static/js/moment.min.js"></script>
         <script src="../static/js/fullcalendar.min.js"></script>
+        <script src="../static/js/fullcalendar.de.js"></script>
         <script src="../static/js/gcal.min.js"></script>
         <style>
             body
@@ -22,18 +23,27 @@
         <div id="calendar"></div>
         <script>
             $('#calendar').fullCalendar({
+                locale : "de",
                 defaultView: 'agendaWeek',
                 nowIndicator: true,
                 agendaEventMinHeight: 10,
                 slotDuration: '00:60:00',
-                googleCalendarApiKey: 'xxxxxxx',
+                firstDay: 1,
+                businessHours: {
+                dow: [ 1, 2, 3, 4, 5 ], // Monday - Thursday
+
+                start: '8:00', // a start time (10am in this example)
+                end: '17:00', // an end time (6pm in this example)
+                },
+                googleCalendarApiKey: 'XXXXXXXXXXXXXXXXXX',
                 events: {
-                    googleCalendarId: 'xxxxx@group.calendar.google.com',
-                    eventClick: function(event) {
-                        var w = window.open(event.url, 'gcalevent', 'width=700, height=600, scrollbars=yes');
+                    googleCalendarId: 'XXXXXXXXXXXX@group.calendar.google.com'
+                },
+                eventClick: function(event) {
+                        var w = window.open(event.url, 'gcalevent', 'width=750, height=550, scrollbars=yes');
                         return false;
                     }
-                }
+                
             });
         </script>
     </body>

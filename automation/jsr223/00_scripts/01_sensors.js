@@ -44,7 +44,7 @@ JSRule({
         var state = input.state;
         if (isUninitialized(state)) state = triggeringItem.state;
 
-        if ((getItem("HourNow").state >= 7) || (getItem("HourNow").state <= 23))
+        if ((getItem("HourNow").state >= 7) && (getItem("HourNow").state <= 23))
         {
             if (triggeringItem.name == "OsramSensorTriggered")
             {

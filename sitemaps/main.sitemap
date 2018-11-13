@@ -426,6 +426,7 @@ sitemap main label="Home"
         Image label="12" url="http://localhost:8080/static/12.png"
 
         Image label="14" url="http://localhost:8080/static/14.png"
+        Image label="21" url="http://localhost:8080/static/21.png"
         
         Text label="|Grafana Dashboard|http://192.168.178.31:3000/d/-8mo5BRgk/openhab?orgId=1 |Homematic|http://192.168.178.45" icon="none"
         Text label="" icon="none"
@@ -500,7 +501,7 @@ sitemap main label="Home"
     }
 	Frame label="System Stats"
 	{
-        Switch item=Backupbtn label="Commit & Push Backup |Bitbucket Repository|https://bitbucket.org/XXXXXXX/all [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
+        Switch item=Backupbtn label="System Backup [%s]" icon="control_on_off" mappings=[ON="BACKUP"]
         Switch item=Resetbtn label="Restart OH2 Service [%s]" icon="control_reset" mappings=[ON="RESTART"]
         Switch item=piReboot label="Reboot RasPi" icon="control_reset" mappings=[ON="REBOOT"]
         Switch item=SysStartupForce icon="audio_repeat" mappings=[ON="TEST ON"] visibility=[SysStartup==0]

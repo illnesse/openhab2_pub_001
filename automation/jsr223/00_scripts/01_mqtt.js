@@ -206,7 +206,7 @@ JSRule({
 			var lat  = json.lat;
             var lon  = json.lon;
             var acc  = json.acc;
-            var batt = parseInt(json.batt);
+            var batt = parseFloat(json.batt);
 
             var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&key=XXXXXXX"
             var geocodeJson = JSON.parse(HTTP.sendHttpGetRequest(geocodeURL));

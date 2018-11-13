@@ -88,6 +88,8 @@ function sendMQTT(broker, topic, message, quiet)
     //logInfo("sendMQTT broker: " + broker + " topic: " + topic + " result: " + execResult);
 }
 
+function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+
 function custom_sort(a, b) {
     return jodaDate(a.start.dateTime).compareTo(jodaDate(b.start.dateTime));
 }

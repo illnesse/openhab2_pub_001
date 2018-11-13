@@ -1,6 +1,5 @@
-Group gAtHome
-Switch AtHomeS "S is Home [%s]" (gAtHome)
-Switch AtHomeJ "J is Home [%s]" (gAtHome)
+Switch AtHomeS "S is Home [%s]"
+Switch AtHomeJ "J is Home [%s]"
 
 Group:String gCalTimes
 
