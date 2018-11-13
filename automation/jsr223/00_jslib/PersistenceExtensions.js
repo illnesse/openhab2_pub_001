@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2018 by Helmut Lehmeyer.
+ * 
+ * @author Helmut Lehmeyer 
+ */
+
 'use strict';
 
 var PersistenceExtensions	= Java.type("org.eclipse.smarthome.model.persistence.extensions.PersistenceExtensions");
