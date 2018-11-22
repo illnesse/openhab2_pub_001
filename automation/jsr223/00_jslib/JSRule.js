@@ -80,9 +80,12 @@ return RuleBuilder.create(ruleDto.uid)
 (function (context) {
 	'use strict';
 
-/*	
-	context.JSRule = function(obj) {
-		logInfo("JSRule added: '"+obj.name+"' "+obj.description);
+    context.JSRule = function(obj) {
+        logInfo("JSRule added: '"+obj.name+"' "+obj.description);
+
+        var rname =  obj.name ? obj.name.replace(/[^\w]/g, "-") : "nameless-generic";
+        var ruid = obj.uid ? obj.uid : uuid.randomUUID() + "-" + rname;
+        
         var rule = new SimpleRule()
         {
             execute: function(module,input)
@@ -104,41 +107,32 @@ return RuleBuilder.create(ruleDto.uid)
                     }
                     logError(obj.name+" "+out+": "+e.toString());
                 }
+                finally {
+                    // always runs even if there was an error, good place for cleanup
+                }
             }
         };
-*/
-	context.JSRule = function (obj, line) {
-		try{
-			var ruid = uuid.randomUUID() + "-" + obj.name.replace(/[^\w]/g, "-");
-			//logInfo("################  JSRule Line: "+__LINE__+"  ################# ruid:" + ruid);
-			//var rule = new SimpleRule({ setUID: function(i) { uid = i; } })
-		var rule = new SimpleRule(){
-				execute: obj.execute //DOES THIS WORK? AND IF YES, WHY? => execute is found in implemented SimpleRuleActionHandler
-		};
-		var triggers = obj.triggers ? obj.triggers : obj.getEventTrigger();
 
-			rule.setTemplateUID(ruid);
+        if(obj.description)
+        {
+            rule.setDescription(obj.name +" / "+ obj.description);
+        }
+        
+        if(obj.name)
+        {
+            rule.setName(obj.name);
+        }
 
-		if (obj.description) {
-			rule.setDescription(obj.description);
-		}
-		if (obj.name) {
-			rule.setName(obj.name);
-		}
+        rule.setTemplateUID(ruid);
 
-		//1. Register rule here
-		if (triggers && triggers.length > 0) {
-			rule.setTriggers(triggers);
-			automationManager.addRule(rule);
-		}
-
-		//2. OR second option, to add Rules in rulefile. Is not needed.
-		return rule;
-		}catch(err) {
-			context.logError("JSRule " + __LINE__ + ". obj: '" + obj + "' Error:" +  err);
-		}
-		return null;
-	},
+        var triggers = obj.triggers ? obj.triggers : obj.getEventTrigger();
+        if(triggers && triggers.length > 0)
+        {
+            rule.setTriggers(triggers);
+            automationManager.addRule(rule);
+        }
+        return rule;
+    },
 
 	//TODO like in org.eclipse.smarthome.automation.core.dto.RuleDTOMapper 
 	// or org.eclipse.smarthome.automation.sample.extension.java.internal.WelcomeHomeRulesProvider

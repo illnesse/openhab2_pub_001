@@ -269,15 +269,11 @@ JSRule({
     execute: function( module, input)
     {
         var toUpdate  = getTriggeringItemStr(input).split("_")[2];
-        var state;
+        var state = input.command.toString().toLowerCase();
 
         //logInfo("MQTT_Shelly_" + toUpdate + ": input: " + input.command)
-       
-        if (input.command == ON) state = "on";
-        else if (input.command == OFF) state = "off";
-        else state = input.command;
-
         //logInfo("MQTT_Shelly_" + toUpdate + ": " + state)
+
         if (toUpdate == "Heizung") sendMQTT("local", "shellies/shelly1-0592EC/relay/0/command", state, true)
         else if (toUpdate == "KWand") sendMQTT("local", "shellies/shelly1-5BABCD/relay/0/command", state, true)
         else if (toUpdate == "Gang") sendMQTT("local", "shellies/shelly1-4A59EF/relay/0/command", state, true)

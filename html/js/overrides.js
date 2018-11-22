@@ -7,14 +7,11 @@ var $minimizedalpha = 0.7;
 var $draggable_zindex = 1000;
 var $refresh = true;
 
-var LogIntervalTime = 5000;
 var AllImgIntervalTime = 30000;
 var ImgIntervalTime = 300;
 
 //var refreshImageItem;
 //var refreshImageItemURL = "https://XXXXXXX.de/out.jpg";
-
-var syntaxhilight = true;
 
 //hack to avoid jetty mjpeg timeout
 /*
@@ -30,7 +27,7 @@ function refreshSingleImage()
 */
 function refreshAllImgs()
 {
-//    if (!$parentdoc.hasFocus()) return;
+    //if (!$parentdoc.hasFocus()) return;
     //if (!$refresh) return;
     var d = new Date();
     $(".mdl-form__image img", $parentdoc).each(function()
@@ -41,13 +38,11 @@ function refreshAllImgs()
 
 function panelState(panel, state, anim)
 {
-/*
     if (panel.hasClass("bg_cams"))
     {
         $refresh = state;
         console.warn("panelState() $refresh set to ",$refresh)
     } 
-*/
     if (state)
     {
         if (anim)
@@ -94,13 +89,55 @@ function panelState(panel, state, anim)
     }
 }
 
-
-
-if($(window.frameElement).attr("data-injected") === undefined)
+function clock()
 {
-    $(window.frameElement).attr("data-injected",true);
-    $head.append("<link rel=\"stylesheet\" href=\"../static/css/overrides.css\">");
+    //if (!$parentdoc.hasFocus()) return;
+    var currentTime = new Date();
+    var currentYear = currentTime.getFullYear();
+    var currentMonth = currentTime.getMonth()+1;
+    var currentDay = currentTime.getDate();
+    var currentHours = currentTime.getHours();
+    var currentMinutes = currentTime.getMinutes();
+    var currentSeconds = currentTime.getSeconds();
 
+    currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
+    currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
+    var currentTimeString = currentDay +"."+ currentMonth +"."+ currentYear +" "+ currentHours + ":" + currentMinutes + ":" + currentSeconds;
+    $("#clock",$parentdoc).text(currentTimeString);
+}
+
+function override_once()
+{
+    console.warn("override_once()");
+    $head.append("<link rel=\"stylesheet\" href=\"../static/css/overrides.css\">");
+    $("meta[name='theme-color']",$parentdoc).attr("content","#111111");
+    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"mdl-layout-title\" id=\"ttsinput\"><form id=\"ttsinputform\" ><input id=\"ttstext\" type=\"text\"></form></div>");
+    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"mdl-layout-title\" id=\"clock\"></div>");
+    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"top_btn\" id=\"all_min\"><i class=\"material-icons\">keyboard_arrow_up</i></div>");
+    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"top_btn\" id=\"all_max\"><i class=\"material-icons\">keyboard_arrow_down</i></div>");
+
+    //display clock in header
+    var clockInterval = setInterval(clock,1000);
+
+    //display TTS input field in header
+    $("#ttsinputform",$parentdoc).submit(function( event )
+    {
+        event.preventDefault();
+        var str = $("#ttstext",$parentdoc).val()
+
+        $.ajax({
+            url:"/rest/items/TTSOut2",
+            type:"POST",
+            data:str,
+            contentType:"text/plain",
+            dataType:"json"
+            });
+    });
+}
+
+function override()
+{
+    console.warn("override()");
     //manipulate parent doc, apply classes etc
     function panelcss(panel, h5, classname, name)
     {
@@ -108,12 +145,7 @@ if($(window.frameElement).attr("data-injected") === undefined)
         h5.append("<div class=\"panel_icon\"><img src=\"../static/icons/"+name+".svg\" width=\"80px\"></div>")
     }
 
-    $("meta[name='theme-color']",$parentdoc).attr("content","#111111");
     $(".mdl-form__colorpicker--pick i",$parentdoc).css({fontSize:20}).text("colorize");
-    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"mdl-layout-title\" id=\"ttsinput\"><form id=\"ttsinputform\" ><input id=\"ttstext\" type=\"text\"></form></div>");
-    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"mdl-layout-title\" id=\"clock\"></div>");
-    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"top_btn\" id=\"all_min\"><i class=\"material-icons\">keyboard_arrow_up</i></div>");
-    $(".mdl-layout__header-row",$parentdoc).append("<div class=\"top_btn\" id=\"all_max\"><i class=\"material-icons\">keyboard_arrow_down</i></div>");
     $("iframe").attr('scrolling', 'no');
     $(".mdl-form",$parentdoc).each(function()
     {
@@ -131,6 +163,8 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("hdmi") >= 0 ) panelcss($panel,$h5,"hdmi","hdmi");
         else if ($h5text.indexOf("pc wz") >= 0 ) panelcss($panel,$h5,"win","win");
         else if ($h5text.indexOf("a/c") >= 0 ) $panel.addClass("panel_custom bg_ac");
+        else if ($h5text.indexOf("octoprint") >= 0 ) $panel.addClass("panel_custom bg_octoprint");
+        else if ($h5text.indexOf("navigation") >= 0 ) $panel.addClass("panel_custom bg_navigation");
         else if ($h5text.indexOf("echo") >= 0 ) panelcss($panel,$h5,"echos","alexa");
         else if ($h5text.indexOf("tunein") >= 0 ) panelcss($panel,$h5,"tunein","tunein");
         else if ($h5text.indexOf("sensors") >= 0 ) panelcss($panel,$h5,"sensors","homematic");
@@ -143,13 +177,11 @@ if($(window.frameElement).attr("data-injected") === undefined)
         else if ($h5text.indexOf("energy") >= 0 ) panelcss($panel,$h5,"energy","tplink");
         else if ($h5text.indexOf("batteries") >= 0 ) $panel.addClass("panel_custom bg_batteries");
         else if ($h5text.indexOf("nas snmp") >= 0 ) panelcss($panel,$h5,"asustor","asustor");
-/*        
         else if ($h5text.indexOf("ip cams") >= 0 ) 
         {
             $panel.addClass("panel_custom bg_cams");
             $panel.find(".mdl-form__image").parent().addClass("cam_panel");
         }
-*/
         else if ($h5text.indexOf("devices") >= 0 ) $panel.addClass("panel_custom bg_devices");
         else if ($h5text.indexOf("rss") >= 0 ) $panel.addClass("panel_custom bg_rss");
         else {$panel.addClass("bg_default");}
@@ -218,233 +250,145 @@ if($(window.frameElement).attr("data-injected") === undefined)
 
     });
 }
-else
+
+function calcContainerHeight() 
 {
-    init();
-    initEvents();
-
-    function pad (str, max)
+    $(".page-content",$parentdoc).removeClass("mdl-grid");
+    
+    /*
+    var $total_panels_height = 0;
+    $(".mdl-form",$parentdoc).each(function()
     {
-        str = str.toString();
-        return str.length < max ? pad("0" + str, max) : str;
-    }
+        $panel = $(this);
+        $total_panels_height += $panel.height() + 16;
+        //console.log($panel.find("h5").text() + "panel height: " + $panel.height());
+    });
+    $total_panels_height = Math.ceil($total_panels_height);
+    var $height_columns = Math.ceil((($total_panels_height/2) + 300));
+    //console.log("total height: " + $total_panels_height, "column height: " + $height_columns);
 
-    function calcContainerHeight() 
-    {
-        $(".page-content",$parentdoc).removeClass("mdl-grid");
-        
-        /*
-        var $total_panels_height = 0;
-        $(".mdl-form",$parentdoc).each(function()
-        {
-            $panel = $(this);
-            $total_panels_height += $panel.height() + 16;
-            //console.log($panel.find("h5").text() + "panel height: " + $panel.height());
-        });
-        $total_panels_height = Math.ceil($total_panels_height);
-        var $height_columns = Math.ceil((($total_panels_height/2) + 300));
-        //console.log("total height: " + $total_panels_height, "column height: " + $height_columns);
-
-        $(".page-content",$parentdoc).css({height:$height_columns});
-        */
-    }
-
-    function eventlog()
-    {
-        //if (!$parentdoc.hasFocus()) return;
-        $.get( "/static/eventlog_tail.log", function( data )
-        {
-            //console.log(data.length);
-            $("#logview1").html(data);
-
-            $('html, body').scrollTop($(document).height());
-        });
-    }
-
-    function openhablog() 
-    {
-        //if (!$parentdoc.hasFocus()) return;
-        var d = new Date();
-        $.get( "/static/openhablog_tail.log?nocache"+d.getTime(), function( data )
-        {
-            if (syntaxhilight)
-            {
-                var lines = data.split("\n");
-                var out = "";
-                var class1 = "s1";
-
-                for(n=0;n<lines.length-1;n++)
-                {
-                    var n_fill = pad(n,3);
-                    var elem = lines[n];
-                    if (elem.indexOf("[ERROR]") >= 0) class1 = "error";
-                    else if (elem.indexOf("[WARN ]") >= 0) class1 = "warning";
-                    else class1 = "log";
-
-                    out += n_fill + "  <span class=\""+class1+"\">" + elem + "</span>\n";
-                }
-                //console.log(lines.length);
-                $("#logview2").html(out);
-            }
-            else
-            {
-                $("#logview2").html(data);
-            }
-
-            $('html, body').scrollTop($(document).height());
-        });
-    }
-
-    function clock()
-    {
-        //if (!$parentdoc.hasFocus()) return;
-        var currentTime = new Date();
-        var currentYear = currentTime.getFullYear();
-        var currentMonth = currentTime.getMonth()+1;
-        var currentDay = currentTime.getDate();
-        var currentHours = currentTime.getHours();
-        var currentMinutes = currentTime.getMinutes();
-        var currentSeconds = currentTime.getSeconds();
-
-        currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
-        currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
-        var currentTimeString = currentDay +"."+ currentMonth +"."+ currentYear +" "+ currentHours + ":" + currentMinutes + ":" + currentSeconds;
-        $("#clock",$parentdoc).text(currentTimeString);
-    }
-   
-    function init()
-    {
-        console.log("init");
-
-        //multitail style logger for events.log and openhab.log
-        var log1Interval = setInterval(eventlog,LogIntervalTime);
-        eventlog();
-
-        var log2Interval = setInterval(openhablog,LogIntervalTime);
-        openhablog();
-
-        //display clock in header
-        var clockInterval = setInterval(clock,1000);
-
-        //display TTS input field in header
-        $("#ttsinputform",$parentdoc).submit(function( event )
-        {
-            event.preventDefault();
-            var str = $("#ttstext",$parentdoc).val()
-
-            $.ajax({
-                url:"/rest/items/TTSOut2",
-                type:"POST",
-                data:str,
-                contentType:"text/plain",
-                dataType:"json"
-                });
-
-        });
-
-        console.log("init end");
-    }
-
-    function initEvents()
-    {
-        console.log("init Events")
-
-        // refreshSingleImage();
-        // refreshAllImgs();
-
-        var refreshAllImgInterval = setInterval(refreshAllImgs,AllImgIntervalTime);
-//        var refreshImgInterval = setInterval(refreshSingleImage,ImgIntervalTime);
-
-        if ($(".mdl-form > h5",$parentdoc).length >= 1)
-        {
-            $($parentdoc).on("click",".mdl-form > h5", function()
-            {
-                $panel = $(this).parent();
-
-                var id = $panel.data("widget-id");
-                var state;
-
-                if (($.cookie('panelid_'+id+'_state')) && ($.cookie('panelid_'+id+'_state') == "false")) state = false;
-                else state = true;
-
-                state = !state; //actual toggle
-                $.cookie('panelid_'+id+'_state', state);
-
-                if (state) panelState($panel,true,true);
-                else panelState($panel,false,true);
-            });
-
-            $($parentdoc).on("click",".pop_btn", function(event)
-            {
-                event.preventDefault();
-                event.stopPropagation();
-                $panel = $(this).parent().parent();
-                var id = $panel.data("widget-id");
-
-                if ($panel.hasClass("draggable"))
-                {
-                    $panel.removeClass("draggable mdl-shadow--2dp_popout");
-                    $panel.draggable("disable");
-                    $panel.css("z-index", 1000);
-                }
-                else
-                {
-                    $panel.addClass("draggable mdl-shadow--2dp_popout");
-                    $panel.css("z-index", $draggable_zindex++);
-                    $panel.draggable({
-                        start: function(event, ui) {
-                            $(this).css("z-index", $draggable_zindex++);
-                        }
-                      });
-                    $panel.draggable("enable");
-                }
-            });
-            calcContainerHeight();
-        }
-
-        //header buttons to min/max all panels
-        $($parentdoc).on("click","#all_min", function()
-        {
-            console.log("all_min");
-            $(".mdl-form",$parentdoc).each(function()
-            {
-                $panel = $(this);
-                var id = $panel.data("widget-id")
-                $.cookie('panelid_'+id+'_state', false);
-                panelState($panel,false,false);
-            });
-            calcContainerHeight();
-        });
-
-        $($parentdoc).on("click","#all_max", function()
-        {
-            console.log("all_max");
-            $(".mdl-form",$parentdoc).each(function()
-            {
-                $panel = $(this);
-                var id = $panel.data("widget-id")
-                $.cookie('panelid_'+id+'_state', true);
-                panelState($panel,true,false);
-            });
-            calcContainerHeight();
-        });
-
-        //remember scroll pos
-        $(".mdl-layout__content, .mdl-layout",$parentdoc).on("scroll", function(ev)
-        {
-            var $ypos = $(this).scrollTop();
-            clearTimeout($.data(this, 'scrollTimer'));
-            $.data(this, 'scrollTimer', setTimeout(function()
-            {
-                $.cookie("scrollz", $ypos);
-                //console.log("saving scroll pos: " + $.cookie("scrollz"));
-            }, 200));
-        });
-
-        console.log("scrolling to saved pos: " + $.cookie("scrollz"));
-        $(".mdl-layout__content",$parentdoc).scrollTop($.cookie("scrollz"));
-        $(".mdl-layout",$parentdoc).scrollTop($.cookie("scrollz"));
-
-        console.log("init Events end")
-    }
+    $(".page-content",$parentdoc).css({height:$height_columns});
+    */
 }
+
+
+console.log("init");
+override_once();
+override();
+
+var title = $('title',$parentdoc).text();
+
+$("title",$parentdoc).change(function () {
+    console.log("Title has changed");
+});
+
+$(".mdl-layout__content",$parentdoc).on('DOMSubtreeModified', function() 
+{
+    if (title != $('title',$parentdoc).text())
+    {
+        title = $('title',$parentdoc).text();
+        console.log(" count panels",$(".mdl-form",$parentdoc).length,title);
+        //override();
+        setTimeout(override,100);
+    }
+});
+
+console.log("init events");
+
+// refreshSingleImage();
+// refreshAllImgs();
+
+var refreshAllImgInterval = setInterval(refreshAllImgs,AllImgIntervalTime);
+//var refreshImgInterval = setInterval(refreshSingleImage,ImgIntervalTime);
+
+if ($(".mdl-form > h5",$parentdoc).length >= 1)
+{
+    $($parentdoc).on("click",".mdl-form > h5", function()
+    {
+        $panel = $(this).parent();
+
+        var id = $panel.data("widget-id");
+        var state;
+
+        if (($.cookie('panelid_'+id+'_state')) && ($.cookie('panelid_'+id+'_state') == "false")) state = false;
+        else state = true;
+
+        state = !state; //actual toggle
+        $.cookie('panelid_'+id+'_state', state);
+
+        if (state) panelState($panel,true,true);
+        else panelState($panel,false,true);
+    });
+
+    $($parentdoc).on("click",".pop_btn", function(event)
+    {
+        event.preventDefault();
+        event.stopPropagation();
+        $panel = $(this).parent().parent();
+        var id = $panel.data("widget-id");
+
+        if ($panel.hasClass("draggable"))
+        {
+            $panel.removeClass("draggable mdl-shadow--2dp_popout");
+            $panel.draggable("disable");
+            $panel.css("z-index", 1000);
+        }
+        else
+        {
+            $panel.addClass("draggable mdl-shadow--2dp_popout");
+            $panel.css("z-index", $draggable_zindex++);
+            $panel.draggable({
+                start: function(event, ui) {
+                    $(this).css("z-index", $draggable_zindex++);
+                }
+                });
+            $panel.draggable("enable");
+        }
+    });
+    calcContainerHeight();
+}
+
+//header buttons to min/max all panels
+$($parentdoc).on("click","#all_min", function()
+{
+    console.log("all_min");
+    $(".mdl-form",$parentdoc).each(function()
+    {
+        $panel = $(this);
+        var id = $panel.data("widget-id")
+        $.cookie('panelid_'+id+'_state', false);
+        panelState($panel,false,false);
+    });
+    calcContainerHeight();
+});
+
+$($parentdoc).on("click","#all_max", function()
+{
+    console.log("all_max");
+    $(".mdl-form",$parentdoc).each(function()
+    {
+        $panel = $(this);
+        var id = $panel.data("widget-id")
+        $.cookie('panelid_'+id+'_state', true);
+        panelState($panel,true,false);
+    });
+    calcContainerHeight();
+});
+
+//remember scroll pos
+$(".mdl-layout__content, .mdl-layout",$parentdoc).on("scroll", function(ev)
+{
+    var $ypos = $(this).scrollTop();
+    clearTimeout($.data(this, 'scrollTimer'));
+    $.data(this, 'scrollTimer', setTimeout(function()
+    {
+        $.cookie("scrollz", $ypos);
+        //console.log("saving scroll pos: " + $.cookie("scrollz"));
+    }, 200));
+});
+
+console.log("scrolling to saved pos: " + $.cookie("scrollz"));
+$(".mdl-layout__content",$parentdoc).scrollTop($.cookie("scrollz"));
+$(".mdl-layout",$parentdoc).scrollTop($.cookie("scrollz"));
+
+console.log("init end")

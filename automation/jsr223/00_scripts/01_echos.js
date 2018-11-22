@@ -67,17 +67,15 @@ JSRule({
     }
 });
 
-
-var EchoTitlesTriggers = [];
-itemRegistry.getItem("gEchoTriggers").getMembers().forEach(function (gEchoTriggerItem) 
-{
-    EchoTitlesTriggers.push(ItemStateChangeTrigger(gEchoTriggerItem.name));
-});
-
 JSRule({
     name: "EchoTitles",
     description: "Line: "+__LINE__,
-    triggers: EchoTitlesTriggers,
+    triggers: [
+        ItemStateChangeTrigger("Echo1_Subtitle1"),
+        ItemStateChangeTrigger("Echo2_Subtitle1"),
+        ItemStateChangeTrigger("Echo3_Subtitle1"),
+        ItemStateChangeTrigger("Echo4_Subtitle1")
+    ],
     execute: function( module, input)
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
@@ -88,11 +86,14 @@ JSRule({
         var itemSubtitle2 = getItem(id+"_Subtitle2");
         var itemSubtitles = getItem(id+"_Subtitles");
 
-        createTimer(now().plusSeconds(1), function() 
+        var out = itemTitle.state + " - " + itemProviderDisplayName.state + " - " + itemSubtitle1.state + " - " + itemSubtitle2.state;
+        postUpdate(itemSubtitles,out);
+        
+        createTimer(now().plusSeconds(2), function() 
         {
             var out = itemTitle.state + " - " + itemProviderDisplayName.state + " - " + itemSubtitle1.state + " - " + itemSubtitle2.state;
-            //logInfo(itemProviderDisplayName.state + " /////// "+ itemSubtitle1.state + " ///// " + itemSubtitle2.state +" ///// " + itemSubtitles.state);
             postUpdate(itemSubtitles,out);
+            logInfo(itemProviderDisplayName.state + " /////// "+ itemSubtitle1.state + " ///// " + itemSubtitle2.state +" ///// " + itemSubtitles.state);
         });
     }
 });

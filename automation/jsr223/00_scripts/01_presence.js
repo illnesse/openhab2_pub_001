@@ -1,88 +1,24 @@
 'use strict';
 load('/etc/openhab2/automation/jsr223/00_jslib/JSRule.js');
 
-var AtHomeSTimer = null;
-var AtHomeJTimer = null;
-
 function checkLatency(toUpdate)
 {
     //var triggeringItem = getItem(getTriggeringItemStr(input));
     //var toUpdate = triggeringItem.name.split("Latency")[0]
+    //logInfo("online "+toUpdate + ", " + getItem(toUpdate+"Latency").state);
     var online = (getItem(toUpdate+"Latency").state == "UNDEF") ? false : true;
-
-    //logInfo("HandySLatency changedsince 1min? "+changedSince(getItem("HandySLatency"),now().minusSeconds(6)));
-    //logInfo("HandyJLatency changedsince 1min? "+changedSince(getItem("HandyJLatency"),now().minusSeconds(6)));
 
     if (online)
     {
-        if (toUpdate == "HandyS")
-        {
-            var itemAtHomeS = getItem("AtHomeS");
-            if (itemAtHomeS.state != ON) postUpdate(itemAtHomeS,ON)
-            if (!isUninitialized(AtHomeSTimer)) {
-                AtHomeSTimer.cancel();
-                AtHomeSTimer = null;
-            }
-        }
-        else if (toUpdate == "HandyJ")
-        {
-            var itemAtHomeJ = getItem("AtHomeJ");
-            if (itemAtHomeJ.state != ON) postUpdate(itemAtHomeJ,ON)
-            if (!isUninitialized(AtHomeJTimer)) {
-                AtHomeJTimer.cancel();
-                AtHomeJTimer = null;
-            }
-        }
+        if ((toUpdate == "HandyS") && (getItem("AtHomeS").state == OFF)) postUpdate("AtHomeS",ON)
+        else if ((toUpdate == "HandyJ") && (getItem("AtHomeJ").state == OFF)) postUpdate("AtHomeJ",ON)
     }
     else
     {
-        if ((toUpdate == "HandyS") && isUninitialized(AtHomeSTimer))
+        if (!changedSince(getItem(toUpdate+"Latency"),now().minusMinutes(5)))
         {
-            var itemAtHomeS = getItem("AtHomeS");
-            if (itemAtHomeS.state != OFF)
-            {
-                logInfo(toUpdate +" debug 1: "+ online);
-                AtHomeSTimer = createTimer(now().plusSeconds(3*60), function() 
-                {
-                    var itemAtHomeS = getItem("AtHomeS");
-                    var itemLatency = getItem("HandySLatency");
-                    logInfo(toUpdate +" debug 2: "+ (itemLatency.state != "UNDEF"));
-                    if (itemLatency.state == "UNDEF")
-                    {
-                        logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
-                        postUpdate(itemAtHomeS,OFF)
-                    } 
-                    if (!isUninitialized(AtHomeSTimer)) 
-                    {
-                        AtHomeSTimer.cancel();
-                        AtHomeSTimer = null;
-                    }
-                });
-            }
-        }
-        else if ((toUpdate == "HandyJ") && isUninitialized(AtHomeJTimer))
-        {
-            var itemAtHomeJ = getItem("AtHomeJ");
-            if (itemAtHomeJ.state != OFF)
-            {
-                logInfo(toUpdate +" debug 1: "+ online);
-                AtHomeJTimer = createTimer(now().plusSeconds(3*60), function() 
-                {
-                    var itemAtHomeJ = getItem("AtHomeJ");
-                    var itemLatency = getItem("HandyJLatency");
-                    logInfo(toUpdate +" debug 2: "+ itemLatency.state);
-                    if (itemLatency.state == "UNDEF")
-                    {
-                        logInfo(toUpdate +" debug 3: "+ (itemLatency.state != "UNDEF"));
-                        postUpdate(itemAtHomeJ,OFF)
-                    }
-                    if (!isUninitialized(AtHomeJTimer))
-                    {
-                        AtHomeJTimer.cancel();
-                        AtHomeJTimer = null;
-                    }
-                });
-            }
+            if ((toUpdate == "HandyS")  && (getItem("AtHomeS").state == ON)) postUpdate("AtHomeS",OFF)
+            else if ((toUpdate == "HandyJ") && (getItem("AtHomeJ").state == ON)) postUpdate("AtHomeJ",OFF)
         }
     }
 }
@@ -136,15 +72,23 @@ JSRule({
 
         if (getTriggeringItemStr(input) == "AtHomeS")
         {
-            id == "S";
+            id = "S";
             if (input.newState == ON) AtHome = true;
-            else presenceChanged(id,false);
+            else 
+            {
+                presenceChanged(id,false,false);
+                return;
+            }
         }
         else if (getTriggeringItemStr(input) == "AtHomeJ")
         {
-            id == "J";
+            id = "J";
             if (input.newState == ON) AtHome = true;
-            else presenceChanged(id,false);
+            else 
+            {
+                presenceChanged(id,false,false);
+                return;
+            }
         }
         else
         {
@@ -197,22 +141,25 @@ JSRule({
 
             if ((HMDoor1_minutes < 10) && (Sensor_minutes < 10))
             {
-                logInfos(id + " zuhause " + getTriggeringItemStr(input))
-                presenceChanged(id,false);
+                logInfos(" sensor door presence check for " + id + ": zuhause / " + getTriggeringItemStr(input))
+                presenceChanged(id,true,true);
+            }
+            else
+            {
+                presenceChanged(id,true,false);
             }
         }
     }
 });
 
 
-function presenceChanged(id,state)
+function presenceChanged(id,state,announce)
 {
     var name;
     if (id == "S") name = "Sebastian";
     else if (id == "J") name = "Janine";
 
     var itemfboxMissedCalls = getItem("fboxMissedCalls");
-
     var itemAtHomeBegin = getItem("AtHome"+id+"Begin");
     var itemAtHomeEnd = getItem("AtHome"+id+"End");
     var itemTTSOut2 = getItem("TTSOut2");
@@ -235,6 +182,8 @@ function presenceChanged(id,state)
     var currentTime = "Es ist "+JsJodaNow.hour() +" Uhr "+ JsJodaNow.minute();
     var minutes
 
+    logInfo("presenceChanged("+id+","+state+","+announce+") JsJodaNow: "+JsJodaNow+" itemAtHomeBegin.state: "+itemAtHomeBegin.state);
+
     if (state != true) //gone
     {
         minutes = (JSJoda.convert(jodaDate(JsJodaNow)).toEpochMilli() - JSJoda.convert(jodaDate(itemAtHomeBegin.state)).toEpochMilli()) /1000 / 60; //= jodaDate(itemAtHomeBegin.state).compareTo(JsJodaNow) / 1000 / 60;
@@ -252,7 +201,7 @@ function presenceChanged(id,state)
         logInfo(id + " is home, has been away for "+ hours +" h")
 
         postUpdate(itemAtHomeBegin, JsJodaNow + "Z" );
-        if (minutes > 10) 
+        if ((minutes > 10) && announce)
         {
             var timeout = hours +" Stunden"
             var  out = "Willkommen Daheim "+name+", du warst " + timeout.replace(".", ",") + " lang weg. " + MissedCalls + currentTime

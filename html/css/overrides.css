@@ -482,7 +482,14 @@ a:hover
     background-color: rgba(30, 30, 30, 0.54) !important;
     /* background-color: rgba(30,30,30, 0.9) !important; */
 }
-
+.bg_octoprint
+{
+    background-color: #171717d9 !important;
+}
+.bg_navigation
+{
+    background-color: #101010 !important;
+}
 .bg_hdmi
 {
     background-color: rgba(30,30,30, 0.9) !important;

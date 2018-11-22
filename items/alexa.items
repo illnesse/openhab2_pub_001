@@ -1,11 +1,14 @@
 Group gEchos
 Group gEcho1 (gEchos)
 Group gEcho2 (gEchos)
+Group gEcho3 (gEchos)
+Group gEcho4 (gEchos)
 Group gEchoGroup (gEchos)
-Group gEchoTriggers
 
 String Echo1_lastVoiceCommand (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:lastVoiceCommand"}
 String Echo2_lastVoiceCommand (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:lastVoiceCommand"}
+String Echo3_lastVoiceCommand (gEcho3) {channel="amazonechocontrol:echo:account1:echo3:lastVoiceCommand"}
+String Echo4_lastVoiceCommand (gEcho4) {channel="amazonechocontrol:echo:account1:echo4:lastVoiceCommand"}
 
 String FireTV_CMD
 String Kodi_title                 "Title [%s]"
@@ -15,12 +18,14 @@ String TuneInPlayDevice
 
 String Echo1_Subtitles            "Title [%s]"                         (gEcho1)
 String Echo2_Subtitles            "Title [%s]"                         (gEcho2)
+String Echo3_Subtitles            "Title [%s]"                         (gEcho1)
+String Echo4_Subtitles            "Title [%s]"                         (gEcho2)
 String EchoGroup1_Subtitles       "Title [%s]"                         (gEchoGroup)
 
 Player Echo1_Player               "Player"                            (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:player"}
 Dimmer Echo1_Volume               "Volume [%.0f %%]"                  (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:volume"}
 String Echo1_Title                "Title"                             (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:title"}
-String Echo1_Subtitle1            "Subtitle 1"                        (gEcho1, gEchoTriggers) {channel="amazonechocontrol:echo:account1:echo1:subtitle1"}
+String Echo1_Subtitle1            "Subtitle 1"                        (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:subtitle1"}
 String Echo1_Subtitle2            "Subtitle 2"                        (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:subtitle2"}
 String Echo1_ProviderDisplayName  "Provider"                          (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:providerDisplayName"}
 String Echo1_RadioStationId       "TuneIn Radio Station Id"           (gEcho1) {channel="amazonechocontrol:echo:account1:echo1:radioStationId"}
@@ -31,13 +36,35 @@ String Echo1_StartCommand       "Start Command"                       (gEcho1) {
 Player Echo2_Player               "Player"                            (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:player"}
 Dimmer Echo2_Volume               "Volume [%.0f %%]"                  (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:volume"}
 String Echo2_Title                "Title"                             (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:title"}
-String Echo2_Subtitle1            "Subtitle 1"                        (gEcho2, gEchoTriggers) {channel="amazonechocontrol:echo:account1:echo2:subtitle1"}
+String Echo2_Subtitle1            "Subtitle 1"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:subtitle1"}
 String Echo2_Subtitle2            "Subtitle 2"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:subtitle2"}
 String Echo2_ProviderDisplayName  "Provider"                          (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:providerDisplayName"}
 String Echo2_RadioStationId       "TuneIn Radio Station Id"           (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:radioStationId"}
 String Echo2_TTS                "Text to Speech"                      (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:textToSpeech"}
 String Echo2_TTSVolume            "TTS Volume"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:textToSpeechVolume"}
 String Echo2_StartCommand       "Start Command"                       (gEcho2) {channel="amazonechocontrol:echo:account1:echo2:startCommand"}
+
+Player Echo3_Player               "Player"                            (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:player"}
+Dimmer Echo3_Volume               "Volume [%.0f %%]"                  (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:volume"}
+String Echo3_Title                "Title"                             (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:title"}
+String Echo3_Subtitle1            "Subtitle 1"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:subtitle1"}
+String Echo3_Subtitle2            "Subtitle 2"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:subtitle2"}
+String Echo3_ProviderDisplayName  "Provider"                          (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:providerDisplayName"}
+String Echo3_RadioStationId       "TuneIn Radio Station Id"           (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:radioStationId"}
+String Echo3_TTS                "Text to Speech"                      (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:textToSpeech"}
+String Echo3_TTSVolume            "TTS Volume"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:textToSpeechVolume"}
+String Echo3_StartCommand       "Start Command"                       (gEcho2) {channel="amazonechocontrol:echo:account1:echo3:startCommand"}
+
+Player Echo4_Player               "Player"                            (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:player"}
+Dimmer Echo4_Volume               "Volume [%.0f %%]"                  (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:volume"}
+String Echo4_Title                "Title"                             (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:title"}
+String Echo4_Subtitle1            "Subtitle 1"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:subtitle1"}
+String Echo4_Subtitle2            "Subtitle 2"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:subtitle2"}
+String Echo4_ProviderDisplayName  "Provider"                          (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:providerDisplayName"}
+String Echo4_RadioStationId       "TuneIn Radio Station Id"           (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:radioStationId"}
+String Echo4_TTS                "Text to Speech"                      (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:textToSpeech"}
+String Echo4_TTSVolume            "TTS Volume"                        (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:textToSpeechVolume"}
+String Echo4_StartCommand       "Start Command"                       (gEcho2) {channel="amazonechocontrol:echo:account1:echo4:startCommand"}
 
 Player EchoGroup1_Player               "Player"                            (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:player"}
 // String EchoGroup1_Title                "Title"                             (gEchoGroup) {channel="amazonechocontrol:wha:dcc1f0f1:title"}

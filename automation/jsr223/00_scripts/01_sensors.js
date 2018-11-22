@@ -27,7 +27,7 @@ JSRule({
         //persist(itemHMDoor1);
         postUpdate(itemHMDoor1UI,formatUITimeStampfromJodaDate(DateTime.now()) + " 　" + state)
     }
-});
+}); 
 
 JSRule({
     name: "MotionSensor",
@@ -42,10 +42,11 @@ JSRule({
     {
         var triggeringItem = getItem(getTriggeringItemStr(input));
         var state = input.state;
-        if (isUninitialized(state)) state = triggeringItem.state;
 
-        if ((getItem("HourNow").state >= 7) && (getItem("HourNow").state <= 23))
+        if (isUninitialized(state)) state = triggeringItem.state;
+        if ((getItem("HourNow").state >= 7) && (getItem("HourNow").state <= 22))
         {
+            //logInfo("MotionSensor 7-22 hournow " + getItem("HourNow").state + " state " + state + " item " + triggeringItem.name);
             if (triggeringItem.name == "OsramSensorTriggered")
             {
                 sendCommand("MQTT_Shelly_Gang",state);
@@ -57,6 +58,7 @@ JSRule({
         }
         else
         {
+            //logInfo("MotionSensor 23-6 hournow " + getItem("HourNow").state + " state " + state + " item " + triggeringItem.name);
             if (triggeringItem.name == "OsramSensorTriggered")
             {
                 sendCommand("MQTT_Shelly_KWand",state);

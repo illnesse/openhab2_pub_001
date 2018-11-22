@@ -34,42 +34,42 @@ JSRule({
         if ((execResult == "ON") || (execResult == "OFF")) 
         {
             postUpdate(itemTuyaSocket1,execResult);
-            logInfo("SocketsAtStart / TuyaSocket1 " + execResult);
+            //logInfo("SocketsAtStart / TuyaSocket1 " + execResult);
         }
         sleep(2000);
         execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket2Config + " STATE", 1000 * 3);
         if ((execResult == "ON") || (execResult == "OFF")) 
         {
             postUpdate(itemTuyaSocket2,execResult);
-            logInfo("SocketsAtStart / TuyaSocket2 " + execResult);
+            //logInfo("SocketsAtStart / TuyaSocket2 " + execResult);
         }
         sleep(2000);
         execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket3Config + " STATE", 1000 * 3);
         if ((execResult == "ON") || (execResult == "OFF")) 
         {
             postUpdate(itemTuyaSocket3,execResult);
-            logInfo("SocketsAtStart / TuyaSocket3 " + execResult);
+            // logInfo("SocketsAtStart / TuyaSocket3 " + execResult);
         }
         sleep(2000);
         execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket4Config + " STATE", 1000 * 3);
         if ((execResult == "ON") || (execResult == "OFF")) 
         {
             postUpdate(itemTuyaSocket4,execResult);
-            logInfo("SocketsAtStart / TuyaSocket4 " + execResult);
+            // logInfo("SocketsAtStart / TuyaSocket4 " + execResult);
         }
         sleep(2000);
         execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket5Config + " STATE", 1000 * 3);
         if ((execResult == "ON") || (execResult == "OFF")) 
         {
             postUpdate(itemTuyaSocket5,execResult);
-            logInfo("SocketsAtStart / TuyaSocket5 " + execResult);
+            // logInfo("SocketsAtStart / TuyaSocket5 " + execResult);
         }
         sleep(2000);
         execResult = executeCommandLineAndWaitResponse(tuyaScript + TuyaSocket6Config + " STATE", 1000 * 3);
         if ((execResult == "ON") || (execResult == "OFF")) 
         {
             postUpdate(itemTuyaSocket6,execResult);
-            logInfo("SocketsAtStart / TuyaSocket6 " + execResult);
+            // logInfo("SocketsAtStart / TuyaSocket6 " + execResult);
         }
         sleep(2000);
     }
@@ -103,18 +103,18 @@ JSRule({
         else if (triggeringItem.name == "TuyaSocket6") tuyaConfig = TuyaSocket6Config;
 
         cmd = tuyaScript +  tuyaConfig + state;
-        logInfo(cmd);
+        // logInfo(cmd);
         execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
         if (execResult.indexOf("Error") > -1)
         {
-            logError("TUYA switch1 "+ triggeringItem.name + " ERR COMM (" + execResult +")")
+            logWarn("TUYA switch1 "+ triggeringItem.name + " ERR COMM (" + execResult +")")
         }
         else
         {
             if ((execResult != "OFF") && (execResult != "ON"))
             {
-                logError("TUYA switch4 " + triggeringItem.name + " ERR TIMEOUT ("+ execResult +")")
+                logWarn("TUYA switch4 " + triggeringItem.name + " ERR TIMEOUT ("+ execResult +")")
             }
             else
             {
@@ -146,11 +146,11 @@ JSRule({
         cmd = tuyaLEDScript + tuyaConfig;
         execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
-        logInfo(cmd);
+        //logInfo(cmd);
 
         if (execResult.indexOf("Error") > -1) 
         {
-            logError("TUYA LED " + triggeringItem.name + " ERR COMM (" + execResult +")")
+            logWarn("TUYA LED " + triggeringItem.name + " ERR COMM (" + execResult +")")
         }
         else
         {
@@ -180,11 +180,11 @@ JSRule({
         cmd = tuyaLEDScript + tuyaConfig;
         execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
-        logInfo(cmd);
+        //logInfo(cmd);
 
         if (execResult.indexOf("Error") > -1) 
         {
-            logError("TUYA Flash " + triggeringItem.name + " ERR COMM (" + execResult +")")
+            logWarn("TUYA Flash " + triggeringItem.name + " ERR COMM (" + execResult +")")
         }
         else
         {
@@ -241,11 +241,11 @@ JSRule({
         cmd = tuyaLEDScript + tuyaConfig;
         execResult = executeCommandLineAndWaitResponse(cmd, 1000 * 6);
 
-        logInfo(cmd);
+        //logInfo(cmd);
 
         if (execResult.indexOf("Error") > -1) 
         {
-            logError("TUYA Flash " + triggeringItem.name + " ERR COMM (" + execResult +")")
+            logWarn("TUYA Flash " + triggeringItem.name + " ERR COMM (" + execResult +")")
         }
         else
         {
@@ -278,7 +278,7 @@ JSRule({
 
         if (execResult.indexOf("Error") > -1) 
         {
-            logError("TUYA LED " + triggeringItem.name + " ERR COMM (" + execResult +")");
+            logWarn("TUYA LED " + triggeringItem.name + " ERR COMM (" + execResult +")");
         }
         else
         {

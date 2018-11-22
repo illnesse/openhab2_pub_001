@@ -244,7 +244,7 @@ JSRule({
 
         var execResultVersion = executeCommandLineAndWaitResponse("/etc/openhab2/scripts/sh/version.sh",1000*3);
         //logInfo("stats version '"+execResultVersion + "'")
-        if (execResultVersion != "") postUpdate( "System_openHAB_Version", execResultVersion );
+        if (isNumber(parseFloat(execResultVersion))) postUpdate( "System_openHAB_Version", execResultVersion );
 
     }
 });
