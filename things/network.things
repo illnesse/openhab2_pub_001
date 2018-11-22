@@ -7,10 +7,14 @@ Thing network:pingdevice:nexus7 [ hostname="192.168.178.21", refreshInterval=300
 Thing network:pingdevice:nas [ hostname="192.168.178.25", refreshInterval=60000 ]
 Thing network:pingdevice:echo1 [ hostname="192.168.178.23", refreshInterval=300000 ]
 Thing network:pingdevice:echo2 [ hostname="192.168.178.29", refreshInterval=300000 ]
+Thing network:pingdevice:echodot1 [ hostname="192.168.178.7", refreshInterval=300000 ]
+Thing network:pingdevice:echodot2 [ hostname="192.168.178.8", refreshInterval=300000 ]
+
 Thing network:pingdevice:firetv [ hostname="192.168.178.26", refreshInterval=300000 ]
 Thing network:pingdevice:raspberrypi [ hostname="192.168.178.31", refreshInterval=300000 ]
 Thing network:pingdevice:raspberrymatic [ hostname="192.168.178.45", refreshInterval=300000 ]
 Thing network:pingdevice:hyperionraspi [ hostname="192.168.178.50", refreshInterval=300000 ]
+Thing network:pingdevice:octopiraspi [ hostname="192.168.178.6", refreshInterval=300000 ]
 Thing network:pingdevice:ps4 [ hostname="192.168.178.30", refreshInterval=300000 ]
 Thing network:pingdevice:osramgateway [ hostname="192.168.178.22", refreshInterval=300000 ]
 Thing network:pingdevice:blackbean [ hostname="192.168.178.32", refreshInterval=300000 ]
@@ -30,8 +34,8 @@ Thing network:pingdevice:tplinkplug1 [ hostname="192.168.178.46", refreshInterva
 Thing network:pingdevice:tplinkplug2 [ hostname="192.168.178.47", refreshInterval=300000 ]
 
 Thing network:pingdevice:shelly_heizung [ hostname="192.168.178.55", refreshInterval=300000 ]
-Thing network:pingdevice:shelly_kwand [ hostname="192.168.178.3", refreshInterval=300000 ]
-Thing network:pingdevice:shelly_gang [ hostname="192.168.178.4", refreshInterval=300000 ]
+Thing network:pingdevice:shelly_kwand [ hostname="192.168.178.4", refreshInterval=300000 ]
+Thing network:pingdevice:shelly_gang [ hostname="192.168.178.3", refreshInterval=300000 ]
 
 Thing network:pingdevice:handys [ hostname="192.168.178.20", retry=2, timeout=5000, refreshInterval=20000 ]
 Thing network:pingdevice:handyj [ hostname="192.168.178.24", retry=2, timeout=5000, refreshInterval=20000 ]
