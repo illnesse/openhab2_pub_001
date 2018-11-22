@@ -1,0 +1,14 @@
+//DC4FAEA989F541A4B74461CDB985A3DC
+
+String OctoPrint_Connected "Status: [%s]" (gOctoPrint) { mqtt="<[local:octoprint/event/Connected:state:JSONPATH($._event)]" }
+
+Number OctoPrint_Temperature_Tool0 "Nozzle temp [%.1f °C]" (gOctoPrint) { mqtt="<[local:octoprint/temperature/tool0:state:JSONPATH($.actual)]" }
+Number OctoPrint_Temperature_Tool0_Target "Nozzle temp target [%.1f °C]" (gOctoPrint) { mqtt="<[local:octoprint/temperature/tool0:state:JSONPATH($.target)]" }
+Number OctoPrint_Temperature_Bed "Bed temp [%.1f °C]" (gOctoPrint) { mqtt="<[local:octoprint/temperature/bed:state:JSONPATH($.actual)]" }
+Number OctoPrint_Temperature_Bed_Target "Bed temp target [%.1f °C]" (gOctoPrint) { mqtt="<[local:octoprint/temperature/bed:state:JSONPATH($.target)]" }
+
+Number OctoPrint_ProgressCompletion "Completion [%.0f %%]" (gOctoPrint) {mqtt="<[local:octoprint/progress/printing:state:JSONPATH($.progress)]"}
+Number OctoPrint_CurrentLayerHeight "Layer Height [%.1f mm]" (gOctoPrint) {mqtt="<[local:octoprint/event/ZChange:state:JSONPATH($.new)]"}
+
+String OctoPrint_PrintStart "Started: [%s]" (gOctoPrint) {mqtt="<[local:octoprint/event/PrintStarted:state:JSONPATH($.name)]" }
+String OctoPrint_PrintEnd "Finished: [%s]" (gOctoPrint) {mqtt="<[local:octoprint/event/PrintDone:state:JSONPATH($.name)]" }
